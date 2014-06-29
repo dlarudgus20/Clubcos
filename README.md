@@ -52,6 +52,7 @@ If you want to just use it, not to build, you don't need to build it. Just use i
 > Windows, with Cygwin & MinGW
 
   You can build & run it as follows:
+  
     ```
     make make_dirs
     make tools
