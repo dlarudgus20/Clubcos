@@ -123,12 +123,12 @@ endif
 BOCHSRC := bochsrc_$(CONFIG).bxrc
 
 # phony targets
-.PHONY: all make_folder rebuild run rerun run_dbg dbg dbg_vm run_bochs \
+.PHONY: all make_dirs rebuild run rerun run_dbg dbg dbg_vm run_bochs \
 		distclean clean mostlyclean tools tools_clean
 
-all: make_folder $(EXCPP) $(OUTPUT_IMG)
+all: make_dirs $(EXCPP) $(OUTPUT_IMG)
 
-make_folder:
+make_dirs:
 	mkdir -p img
 	mkdir -p $(DIR_IMG)
 	mkdir -p bin
@@ -225,12 +225,14 @@ $(DIR_DEP)/%.asm.d: $(DIR_SRC)/%.asm
 		| sed 's@\($(DIR_OBJ)/$*.asm.o\)[ :]*@\1 $@ : @g' > $@
 
 # include dependencies
+ifneq ($(MAKECMDGOALS), make_dirs)
 ifneq ($(MAKECMDGOALS), distclean)
 ifneq ($(MAKECMDGOALS), clean)
 ifneq ($(MAKECMDGOALS), mostlyclean)
 ifneq ($(MAKECMDGOALS), tools)
 ifneq ($(MAKECMDGOALS), tools_clean)
 include $(DEPENDENCIES)
+endif
 endif
 endif
 endif
