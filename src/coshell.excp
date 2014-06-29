@@ -1,0 +1,223 @@
+// Copyright (c) 2014, 임경현 (dlarudgus20)
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+// * Redistributions of source code must retain the above copyright notice, this
+//   list of conditions and the following disclaimer.
+//
+// * Redistributions in binary form must reproduce the above copyright notice,
+//   this list of conditions and the following disclaimer in the documentation
+//   and/or other materials provided with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+/**
+ * @file coshell.c
+ * @date 2014. 5. 4.
+ * @author dlarudgus20
+ * @copyright The BSD (2-Clause) License
+ */
+
+#include "coshell.h"
+#include "terminal.h"
+#include "string.h"
+#include "keyboard.h"
+#include "memory.h"
+#include "rtc.h"
+#include "timer.h"
+#include "task.h"
+#include "recursive_mutex.h"
+#include "string.h"
+#include "memory_map.h"
+
+// Coshell의 명령어를 처리하는 함수 포인터입니다.
+typedef void (*CommandHandler)(const char *param);
+
+// Coshell의 명령어 엔트리입니다.
+typedef struct tagCommandEntry CommandEntry;
+struct tagCommandEntry
+{
+	const char *cmd; 			// 명령어입니다.
+	CommandHandler handler;		// 명령어 처리기입니다.
+	const char *desc;			// 명령어의 간단한 설명입니다
+	const char *detail;			// 명령어의 자세한 설명입니다. NULL일 수 있습니다
+};
+
+static void csCoshellCmdHelp(const char *param);
+
+static CommandEntry Commands[] = {
+#@sort
+	{ "help",			csCoshellCmdHelp,			"show help",								"Usage) help (specific command)" },
+	{ "reset",			ckCoshellCmdReset,			"reset computer",							NULL },
+	{ "echo",			ckCoshellCmdEcho,			"echo your inputs",							NULL },
+	{ "cls",			ckCoshellCmdCls,			"clear terminal",							NULL },
+	{ "meminfo",		ckCoshellCmdMemInfo,		"show memory information",					NULL },
+	{ "testbuddyseq",	ckCoshellCmdTestBuddySeq,	"test buddy block allocation by seqence",	NULL },
+	{ "showtick",		ckCoshellCmdShowTick,		"show tick count",							NULL },
+	{ "datetime",		ckCoshellCmdDateTime,		"show now date & time",						NULL },
+	{ "cpuspeed",		ckCoshellCmdCpuSpeed,		"measure cpu speed",						"Usage) cpuspeed (waiting time)" },
+	{ "testtask",		ckCoshellCmdTestTask,		"test tasking feature",						NULL },
+	{ "testmutex",		ckCoshellCmdTestMutex,		"test mutex",								NULL },
+	{ "skout-sokoban",	ckCoshellCmdSkoutSokoban,	"sokoban, by skout",						NULL },
+	{ "testfloat",		ckCoshellCmdTestFloat,		"test floating-point feature",				NULL },
+	{ "testprocess",	ckCoshellCmdTestProcess,	"test multi-process feature",				NULL },
+	{ "killtask",		ckCoshellCmdKillTask,		"kill task",								"Usage) killproc (task id)" },
+	{ "killproc",		ckCoshellCmdKillProc,		"kill process",								"Usage) killproc (proc id)" },
+#@endsort
+};
+static const size_t CountOfCommands = sizeof(Commands) / sizeof(Commands[0]);
+
+// 명령어의 명령어 엔트리를 이진 탐색으로 찾습니다.
+static CommandEntry *csSearchCommand(const char *cmd);
+
+// coshell 태스크가 실행되는 함수입니다.
+static void csCoshellMain(void);
+
+void ckCoshellInitialize(void)
+{
+	ckTerminalSetColor(TERMINAL_COLOR_DEFAULT);
+	ckTerminalPrintString("Coshell run...\n");
+	ckTerminalSetStatus(TERMINAL_STATUS_STRING_INPUTING);
+
+	ckTaskCreate((uint32_t)csCoshellMain, COSHELL_TASK_STACK_TOP, NULL,
+		ckProcessGetCurrentId(), TASK_PRIORITY_ABOVE_NORMAL);
+}
+
+static void csCoshellMain(void)
+{
+	char str[1024];
+
+	while (1)
+	{
+		ckTerminalPrintString("Clubcos >");
+		ckTerminalGetLine(str, sizeof(str));
+
+		size_t len = strlen(str);
+		if (len != 0)
+		{
+			char cmd[len + 1];
+			memcpy(cmd, str, len + 1);
+
+			char *param = strchr(cmd, ' ');
+			if (param != NULL)
+				*param++ = '\0';
+
+			CommandEntry *entry = csSearchCommand(cmd);
+			if (entry != NULL)
+			{
+				entry->handler(param);
+				ckTerminalClearAllBuffers();
+			}
+			else
+			{
+				ckTerminalPutChar('\'');
+				ckTerminalPrintString(cmd);
+				ckTerminalPrintString("\' is not command ^o^");
+			}
+			ckTerminalPutChar('\n');
+		}
+	}
+}
+
+static CommandEntry *csSearchCommand(const char *cmd)
+{
+	CommandEntry *begin = Commands, *end = Commands + CountOfCommands;
+	CommandEntry *entry = begin + (end - begin) / 2;
+	int ret;
+
+	while (1)
+	{
+		ret = strcmp(cmd, entry->cmd);
+		if (ret < 0)
+		{
+			end = entry;
+			entry = begin + (end - begin) / 2;
+		}
+		else if (ret > 0)
+		{
+			begin = entry + 1;
+			entry = begin + (end - begin) / 2;
+		}
+		else
+		{
+			return entry;
+		}
+
+		if (begin == end)
+		{
+			return NULL;
+		}
+	}
+}
+
+static inline void ckShowHelp(CommandEntry *entry)
+{
+	ckTerminalPrintString(entry->cmd);
+	ckTerminalPrintString(" : ");
+	ckTerminalPrintString(entry->desc);
+	ckTerminalPutChar('\n');
+}
+static void csCoshellCmdHelp(const char *param)
+{
+	if (param == NULL)
+	{
+		CommandEntry *end = Commands + CountOfCommands;
+		unsigned line = 0;
+
+		for (CommandEntry *entry = Commands; entry < end; entry++)
+		{
+			ckShowHelp(entry);
+
+			if (line++ == TERMINAL_HEIGHT)
+			{
+				ckTerminalPrintString("---Type <return> to continue, or q <return> to quit---");
+
+				bool bLoop = true;
+				while (bLoop)
+				{
+					switch (ckTerminalGetChar())
+					{
+						case '\n':
+							bLoop = false;
+							break;
+						case 'q':
+							goto HelpQuit;
+					}
+				}
+			}
+		}
+		ckTerminalPrintString("To see more detail help of specific command, enter \"help [command]\"");
+	HelpQuit: ;
+	}
+	else
+	{
+		CommandEntry *entry = csSearchCommand(param);
+		if (entry != NULL)
+		{
+			ckShowHelp(entry);
+			if (entry->detail != NULL)
+			{
+				ckTerminalPrintString(entry->detail);
+				ckTerminalPutChar('\n');
+			}
+		}
+		else
+		{
+			ckTerminalPutChar('\'');
+			ckTerminalPrintString(param);
+			ckTerminalPrintString("\' is not command. type <help> to see help of whole commands.");
+		}
+	}
+}
+

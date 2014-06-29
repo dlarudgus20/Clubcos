@@ -1,0 +1,20 @@
+커널 가상 메모리 페이징
+
+page Dir/Tbl                  logical address              physical address             size        description
+-----------------------------|----------------------------|----------------------------|-----------|------------------
+[D#0x000]
+	[T#0x00000 ~ T#0x00100)		[0x00000000 ~ 0x00100000)	[0x00000000 ~ 0x00100000)	[1MB]		unused lower 1MB
+
+	[T#0x00100 ~ T#0x00400)		[0x00100000 ~ 0xbf800000)	[0x00900000 ~ 0xc0000000)	[3063MB]	dynamic memory
+[D#0x001 ~ D#0x2fe)
+	[T#0x00400 ~ T#0xbf800)
+
+[D#0x2fe ~ D#0x3f8)				[0xbf800000 ~ 0xfe000000)	<    runtime binding    >	[1000MB]	shared memory
+	[T#0xbf800 ~ T#0xfe000)
+
+[D#0x3f8 ~ D#0x3fa)				[0xfe000000 ~ 0xfe800000)	[0x00100000 ~ 0x00900000)	[32MB -]	kernel area
+	[T#0xfe000 ~ T#0xfe800)
+
+[D#0x3fa ~ D#0x3ff]				[0xfe800000 ~ 0xffffffff]	-------------------------	[32MB -]	kernel area (reserved)
+	[T#0xfe800 ~ T#0xfffff]
+

@@ -1,0 +1,41 @@
+물리 메모리
+
+[0x00000000 ~ 0x00100000)		unused & hardware
+[0x00100000 ~ 0x00200000)		kernel
+[0x00200000 ~ 0x00300000)		kernel stack
+[0x00300000 ~ 0x00301000)		page directory
+[0x00301000 ~ 0x00701000)		page table
+[0x00701000 ~ 0x00711000)		gdt table
+[0x00711000 ~ 0x00711800)		idt table
+[0x00711800 ~ 0x00719800)		TimeOut table
+[0x00719800 ~ 0x008798c8)		TaskStruct
+[0x008798c8 ~ 0x008ad0c4)		Coshell Task stack
+[0x0086d0c4 ~ 0x00900000)		Idle Task stack
+[0x00900000 ~ 0xc0000000)		dynamic memory
+[0xc0000000 ~ 0xffffffff]		unused & hardware
+
+가상 메모리 (커널)
+
+logical address            physical address            description
+--------------------------|---------------------------|------------------
+[0x00000000 ~ 0x00100000)	[0x00000000 ~ 0x00100000)	unused lower 1MB
+[0x00100000 ~ 0xbf800000)	[0x00900000 ~ 0xc0000000)	dynamic memory
+[0xbf800000 ~ 0xfe000000)	<    runtime binding    >	memory for I/O mapping
+[0xfe000000 ~ 0xffffffff]	[0x00100000 ~ 0x00900000)	kernel area
+	[0xfe000000 ~ 0xfe100000)	[0x00100000 ~ 0x00200000)	kernel
+	[0xfe100000 ~ 0xfe200000)	[0x00200000 ~ 0x00300000)	kernel stack
+	[0xfe200000 ~ 0xfe201000)	[0x00300000 ~ 0x00301000)	page directory
+	[0xfe201000 ~ 0xfe601000)	[0x00301000 ~ 0x00701000)	page table
+	[0xfe601000 ~ 0xfe611000)	[0x00701000 ~ 0x00711000)	gdt table
+	[0xfe611000 ~ 0xfe611800)	[0x00711000 ~ 0x00711800)	idt table
+	[0xfe611800 ~ 0xfe619800)	[0x00711800 ~ 0x00719800)	TimeOut table
+	[0xfe619800 ~ 0xfe7798c8)	[0x00719800 ~ 0x008798c8)	TaskStruct
+	[0xfe7798c8 ~ 0xfe7ad0c4)	[0x008798c8 ~ 0x008ad0c4)	Coshell Task stack
+	[0xfe7ad0c4 ~ 0xfe800000)	[0x008ad0c4 ~ 0x00900000)	Idle Task stack
+	[0xfe800000 ~ 0xffffffff]	-------------------------	kernel area (reserved)
+
+가상 메모리 (응용프로그램)
+
+[0x00000000 ~ 0x00100000)		unused
+[0x00100000 ~ 0xfe000000)		free space
+[0xfe000000 ~ 0xffffffff]		kernel area (32MB)

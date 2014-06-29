@@ -1,23 +1,12 @@
-# Object files
 *.o
-*.ko
-*.obj
-*.elf
+*.d
+*.excp.c
+*.map
+*.nm
+*.disasm
+*.sym
+*.dump
+*.lst
 
-# Libraries
-*.lib
-*.a
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+bochsout.txt
+parport.out
