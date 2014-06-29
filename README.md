@@ -18,13 +18,22 @@ Prerequisites
 =======
 
 Unix-like shell (I use Cygwin)
+
 make
+
 binutils, **which is cross-compiled for i686-pc-elf**
+
 gcc upper 4.8.x, **which is cross-compiled for i686-pc-elf**
+
 nasm upper 2.11
 
+<hr/>
+
 qemu (for `make run`)
+
 bochsdbg (for `make run_bochs`)
+
+<hr/>
 
 MinGW (if you're in windows - to build *excpp*)
 
