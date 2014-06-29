@@ -50,11 +50,14 @@ First, clone this repository:
 If you want to just use it, not to build, you don't need to build it. Just use it!
 
 > Windows, with Cygwin & MinGW
+
   You can build & run it as follows:
-        make make_dirs
-        make tools
-        make CONFIG=Release
-        make run CONFIG=Release
+    ```
+    make make_dirs
+    make tools
+    make CONFIG=Release
+    make run CONFIG=Release
+    ```
 
 =======
 
@@ -62,5 +65,6 @@ Troubleshooting
 =======
 
 > **can't input arrow keys**
+
   qemu has an bug of transform arrow keys to 2/4/6/8 keys of keypad. Turn off NumLock, and use 2/4/6/8 of keypad.
 
