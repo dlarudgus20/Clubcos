@@ -1,12 +1,10 @@
-﻿OUTPUT_FILE := edimg
-
-ifneq ($(NASM), )
-NASM := nasm
-endif
+﻿NASM := nasm
+NASM_FLAGS := $(NASM_FLAGS) -f elf
+CFLAGS := $(CFLAGS) -m32
 
 .PHONY: all mostlyclean clean distclean
 
-all: $(OUTPUT_FILE)
+all: edimg
 
 mostlyclean:
 	-$(RM) *.o
@@ -15,19 +13,19 @@ mostlyclean:
 	-$(RM) autodec/autodec.nas
 
 clean: mostlyclean
-	-$(RM) $(OUTPUT_FILE)
+	-$(RM) edimg
 
 distclean: clean
 	-$(RM) autodec.asm
 
-$(OUTPUT_FILE): edimg.o autodec.o
+edimg: edimg.o autodec.o
 	$(CC) $(CFLAGS) edimg.o autodec.o -o edimg
 
 edimg.o: edimg.c
 	$(CC) $(CFLAGS) -c edimg.c -o edimg.o
 
 autodec.o: autodec.asm
-	nasm -f coff autodec.asm -o autodec.o
+	nasm $(NASM_FLAGS) autodec.asm -o autodec.o
 
 autodec.asm: autodec/autodec.ask
 	cpp -P autodec/autodec.ask > autodec/autodec.ias

@@ -12,22 +12,23 @@ with open(sys.argv[1], 'r') as input:
 	if_sorting = 0
 
 	for line in input:
+		line = line.rstrip('\n\r')
 		if if_sorting:
-			if line == '#@endsort\n':
+			if line == '#@endsort':
 				sort_list.sort()
 				output_list.extend(sort_list)
 				sort_list = []
-				output_list.append('//#@endsort\n')
+				output_list.append('//#@endsort')
 				if_sorting = 0
 			else:
 				sort_list.append(line)
 		else:
-			if line == '#@sort\n':
-				output_list.append('//#@sort\n')
+			if line == '#@sort':
+				output_list.append('//#@sort')
 				if_sorting = 1
 			else:
 				output_list.append(line)
 
 	with open(sys.argv[2], 'w') as output:
 		for item in output_list:
-			output.write(item)
+			output.write('%s\n' % item)

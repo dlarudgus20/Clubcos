@@ -4,10 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SAR_MODE_WIN32		1
+//#define SAR_MODE_WIN32		1
 /* Linux등으로는↑을 comment out 한다 */
 
-//#define SAR_MODE_POSIX	1
+#define SAR_MODE_POSIX	1
 /* Windows등으로는↑을 comment out 한다 */
 
 typedef unsigned char UCHAR;
@@ -407,7 +407,12 @@ int tek1_decode1(int siz, UCHAR *p, UCHAR *q);
 int tek1_decode2(int siz, UCHAR *p, UCHAR *q);
 int tek1_decode5(int siz, UCHAR *p, UCHAR *q);
 
+#ifndef SAR_MODE_POSIX
 int autodecomp(int siz0, UCHAR *p0, int siz);
+#else
+int _autodecomp(int siz0, UCHAR *p0, int siz);
+#define autodecomp _autodecomp
+#endif
 
 int autodecomp2(int siz0, UCHAR *p0, int siz)
 {

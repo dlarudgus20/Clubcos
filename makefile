@@ -65,7 +65,8 @@ TARGET_GDB := $(TARGET_PLATFORM)-gdb
 DIR_EDIMG := $(DIR_TOOLS)/edimg
 EDIMG := $(DIR_EDIMG)/edimg
 DIR_EXCPP := $(DIR_TOOLS)/excpp
-EXCPP := python $(DIR_EXCPP)/excpp.py
+EXCPP_SCRIPT := $(DIR_EXCPP)/excpp.py
+EXCPP := python $(EXCPP_SCRIPT)
 
 # flags
 TARGET_CFLAGS := $(TARGET_CFLAGS) -std=c99 -m32 -ffreestanding -I$(DIR_SRC) \
@@ -206,7 +207,7 @@ $(DIR_DEP)/%.c.d: $(DIR_SRC)/%.c | $(DIR_DEPENS)
 	$(TARGET_CC) $(TARGET_CFLAGS) $< -MM -MT $(DIR_OBJ)/$*.c.o \
 		| sed 's@\($(DIR_OBJ)/$*.c.o\)[ :]*@\1 $@ : @g' > $@
 
-$(DIR_GEN)/%.excp.c: $(DIR_SRC)/%.excp | $(DIR_DEPENS)
+$(DIR_GEN)/%.excp.c: $(DIR_SRC)/%.excp $(EXCPP_SCRIPT) | $(DIR_DEPENS)
 	$(EXCPP) $< $@
 
 $(DIR_OBJ)/%.excp.o: $(DIR_GEN)/%.excp.c | $(DIR_DEPENS)
