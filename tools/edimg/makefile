@@ -2,7 +2,7 @@
 NASM_FLAGS := $(NASM_FLAGS) -f elf
 CFLAGS := $(CFLAGS) -m32
 
-.PHONY: all mostlyclean clean distclean
+.PHONY: all mostlyclean clean distclean autodec_generate
 
 all: edimg
 
@@ -27,7 +27,7 @@ edimg.o: edimg.c
 autodec.o: autodec.asm
 	nasm $(NASM_FLAGS) autodec.asm -o autodec.o
 
-autodec.asm: autodec/autodec.ask
+autodec_generate: autodec/autodec.ask
 	cpp -P autodec/autodec.ask > autodec/autodec.ias
 	autodec/aska autodec/autodec.ias autodec/autodec.3as
 	autodec/naskcnv0 autodec/autodec.3as autodec/autodec.nas
