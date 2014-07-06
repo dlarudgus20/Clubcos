@@ -49,41 +49,37 @@ DIR_GEN := gen/$(CONFIG)
 DIR_SRC := src
 DIR_TOOLS := tools
 
+DIR_DEPENS := $(DIR_IMG) $(DIR_BIN) $(DIR_DEP) $(DIR_OBJ) $(DIR_GEN)
+
 # tools
 TARGET_PLATFORM := i686-pc-elf
 
-CC := $(TARGET_PLATFORM)-gcc
-OBJCOPY := $(TARGET_PLATFORM)-objcopy
-OBJDUMP := $(TARGET_PLATFORM)-objdump
-NM := $(TARGET_PLATFORM)-nm
-NASM := nasm
-NDISASM := ndisasm
-GDB := $(TARGET_PLATFORM)-gdb
+TARGET_CC := $(TARGET_PLATFORM)-gcc
+TARGET_OBJCOPY := $(TARGET_PLATFORM)-objcopy
+TARGET_OBJDUMP := $(TARGET_PLATFORM)-objdump
+TARGET_NM := $(TARGET_PLATFORM)-nm
+TARGET_NASM := nasm
+TARGET_NDISASM := ndisasm
+TARGET_GDB := $(TARGET_PLATFORM)-gdb
 
-EDIMG := $(DIR_TOOLS)/edimg/edimg
+DIR_EDIMG := $(DIR_TOOLS)/edimg
+EDIMG := $(DIR_EDIMG)/edimg
 DIR_EXCPP := $(DIR_TOOLS)/excpp
-EXCPP := $(DIR_EXCPP)/excpp
-
-ifeq ($(TOOLS_CXX), )
-TOOLS_CXX := /cygdrive/c/MinGW/bin/g++
-endif
-ifeq ($(TOOLS_CXXFLAGS), )
-TOOLS_CXXFLAGS := -std=c++11 -O3 -Wall -static
-endif
+EXCPP := python $(DIR_EXCPP)/excpp.py
 
 # flags
-CFLAGS := $(CFLAGS) -std=c99 -m32 -ffreestanding -I$(DIR_SRC) \
+TARGET_CFLAGS := $(TARGET_CFLAGS) -std=c99 -m32 -ffreestanding -I$(DIR_SRC) \
 	-Wall -Wextra -Wno-unused-parameter -fpack-struct
 #	-mno-mmx -mno-sse -mno-sse2 -mno-sse3 -mno-3dnow
-LDFLAGS := $(LDFLAGS) -nostdlib -Xlinker -melf_i386
-OBJDUMP_FLAGS := $(OBJDUMP_FLAGS) -M intel
-NM_FLAGS := $(NM_FLAGS) --line-numbers --print-size --print-armap --numeric-sort
-NASM_FLAGS := $(NASM_FLAGS) -i$(DIR_SRC)/
+TARGET_LDFLAGS := $(TARGET_LDFLAGS) -nostdlib -Xlinker -melf_i386
+TARGET_OBJDUMP_FLAGS := $(TARGET_OBJDUMP_FLAGS) -M intel
+TARGET_NM_FLAGS := $(TARGET_NM_FLAGS) --line-numbers --print-size --print-armap --numeric-sort
+TARGET_NASM_FLAGS := $(TARGET_NASM_FLAGS) -i$(DIR_SRC)/
 
 ifeq ($(CONFIG), Release)
-CFLAGS := $(CFLAGS) -DNDEBUG -Ofast -flto
+TARGET_CFLAGS := $(TARGET_CFLAGS) -DNDEBUG -Ofast -flto
 else
-CFLAGS := $(CFLAGS) -ggdb -DDEBUG
+TARGET_CFLAGS := $(TARGET_CFLAGS) -ggdb -DDEBUG
 endif
 
 # files
@@ -123,22 +119,10 @@ endif
 BOCHSRC := bochsrc_$(CONFIG).bxrc
 
 # phony targets
-.PHONY: all make_dirs rebuild run rerun run_dbg dbg dbg_vm run_bochs \
+.PHONY: all rebuild run rerun run_dbg dbg dbg_vm run_bochs \
 		distclean clean mostlyclean tools tools_clean
 
-all: make_dirs $(EXCPP) $(OUTPUT_IMG)
-
-make_dirs:
-	mkdir -p img
-	mkdir -p $(DIR_IMG)
-	mkdir -p bin
-	mkdir -p $(DIR_BIN)
-	mkdir -p dep
-	mkdir -p $(DIR_DEP)
-	mkdir -p obj
-	mkdir -p $(DIR_OBJ)
-	mkdir -p gen
-	mkdir -p $(DIR_GEN)
+all: $(OUTPUT_IMG)
 
 rebuild:
 	make clean
@@ -157,75 +141,100 @@ run_dbg:
 	$(QEMU) $(QEMU_DEBUG_FLAGS)
 
 dbg:
-	$(GDB) $(KERNEL_ELF_FILE) "-ex=target remote :1234"
+	$(TARGET_GDB) $(KERNEL_ELF_FILE) "-ex=target remote :1234"
 
 dbg_vm:
-	$(GDB) $(KERNEL_ELF_FILE) "-ex=target remote :8832"
+	$(TARGET_GDB) $(KERNEL_ELF_FILE) "-ex=target remote :8832"
 
 run_bochs:
 	make all
 	-$(BOCHSDBG) -qf $(BOCHSRC)
 
-distclean: clean tools_clean
+distclean: clean
+	-rmdir $(DIR_GEN)
+	-rmdir gen
+	-rmdir $(DIR_OBJ)
+	-rmdir obj
+	-rmdir $(DIR_DEP)
+	-rmdir dep
+	-rmdir $(DIR_BIN)
+	-rmdir bin
+	-rmdir $(DIR_IMG)
 
 clean: mostlyclean
 	-$(RM) $(DIR_BIN)/*
 	-$(RM) $(OUTPUT_IMG)
 	-$(RM) $(DIR_DEP)/*
+	-$(RM) bochsout.txt
+	-$(RM) parport.out
 
 mostlyclean:
 	-$(RM) $(DIR_OBJ)/*
 	-$(RM) $(DIR_GEN)/*
 
-tools: $(EXCPP)
+tools: $(EDIMG)
+
+$(EDIMG):
+	make -C $(DIR_EDIMG)
 
 tools_clean:
-	-$(RM) $(EXCPP)
+	make clean -C $(DIR_EDIMG)
 
 # rules
-$(OUTPUT_IMG): $(KERNEL_SYS_FILE)
+$(OUTPUT_IMG): $(KERNEL_SYS_FILE) $(EDIMG)
 	$(EDIMG) imgin:$(ORIGIN_IMG) \
 		copy from:$(KERNEL_SYS_FILE) to:@: \
 		imgout:$@
 
 $(KERNEL_SYS_FILE): $(C_OBJECTS) $(ASM_OBJECTS) $(EXCP_OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -T $(LINK_SCRIPT) -o $(KERNEL_ELF_FILE) $^ \
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -T $(LINK_SCRIPT) -o $(KERNEL_ELF_FILE) $^ \
 		 -Xlinker -Map=$(DIR_OBJ)/Clubcos_elf.map
-	$(NM) $(NM_FLAGS) $(KERNEL_ELF_FILE) > $(DIR_OBJ)/Clubcos_elf.nm
-	$(NDISASM) -b 32 $(KERNEL_ELF_FILE) > $(DIR_OBJ)/Clubcos_elf.disasm
+	$(TARGET_NM) $(NM_FLAGS) $(KERNEL_ELF_FILE) > $(DIR_OBJ)/Clubcos_elf.nm
+	$(TARGET_NDISASM) -b 32 $(KERNEL_ELF_FILE) > $(DIR_OBJ)/Clubcos_elf.disasm
 
-	$(OBJCOPY) -j .text -j .data -j .rodata -j .bss -S -g $(KERNEL_ELF_FILE) $(KERNEL_SYS_FILE)
-	$(NM) $(NM_FLAGS) $(KERNEL_SYS_FILE) > $(DIR_OBJ)/Clubcos_sys.nm
-	$(NDISASM) -b 32 $(KERNEL_SYS_FILE) > $(DIR_OBJ)/Clubcos_sys.disasm
+	$(TARGET_OBJCOPY) -j .text -j .data -j .rodata -j .bss -S -g $(KERNEL_ELF_FILE) $(KERNEL_SYS_FILE)
+	$(TARGET_NM) $(TARGET_NM_FLAGS) $(KERNEL_SYS_FILE) > $(DIR_OBJ)/Clubcos_sys.nm
+	$(TARGET_NDISASM) -b 32 $(KERNEL_SYS_FILE) > $(DIR_OBJ)/Clubcos_sys.disasm
 
-	$(NM) --line-numbers --numeric-sort $(KERNEL_SYS_FILE) \
+	$(TARGET_NM) --line-numbers --numeric-sort $(KERNEL_SYS_FILE) \
 		| sed '/.*/ s/\(.*\) . \(.*\)/\1 \2/g' > $(DIR_OBJ)/Clubcos.sym
 
-$(DIR_OBJ)/%.c.o: $(DIR_SRC)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-	$(OBJDUMP) $(OBJDUMP_FLAGS) -D $@ > $(DIR_OBJ)/$*.c.dump
-$(DIR_DEP)/%.c.d: $(DIR_SRC)/%.c
-	$(CC) $(CFLAGS) $< -MM -MT $(DIR_OBJ)/$*.c.o \
+$(DIR_OBJ)/%.c.o: $(DIR_SRC)/%.c | $(DIR_DEPENS)
+	$(TARGET_CC) $(TARGET_CFLAGS) -c $< -o $@
+	$(TARGET_OBJDUMP) $(TARGET_OBJDUMP_FLAGS) -D $@ > $(DIR_OBJ)/$*.c.dump
+$(DIR_DEP)/%.c.d: $(DIR_SRC)/%.c | $(DIR_DEPENS)
+	$(TARGET_CC) $(TARGET_CFLAGS) $< -MM -MT $(DIR_OBJ)/$*.c.o \
 		| sed 's@\($(DIR_OBJ)/$*.c.o\)[ :]*@\1 $@ : @g' > $@
 
-$(DIR_GEN)/%.excp.c: $(DIR_SRC)/%.excp
+$(DIR_GEN)/%.excp.c: $(DIR_SRC)/%.excp | $(DIR_DEPENS)
 	$(EXCPP) $< $@
 
-$(DIR_OBJ)/%.excp.o: $(DIR_GEN)/%.excp.c
-	$(CC) $(CFLAGS) -c $< -o $@
-	$(OBJDUMP) $(OBJDUMP_FLAGS) -D $@ > $(DIR_OBJ)/$*.excp.dump
-$(DIR_DEP)/%.excp.d: $(DIR_GEN)/%.excp.c
-	$(CC) $(CFLAGS) $< -MM -MT $(DIR_OBJ)/$*.excp.o \
+$(DIR_OBJ)/%.excp.o: $(DIR_GEN)/%.excp.c | $(DIR_DEPENS)
+	$(TARGET_CC) $(TARGET_CFLAGS) -c $< -o $@
+	$(TARGET_OBJDUMP) $(TARGET_OBJDUMP_FLAGS) -D $@ > $(DIR_OBJ)/$*.excp.dump
+$(DIR_DEP)/%.excp.d: $(DIR_GEN)/%.excp.c | $(DIR_DEPENS)
+	$(TARGET_CC) $(TARGET_CFLAGS) $< -MM -MT $(DIR_OBJ)/$*.excp.o \
 		| sed 's@\($(DIR_OBJ)/$*.excp.o\)[ :]*@\1 $@ : @g' > $@
 
-$(DIR_OBJ)/%.asm.o: $(DIR_SRC)/%.asm
-	$(NASM) $(NASM_FLAGS) -f elf $< -l $(DIR_OBJ)/$*.lst -o $@
-$(DIR_DEP)/%.asm.d: $(DIR_SRC)/%.asm
-	$(NASM) $(NASM_FLAGS) $< -M -MT $(DIR_OBJ)/$*.asm.o \
+$(DIR_OBJ)/%.asm.o: $(DIR_SRC)/%.asm | $(DIR_DEPENS)
+	$(TARGET_NASM) $(TARGET_NASM_FLAGS) -f elf $< -l $(DIR_OBJ)/$*.lst -o $@
+$(DIR_DEP)/%.asm.d: $(DIR_SRC)/%.asm | $(DIR_DEPENS)
+	$(TARGET_NASM) $(TARGET_NASM_FLAGS) $< -M -MT $(DIR_OBJ)/$*.asm.o \
 		| sed 's@\($(DIR_OBJ)/$*.asm.o\)[ :]*@\1 $@ : @g' > $@
 
+$(DIR_DEPENS):
+	mkdir -p img
+	mkdir -p $(DIR_IMG)
+	mkdir -p bin
+	mkdir -p $(DIR_BIN)
+	mkdir -p dep
+	mkdir -p $(DIR_DEP)
+	mkdir -p obj
+	mkdir -p $(DIR_OBJ)
+	mkdir -p gen
+	mkdir -p $(DIR_GEN)
+
 # include dependencies
-ifneq ($(MAKECMDGOALS), make_dirs)
 ifneq ($(MAKECMDGOALS), distclean)
 ifneq ($(MAKECMDGOALS), clean)
 ifneq ($(MAKECMDGOALS), mostlyclean)
@@ -237,8 +246,3 @@ endif
 endif
 endif
 endif
-endif
-
-# tools build
-$(EXCPP): $(wildcard $(DIR_EXCPP)/src/*.cpp)
-	$(TOOLS_CXX) $(TOOLS_CXXFLAGS) $^ -o $@
