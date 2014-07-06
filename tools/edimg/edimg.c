@@ -407,7 +407,7 @@ int tek1_decode1(int siz, UCHAR *p, UCHAR *q);
 int tek1_decode2(int siz, UCHAR *p, UCHAR *q);
 int tek1_decode5(int siz, UCHAR *p, UCHAR *q);
 
-#ifndef NO_LEADING_ZERO
+#ifndef NO_LEADING_UNDERSCORE
 int autodecomp(int siz0, UCHAR *p0, int siz);
 #else
 int _autodecomp(int siz0, UCHAR *p0, int siz);
