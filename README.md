@@ -34,8 +34,6 @@ License
 
 Clubcos is under The BSD (2-Clause) License.
 
-tools/edimg is under KL-01 License.
-
 =======
 
 <a name="prerequisites" />
