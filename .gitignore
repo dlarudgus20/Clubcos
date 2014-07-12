@@ -7,6 +7,9 @@
 *.sym
 *.dump
 *.lst
+*.elf
+*.sys
+floppy.img
 
 bochsout.txt
 parport.out

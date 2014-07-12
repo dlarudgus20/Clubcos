@@ -5,8 +5,6 @@ Clubcos - Clubc Operating System
 
 #### Table of Contents
 
-[How to use](#use)
-
 [License](#license)
 
 [Prerequisites](##prerequisites)
@@ -17,14 +15,6 @@ Clubcos - Clubc Operating System
 
 [Troubleshooting](#troubleshooting)
 
-
-=======
-
-<a name="use" />
-How to use
-=======
-
-To just use, maybe you easily find floppy disk image with *grub4dos* (img/<config>/floopy.img) and kernel image (bin/<config>/Clubcos.sys)
 
 =======
 
@@ -86,8 +76,8 @@ Notice that default configuration is Debug mode, so you should specify configura
 
 If the cross-compiler is not in PATH environmental variable, you should specify its path.
 
-    # Notice that it MUST contain target triplet prefix (e.g. i686-pc-elf-)
-    make TARGET_PREFIX="/usr/local/cross/bin/i686-pc-elf-"
+    # Notice that it MUST contain target triplet prefix (e.g. i686-pc-elf)
+    make TARGET_PREFIX="/usr/local/cross/bin/i686-pc-elf"
 
 =======
 
