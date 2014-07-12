@@ -1,6 +1,32 @@
-﻿/* "edimg.c":디스크 이미지 에디터 */
-/*	copyright(C) 2004 카와이 히데미, I.Tak.  (KL-01) */
+﻿/* "edimg.c":디스크 이미지 에디터        */
+/*     카와이 히데미, I.Tak.           */
+/*     modified by dlarudgus20    */
+/* this program is under The BSD (2-Clause) License */
 
+/* License Notice*/
+/*
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * * Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
+ *
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+ 
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -407,12 +433,11 @@ int tek1_decode1(int siz, UCHAR *p, UCHAR *q);
 int tek1_decode2(int siz, UCHAR *p, UCHAR *q);
 int tek1_decode5(int siz, UCHAR *p, UCHAR *q);
 
-#ifndef NO_LEADING_UNDERSCORE
-int autodecomp(int siz0, UCHAR *p0, int siz);
-#else
-int _autodecomp(int siz0, UCHAR *p0, int siz);
-#define autodecomp _autodecomp
-#endif
+void panic_tek()
+{
+	fprintf(stderr, "This edimg cannot process *.tek or other compressed files. Aborted.\n");
+	exit(-12341234);
+}
 
 int autodecomp2(int siz0, UCHAR *p0, int siz)
 {
@@ -429,15 +454,13 @@ int autodecomp2(int siz0, UCHAR *p0, int siz)
 						c[i] = b[i];
 					c += 0x14;
 					if (t == 0xffffff81)
-						decode_l2d3(s, c, b);
+						panic_tek();
 					if (t == 0xffffff82)
-						decode_tek0(s, c, b);
+						panic_tek();
 					siz = s;
 				}
 			} else if (0xffffff83 <= t && t <= 0xffffff89) {
-				s = autodecomp(siz0, b, siz);
-				if (s >= 0)
-					siz = s;
+				panic_tek();
 			}
 		}
 	}
