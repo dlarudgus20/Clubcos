@@ -18,4 +18,5 @@ parport.out
 *.3as
 *.nas
 
-edimg*
+edimg
+edimg.exe
