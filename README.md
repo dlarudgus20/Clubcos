@@ -4,11 +4,25 @@ Clubcos
 Clubcos - Clubc Operating System
 
 #### Table of Contents
+
+[How to use](#use)
+
 [License](#license)
+
 [Prerequisites](##prerequisites)
+
 [How to build](#build)
+
 [How to build cross-compiler](#cross-compiler)
+
 [Troubleshooting](#troubleshooting)
+
+
+=======
+
+<a name="use" />
+How to use
+=======
 
 To just use, maybe you easily find floppy disk image with *grub4dos* (img/<config>/floopy.img) and kernel image (bin/<config>/Clubcos.sys)
 
