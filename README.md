@@ -99,7 +99,7 @@ isl
 cloog
 ```
 
-Download source of [gcc](https://gcc.gnu.org/) and [binutils](http://www.gnu.org/software/binutils/). (The latest, the better.)
+Download source of [gcc](https://gcc.gnu.org/) and [binutils](http://www.gnu.org/software/binutils/).
 And, follow this script to build.
 
 (In my example script, I assume that both gcc and binutils are in `/usr/src`.)
