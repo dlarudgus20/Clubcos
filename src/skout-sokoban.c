@@ -88,13 +88,13 @@ void ckCoshellCmdSkoutSokoban(const char *param)
 	ckTerminalClearAllBuffers();
 	ckTerminalCls();
 
-	void *stack = ckMemoryAllocateBuddy(4 * 1024);
+	void *stack = ckDynMemAllocate(4 * 1024);
 	uint32_t id = ckTaskCreate(
-		(uint32_t)SokobanMain, (uint32_t)stack + 4 * 1024, stack,
+		(uint32_t)SokobanMain, (uint32_t)stack + 4 * 1024,
+		stack, 4 * 1024,
 		ckProcessGetCurrentId(), TASK_PRIORITY_NORMAL);
 
 	ckTaskJoin(id);
-	ckMemoryFreeBuddy(stack);
 	ckTerminalCls();
 
 	ckTerminalClearAllBuffers();

@@ -70,7 +70,7 @@ EXCPP := python $(EXCPP_SCRIPT)
 
 # flags
 TARGET_CFLAGS := $(TARGET_CFLAGS) -std=c99 -m32 -ffreestanding -I$(DIR_SRC) \
-	-Wall -Wextra -Wno-unused-parameter -fpack-struct
+	-Wall -Wextra -Werror -Wno-unused-parameter -fpack-struct
 #	-mno-mmx -mno-sse -mno-sse2 -mno-sse3 -mno-3dnow
 TARGET_LDFLAGS := $(TARGET_LDFLAGS) -nostdlib -Xlinker -melf_i386
 TARGET_OBJDUMP_FLAGS := $(TARGET_OBJDUMP_FLAGS) -M intel
@@ -120,8 +120,8 @@ endif
 BOCHSRC := bochsrc_$(CONFIG).bxrc
 
 # phony targets
-.PHONY: all rebuild run rerun run_dbg dbg dbg_vm run_bochs \
-		distclean clean mostlyclean tools tools_clean
+.PHONY: all rebuild run rerun run-dbg dbg dbg-vm run-bochs \
+		distclean clean mostlyclean dep-clean tools tools-clean
 
 all: $(OUTPUT_IMG)
 
@@ -137,21 +137,21 @@ rerun:
 	make clean
 	make run
 
-run_dbg:
+run-dbg:
 	make all
 	$(QEMU) $(QEMU_DEBUG_FLAGS)
 
 dbg:
 	$(TARGET_GDB) $(KERNEL_ELF_FILE) "-ex=target remote :1234"
 
-dbg_vm:
+dbg-vm:
 	$(TARGET_GDB) $(KERNEL_ELF_FILE) "-ex=target remote :8832"
 
-run_bochs:
+run-bochs:
 	make all
 	-$(BOCHSDBG) -qf $(BOCHSRC)
 
-distclean: clean
+distclean: clean tools-clean
 	-rmdir $(DIR_GEN)
 	-rmdir gen
 	-rmdir $(DIR_OBJ)
@@ -162,10 +162,9 @@ distclean: clean
 	-rmdir bin
 	-rmdir $(DIR_IMG)
 
-clean: mostlyclean
+clean: mostlyclean dep-clean
 	-$(RM) $(DIR_BIN)/*
 	-$(RM) $(OUTPUT_IMG)
-	-$(RM) $(DIR_DEP)/*
 	-$(RM) bochsout.txt
 	-$(RM) parport.out
 
@@ -173,12 +172,15 @@ mostlyclean:
 	-$(RM) $(DIR_OBJ)/*
 	-$(RM) $(DIR_GEN)/*
 
+dep-clean:
+	-$(RM) $(DIR_DEP)/*
+
 tools: $(EDIMG)
 
 $(EDIMG):
 	make -C $(DIR_EDIMG)
 
-tools_clean:
+tools-clean:
 	make clean -C $(DIR_EDIMG)
 
 # rules
@@ -239,9 +241,11 @@ $(DIR_DEPENS):
 ifneq ($(MAKECMDGOALS), distclean)
 ifneq ($(MAKECMDGOALS), clean)
 ifneq ($(MAKECMDGOALS), mostlyclean)
+ifneq ($(MAKECMDGOALS), dep-clean)
 ifneq ($(MAKECMDGOALS), tools)
-ifneq ($(MAKECMDGOALS), tools_clean)
+ifneq ($(MAKECMDGOALS), tools-clean)
 include $(DEPENDENCIES)
+endif
 endif
 endif
 endif

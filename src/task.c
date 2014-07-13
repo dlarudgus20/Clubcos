@@ -69,7 +69,8 @@ static void csTssInit(Tss *pTss,
 	uint32_t cr3, uint16_t ds, uint16_t cs, uint32_t eip, uint8_t ss, uint32_t esp);
 static void csTssDescriptorInit(Gdt *pGdt, Tss *pTss, uint8_t dpl);
 
-static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp, void *stack,
+static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
+	void *stack, uint32_t stacksize,
 	Process *pProcess, TaskPriority priority);
 
 static void csCleanupProcess(Process *pProc);
@@ -179,7 +180,8 @@ void ckTaskStructInitialize(void)
 	pProc->ProcData.TermBuffer = (uint16_t *)IOMAP_MEMORY_START_ADDRESS;
 }
 
-uint32_t ckTaskCreate(uint32_t eip, uint32_t esp, void *stack,
+uint32_t ckTaskCreate(uint32_t eip, uint32_t esp,
+	void *stack, uint32_t stacksize,
 	uint32_t ProcessId, TaskPriority priority)
 {
 	uint32_t ret_id;
@@ -189,7 +191,7 @@ uint32_t ckTaskCreate(uint32_t eip, uint32_t esp, void *stack,
 	Process *pProcess = csGetProcessFromId(ProcessId);
 	if (pProcess != NULL)
 	{
-		Task *pTask = ckTaskCreate_unsafe(eip, esp, stack, pProcess, priority);
+		Task *pTask = ckTaskCreate_unsafe(eip, esp, stack, stacksize, pProcess, priority);
 		if (pTask != NULL)
 		{
 			ret_id = pTask->id;
@@ -201,7 +203,8 @@ ret_label:
 	INTERRUPT_UNLOCK();
 	return ret_id;
 }
-static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp, void *stack,
+static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
+	void *stack, uint32_t stacksize,
 	Process *pProcess, TaskPriority priority)
 {
 	Task *ret = NULL;
@@ -225,6 +228,7 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp, void *stack,
 			ckLinkedListPushBack_lockfree(&pProcess->ThreadList, &ret->ThreadNode);
 
 			ret->stack = stack;
+			ret->stacksize = stacksize;
 
 			ret->id = g_pTaskStruct->TaskIdMask | i;
 			g_pTaskStruct->TaskIdMask += TASK_IDMASK_UNIT;
@@ -245,7 +249,8 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp, void *stack,
 }
 
 // TODO: pParentProcess => ParentProcessId
-uint32_t ckProcessCreate(uint32_t eip, uint32_t esp, void *stack, TaskPriority priority,
+uint32_t ckProcessCreate(uint32_t eip, uint32_t esp,
+	void *stack, uint32_t stacksize, TaskPriority priority,
 	uint32_t **PageDirectory, uint32_t cr3, ProcessData ProcData, Process *pParentProcess)
 {
 	uint32_t ret_id = PROCESS_INVALID_ID;
@@ -274,7 +279,7 @@ uint32_t ckProcessCreate(uint32_t eip, uint32_t esp, void *stack, TaskPriority p
 
 			ret->ProcData = ProcData;
 
-			ret->pMainThread = ckTaskCreate_unsafe(eip, esp, stack, ret, priority);
+			ret->pMainThread = ckTaskCreate_unsafe(eip, esp, stack, stacksize, ret, priority);
 
 			break;
 		}
@@ -331,7 +336,7 @@ static bool ckTaskTerminate_internal(Task *pTask)
 	}
 
 	if (pTask->stack != NULL)
-		ckMemoryFreeBuddy(pTask->stack);
+		ckDynMemFree(pTask->stack, pTask->stacksize);
 
 	if (pTask == g_pTaskStruct->pNow)
 	{
@@ -739,7 +744,7 @@ static void csIdleTask(void)
 				csCleanupProcess(pProc);
 
 			if (pTask->stack != NULL)
-				ckMemoryFreeBuddy(pTask->stack);
+				ckDynMemFree(pTask->stack, pTask->stacksize);
 
 			ckGdtInitNull(g_pGdtTable + pTask->selector);
 			pTask->selector = 0;

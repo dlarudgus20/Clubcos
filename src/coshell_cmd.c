@@ -70,72 +70,155 @@ void ckCoshellCmdCls(const char *param)
 
 void ckCoshellCmdMemInfo(const char *param)
 {
-	ckTerminalPrintString ("============ Dynamic Memory Information ============\n");
-	ckTerminalPrintStringF("Start Address: [%p]\n",
-		g_DynMem.qwStartAddress);
-	ckTerminalPrintStringF("Total Size:    [%p]byte, [%u]MB\n",
+	ckTerminalPrintString ("==========================================\n");
+	ckTerminalPrintStringF("DynMem BeginAddr : 0x%08x\n", g_DynMem.BeginAddr);
+	ckTerminalPrintString ("==========================================\n");
+	ckTerminalPrintStringF("CountOfUnitBlock : %#x\n", g_DynMem.CountOfUnitBlock);
+	ckTerminalPrintStringF("BitmapLevel      : %u\n", g_DynMem.BitmapLevel);
+	ckTerminalPrintString ("==========================================\n");
+	ckTerminalPrintStringF("Raw Size         : 0x%08x [%u MB]\n",
 		g_DynMem.DynMemSize, g_DynMem.DynMemSize / 1024 / 1024);
-	ckTerminalPrintStringF("Used Size:     [%p]byte, [%u]KB\n",
-		g_DynMem.qwUsedSize, g_DynMem.qwUsedSize / 1024);
+
+	uint32_t meta = g_DynMem.BeginAddr - DYN_MEMORY_START_ADDRESS;
+	ckTerminalPrintStringF("Metadata Size    : 0x%08x [%u KB]\n",
+		meta, meta / 1024);
+
+	uint32_t dmsize = DYN_MEMORY_START_ADDRESS + g_DynMem.DynMemSize - g_DynMem.BeginAddr;
+	ckTerminalPrintStringF("DynMem Size      : 0x%08x [%u MB]\n",
+		dmsize, dmsize / 1024 / 1024);
+	ckTerminalPrintStringF("Used Size        : 0x%08x [%u KB]\n",
+		g_DynMem.UsedSize, g_DynMem.UsedSize / 1024);
+
+	ckTerminalPrintString ("==========================================\n");
 }
 
-void ckCoshellCmdTestBuddySeq(const char *param)
+void ckCoshellCmdTestDynSeq(const char *param)
 {
-	DynMemStruct *pstMemory = &g_DynMem;
-	uint32_t i, j, k;
-	uint32_t *pqwBuffer;
+	uint32_t *mem;
 
-	ckTerminalPrintString("============ Dynamic Memory Test ============\n");
-
-	for (i = 0 ; i < pstMemory->iMaxLevelCount ; i++)
+	for (uint32_t i = 0; i < g_DynMem.BitmapLevel; i++)
 	{
-		ckTerminalPrintStringF("Block List [%d] Test Start\n", i);
-		ckTerminalPrintString("Allocation And Compare: ");
+		ckTerminalPrintStringF("[%u] Bitmap Level Test Start\n", i);
 
-		// 모든 블록을 할당 받아서 값을 채운 후 검사
-		for(j = 0 ; j < pstMemory->iBlockCountOfSmallestBlock >> i; j++)
+		ckTerminalPrintString("Allocation & Compare : ");
+
+		for (uint32_t j = 0; j < (g_DynMem.CountOfUnitBlock >> i); j++)
 		{
-			pqwBuffer = ckMemoryAllocateBuddy(DYN_MEMORY_MIN_SIZE << i);
-			if(pqwBuffer == NULL)
+			mem = (uint32_t *)ckDynMemAllocate(DYN_MEM_BUDDY_UNIT_SIZE << i);
+			if (mem == NULL)
 			{
-				ckTerminalPrintString("\nAllocation Fail\n");
+				ckTerminalPrintStringF(
+					"\nAllocation Fail : Level[%u] Size[%u] Allocation[%u]\n",
+					i, DYN_MEM_BUDDY_UNIT_SIZE << i, j);
 				return;
 			}
 
-			// 값을 채운 후 다시 검사
-			for (k = 0 ; k < (DYN_MEMORY_MIN_SIZE << i) / sizeof(k); k++)
+			for (uint32_t k = 0; k < ((DYN_MEM_BUDDY_UNIT_SIZE << i) / sizeof(uint32_t)); k++)
 			{
-				pqwBuffer[k] = k;
+				mem[k] = k;
 			}
-
-			for (k = 0 ; k < (DYN_MEMORY_MIN_SIZE << i) / sizeof(k); k++)
+			for (uint32_t k = 0; k < ((DYN_MEM_BUDDY_UNIT_SIZE << i) / sizeof(uint32_t)); k++)
 			{
-				if (pqwBuffer[k] != k)
+				if (mem[k] != k)
 				{
-					ckTerminalPrintString("\nCompare Fail\n");
+					ckTerminalPrintStringF(
+						"\nCompare Fail : Level[%u] Size[%u] Allocation[%u] Compare[%u]\n",
+						i, DYN_MEM_BUDDY_UNIT_SIZE << i, j, k);
 					return;
 				}
 			}
-			// 진행 과정을 . 으로 표시
-			ckTerminalPrintString(".");
+
+			ckTerminalPutChar('.');
 		}
 
-		ckTerminalPrintString("\nFree: ");
-		// 할당 받은 블록을 모두 반환
-		for (j = 0; j < pstMemory->iBlockCountOfSmallestBlock >> i; j++)
+		ckTerminalPrintString("\nFree : ");
+		for (uint32_t j = 0; j < (g_DynMem.CountOfUnitBlock >> i); j++)
 		{
-			if (!ckMemoryFreeBuddy(
-				(void *)(pstMemory->qwStartAddress + ( DYN_MEMORY_MIN_SIZE << i ) * j)))
+			uint32_t free_addr = g_DynMem.BeginAddr + (DYN_MEM_BUDDY_UNIT_SIZE << i) * j;
+			if (!ckDynMemFree((void *)free_addr, DYN_MEM_BUDDY_UNIT_SIZE << i))
 			{
-				ckTerminalPrintString("\nFree Fail\n");
+				ckTerminalPrintStringF(
+					"\nFree Fail : Level[%u] Size[%u] Free[%u]\n",
+					i, DYN_MEM_BUDDY_UNIT_SIZE << i, j);
 				return;
 			}
-			// 진행 과정을 . 으로 표시
-			ckTerminalPrintString(".");
+
+			ckTerminalPutChar('.');
 		}
-		ckTerminalPrintString("\n");
+
+		ckTerminalPutChar('\n');
 	}
-	ckTerminalPrintString("Test Complete~!!!\n");
+
+	ckTerminalPrintString("`testbuddyseq` completed.\n");
+}
+
+static uint32_t testdynran_number;
+static void testdynran_task(void *param)
+{
+	uint16_t y = (uint16_t)((uint32_t)param);
+
+	uint32_t size;
+	uint8_t *mem;
+
+	for (uint32_t i = 0; i < testdynran_number; i++)
+	{
+		while (1)
+		{
+			size = rand() % 32768 * 4096;
+			mem = ckDynMemAllocate(size);
+			if (mem != NULL)
+				break;
+			ckTaskSchedule();
+		}
+
+		ckTerminalWriteStringAtF(12, y, TERMINAL_CYAN,
+			"|addr:[%p] size:[%p] alloc okay", mem, size);
+
+		for (uint32_t j = 0; j < size / 2; j++)
+		{
+			mem[j + size / 2] = mem[j] = rand() % 0xff;
+		}
+
+		for (uint32_t j = 0; j < size / 2; j++)
+		{
+			if (mem[j] != mem[j + size / 2])
+			{
+				ckTerminalWriteStringAt(60, y, TERMINAL_RED, ">>verify fail");
+				ckTaskExit();
+			}
+		}
+
+		if (!ckDynMemFree(mem, size))
+		{
+			ckTerminalWriteStringAt(60, y, TERMINAL_RED, ">>free fail");
+			ckTaskExit();
+		}
+	}
+
+	ckTaskExit();
+}
+void ckCoshellCmdTestDynRan(const char *param)
+{
+	void *stack, *stack_top;
+
+	if (param != NULL)
+		testdynran_number = atoi(param);
+	if (param == NULL || testdynran_number == 0)
+		testdynran_number = 50;
+
+	srand(g_TimerStruct.TickCountLow);
+
+	for (int i = 0; i < 11; i++)
+	{
+		stack = ckDynMemAllocate(4 * 1024);
+		stack_top = (void *)((uint32_t)stack + 4 * 1024);
+		ckTaskSetInitParam(&stack_top, (void *)i);
+
+		ckTaskCreate(
+			(uint32_t)testdynran_task, (uint32_t)stack_top,
+			stack, 4 * 1024,
+			ckProcessGetCurrentId(), TASK_PRIORITY_NORMAL);
+	}
 }
 
 void ckCoshellCmdShowTick(const char *param)
@@ -237,9 +320,10 @@ void ckCoshellCmdTestTask(const char *param)
 	{
 		const TaskPriority t[] =
 			{ TASK_PRIORITY_LOW, TASK_PRIORITY_NORMAL, TASK_PRIORITY_HIGH };
-		void *stack = ckMemoryAllocateBuddy(4 * 1024);
+		void *stack = ckDynMemAllocate(4 * 1024);
 		ckTaskCreate(
-			(uint32_t)testtask, (uint32_t)stack + 4 * 1024, stack,
+			(uint32_t)testtask, (uint32_t)stack + 4 * 1024,
+			stack, 4 * 1024,
 			ckProcessGetCurrentId(), t[i % 3]);
 	}
 }
@@ -281,25 +365,27 @@ static void joinermutextest(void *param)
 }
 void ckCoshellCmdTestMutex(const char *param)
 {
-	uint32_t *arTaskId = (uint32_t *)ckMemoryAllocateBuddy(4 * 1024);
+	uint32_t *arTaskId = (uint32_t *)ckDynMemAllocate(4 * 1024);
 	void *stack, *stack_top;
 
 	ckRecursiveMutexInit(&TestMutex);
 	for (int i = 0; i < TEST_MUTEX_TASK_COUNT; i++)
 	{
-		stack = ckMemoryAllocateBuddy(4 * 1024);
+		stack = ckDynMemAllocate(4 * 1024);
 		stack_top = (uint8_t *)stack + 4 * 1024;
 		ckTaskSetInitParam(&stack_top, (void *)i);
 
 		arTaskId[i] = ckTaskCreate(
-			(uint32_t)testmutex, (uint32_t)stack_top, stack,
+			(uint32_t)testmutex, (uint32_t)stack_top,
+			stack, 4 * 1024,
 			ckProcessGetCurrentId(), TASK_PRIORITY_BELOW_NORMAL);
 	}
 
 	stack_top = (uint8_t *)arTaskId + 4 * 1024;
 	ckTaskSetInitParam(&stack_top, (void *)arTaskId);
 
-	ckTaskCreate((uint32_t)joinermutextest, (uint32_t)stack_top, arTaskId,
+	ckTaskCreate((uint32_t)joinermutextest, (uint32_t)stack_top,
+		arTaskId, 4 * 1024,
 		ckProcessGetCurrentId(), TASK_PRIORITY_NORMAL);
 }
 
@@ -339,39 +425,41 @@ static void testfloatfreertask(const char *param)
 }
 void ckCoshellCmdTestFloat(const char *param)
 {
-	uint32_t *arTaskId = (uint32_t *)ckMemoryAllocateBuddy(4 * 1024);
+	uint32_t *arTaskId = (uint32_t *)ckDynMemAllocate(4 * 1024);
 	void *stack, *stack_top;
 
 	arTaskId[TEST_FLOAT_TASK_COUNT] = g_TimerStruct.TickCountLow;
 
 	for (int i = 0; i < TEST_FLOAT_TASK_COUNT; i++)
 	{
-		stack = ckMemoryAllocateBuddy(4 * 1024);
+		stack = ckDynMemAllocate(4 * 1024);
 		stack_top = (uint8_t *)stack + 4 * 1024;
 		ckTaskSetInitParam(&stack_top, (void *)i);
 
 		arTaskId[i] = ckTaskCreate(
-			(uint32_t)testfloattask, (uint32_t)stack_top, stack,
+			(uint32_t)testfloattask, (uint32_t)stack_top,
+			stack, 4 * 1024,
 			ckProcessGetCurrentId(), TASK_PRIORITY_BELOW_NORMAL);
 	}
 
 	stack_top = (uint8_t *)arTaskId + 4 * 1024;
 	ckTaskSetInitParam(&stack_top, (void *)arTaskId);
 
-	ckTaskCreate((uint32_t)testfloatfreertask, (uint32_t)stack_top, arTaskId,
+	ckTaskCreate((uint32_t)testfloatfreertask, (uint32_t)stack_top,
+		arTaskId, 4 * 1024,
 		ckProcessGetCurrentId(), TASK_PRIORITY_IDLE);
 }
 
 void ckCoshellCmdTestProcess(const char *param)
 {
-	uint8_t *code = (uint8_t *)ckMemoryAllocateBuddy(4 * 1024);
-	uint8_t *stack = (uint8_t *)ckMemoryAllocateBuddy(4 * 1024);
+	uint8_t *code = (uint8_t *)ckDynMemAllocate(4 * 1024);
+	uint8_t *stack = (uint8_t *)ckDynMemAllocate(4 * 1024);
 
 	uint32_t code_phy = ckDynMemLogicalToPhysical((uint32_t)code);
 	uint32_t stack_phy = ckDynMemLogicalToPhysical((uint32_t)stack);
 
-	uint32_t **PageDirectory = (uint32_t **)ckMemoryAllocateBuddy(4 * 1024);
-	uint32_t *PageTable = (uint32_t *)ckMemoryAllocateBuddy(4 * 1024);
+	uint32_t **PageDirectory = (uint32_t **)ckDynMemAllocate(4 * 1024);
+	uint32_t *PageTable = (uint32_t *)ckDynMemAllocate(4 * 1024);
 
 	memset(PageDirectory, 0, 4 * 1024);
 	memset(PageTable, 0, 4 * 1024);
@@ -421,7 +509,8 @@ void ckCoshellCmdTestProcess(const char *param)
 
 	memcpy(code, c, sizeof(c));
 
-	uint32_t id = ckProcessCreate(0x00100000, 0x00102000, NULL, TASK_PRIORITY_NORMAL,
+	uint32_t id = ckProcessCreate(0x00100000, 0x00102000,
+		NULL, 0, TASK_PRIORITY_NORMAL,
 		PageDirectory, ckDynMemLogicalToPhysical((uint32_t)PageDirectory),
 		(ProcessData) { .TermBuffer = (uint16_t *)0x00102000 }, ckProcessGetCurrent());
 

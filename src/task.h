@@ -143,6 +143,7 @@ struct tagTask
 	LinkedListNode ThreadNode;
 
 	void *stack;
+	uint32_t stacksize;
 
 	uint32_t id;
 } __attribute__((aligned(16)));
@@ -201,13 +202,15 @@ static TaskStruct * const g_pTaskStruct = (TaskStruct *)TASKSTRUCT_ADDRESS;
 
 void ckTaskStructInitialize(void);
 
-uint32_t ckTaskCreate(uint32_t eip, uint32_t esp, void *stack,
+uint32_t ckTaskCreate(uint32_t eip, uint32_t esp,
+	void *stack, uint32_t stacksize,
 	uint32_t ProcessId, TaskPriority priority);
 
 bool ckTaskTerminate(uint32_t TaskId);
 static inline void ckTaskExit(void) { ckTaskTerminate(g_pTaskStruct->pNow->id); }
 
-uint32_t ckProcessCreate(uint32_t eip, uint32_t esp, void *stack, TaskPriority priority,
+uint32_t ckProcessCreate(uint32_t eip, uint32_t esp,
+	void *stack, uint32_t stacksize, TaskPriority priority,
 	uint32_t **PageDirectory, uint32_t cr3, ProcessData ProcData, Process *pParentProcess);
 
 bool ckProcessTerminate(uint32_t ProcessId);

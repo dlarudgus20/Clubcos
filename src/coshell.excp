@@ -56,6 +56,24 @@ struct tagCommandEntry
 
 static void csCoshellCmdHelp(const char *param);
 
+void ckCoshellCmdReset(const char *param);
+void ckCoshellCmdEcho(const char *param);
+void ckCoshellCmdCls(const char *param);
+void ckCoshellCmdMemInfo(const char *param);
+void ckCoshellCmdTestDynSeq(const char *param);
+void ckCoshellCmdTestDynRan(const char *param);
+void ckCoshellCmdShowTick(const char *param);
+void ckCoshellCmdDateTime(const char *param);
+void ckCoshellCmdCpuSpeed(const char *param);
+void ckCoshellCmdTestTask(const char *param);
+void ckCoshellCmdTestMutex(const char *param);
+void ckCoshellCmdTestFloat(const char *param);
+void ckCoshellCmdTestProcess(const char *param);
+void ckCoshellCmdKillTask(const char *param);
+void ckCoshellCmdKillProc(const char *param);
+
+void ckCoshellCmdSkoutSokoban(const char *param);
+
 static CommandEntry Commands[] = {
 #@sort
 	{ "help",			csCoshellCmdHelp,			"show help",								"Usage) help (specific command)" },
@@ -63,7 +81,8 @@ static CommandEntry Commands[] = {
 	{ "echo",			ckCoshellCmdEcho,			"echo your inputs",							NULL },
 	{ "cls",			ckCoshellCmdCls,			"clear terminal",							NULL },
 	{ "meminfo",		ckCoshellCmdMemInfo,		"show memory information",					NULL },
-	{ "testbuddyseq",	ckCoshellCmdTestBuddySeq,	"test buddy block allocation by seqence",	NULL },
+	{ "testdynseq",		ckCoshellCmdTestDynSeq,		"test dynamic memory by seqence",			NULL },
+	{ "testdynran",		ckCoshellCmdTestDynRan,		"test dynamic memory by random",			"Usage) testdynran (trying number)" },
 	{ "showtick",		ckCoshellCmdShowTick,		"show tick count",							NULL },
 	{ "datetime",		ckCoshellCmdDateTime,		"show now date & time",						NULL },
 	{ "cpuspeed",		ckCoshellCmdCpuSpeed,		"measure cpu speed",						"Usage) cpuspeed (waiting time)" },
@@ -90,7 +109,8 @@ void ckCoshellInitialize(void)
 	ckTerminalPrintString("Coshell run...\n");
 	ckTerminalSetStatus(TERMINAL_STATUS_STRING_INPUTING);
 
-	ckTaskCreate((uint32_t)csCoshellMain, COSHELL_TASK_STACK_TOP, NULL,
+	ckTaskCreate((uint32_t)csCoshellMain, COSHELL_TASK_STACK_TOP,
+		NULL, 0,
 		ckProcessGetCurrentId(), TASK_PRIORITY_ABOVE_NORMAL);
 }
 

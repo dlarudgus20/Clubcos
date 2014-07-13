@@ -41,21 +41,4 @@
  */
 void ckCoshellInitialize(void);
 
-void ckCoshellCmdReset(const char *param);
-void ckCoshellCmdEcho(const char *param);
-void ckCoshellCmdCls(const char *param);
-void ckCoshellCmdMemInfo(const char *param);
-void ckCoshellCmdTestBuddySeq(const char *param);
-void ckCoshellCmdShowTick(const char *param);
-void ckCoshellCmdDateTime(const char *param);
-void ckCoshellCmdCpuSpeed(const char *param);
-void ckCoshellCmdTestTask(const char *param);
-void ckCoshellCmdTestMutex(const char *param);
-void ckCoshellCmdTestFloat(const char *param);
-void ckCoshellCmdTestProcess(const char *param);
-void ckCoshellCmdKillTask(const char *param);
-void ckCoshellCmdKillProc(const char *param);
-
-void ckCoshellCmdSkoutSokoban(const char *param);
-
 #endif /* COSHELL_H_ */

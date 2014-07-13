@@ -67,7 +67,7 @@ void ckMain(void)
 	}
 
 	// 메모리 최소사양 점검
-	ckMemoryCheckSize();
+	ckDynMemCheckSize();
 	if (unlikely(g_DynMem.DynMemSize + 0x900000 < MINIMAL_REQUIRE_MEMORY))
 		ckTerminalPanic("Clubcos requires 32MB RAM at least.");
 
@@ -78,7 +78,7 @@ void ckMain(void)
 	ckTerminalPrintString_unsafe("IDT table is initialized\n");
 
 	// 동적 메모리 초기화
-	ckMemoryInitialize();
+	ckDynMemInitialize();
 	ckTerminalPrintString_unsafe("Dynamic Memory Manager is initialized\n");
 
 	// 멀티태스킹 초기화

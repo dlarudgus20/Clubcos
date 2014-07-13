@@ -156,7 +156,11 @@ int atoi(const char *str)
 	return sign ? -ret : ret;
 }
 
-static long holdrand;
+/*
+ * rand / srand is copied from SanOS
+ * http://www.jbox.dk/sanos/source/lib/stdlib.c.html
+ */
+static long holdrand = 1;
 void srand(unsigned int seed)
 {
 	holdrand = (long)seed;
