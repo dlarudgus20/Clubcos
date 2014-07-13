@@ -58,18 +58,16 @@ enum
 		PIT_CONTROL_COUNTER0 | PIT_CONTROL_LSBMSBRW | PIT_CONTROL_MODE2 | PIT_CONTROL_BINARYCOUNTER,
 };
 
-typedef struct tagTimeOut TimeOut;
-struct tagTimeOut
+typedef struct tagTimeOut
 {
 	uint32_t timeout;
 	uint32_t code;
-};
+} TimeOut;
 
-typedef struct tagTimerStruct TimerStruct;
-struct tagTimerStruct
+typedef struct tagTimerStruct
 {
 	volatile uint32_t TickCountLow, TickCountHigh;
-};
+} TimerStruct;
 
 extern TimerStruct g_TimerStruct;
 

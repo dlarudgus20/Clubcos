@@ -53,8 +53,7 @@ void ckInterruptQueueInitialize(void);
 /**
  * @brief 인터럽트 콘텍스트입니다. C로 짜여진 ISR에 어셈블리로 짜여진 ISR이 인수로 이 콘텍스트의 포인터를 넘깁니다.
  */
-typedef struct tagInterruptContext InterruptContext;
-struct tagInterruptContext
+typedef struct tagInterruptContext
 {
 	uint32_t gs;
 	uint32_t fs;
@@ -90,7 +89,7 @@ struct tagInterruptContext
 			uint32_t err_ss2;
 		};
 	};
-};
+} InterruptContext;
 
 /* CPU 예외 핸들러 */
 void ckExceptIntHandler00();

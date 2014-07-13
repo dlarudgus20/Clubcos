@@ -56,21 +56,19 @@ enum
 /**
  * @brief @ref ckRTCReadTime 함수의 결과값을 나타냅니다.
  */
-typedef struct tagRTCTime RTCTime;
-struct tagRTCTime
+typedef struct tagRTCTime
 {
 	uint8_t hour, minute, second;
-};
+} RTCTime;
 
 /**
  * @brief @ref ckRTCReadDate 함수의 결과값을 나타냅니다.
  */
-typedef struct tagRTCDate RTCDate;
-struct tagRTCDate
+typedef struct tagRTCDate
 {
 	uint16_t year;
 	uint8_t month, dayofmonth, dayofweek;
-};
+} RTCDate;
 
 /**
  * @brief 8바이트 BCD 포맷을 이진 포맷으로 변환합니다.

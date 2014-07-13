@@ -64,8 +64,7 @@ enum
 	KERNEL_PROCESS_ID = 0,
 };
 
-typedef enum tagTaskPriority TaskPriority;
-enum tagTaskPriority
+typedef enum tagTaskPriority
 {
 	TASK_PRIORITY_REALTIME,
 	TASK_PRIORITY_HIGHEST,
@@ -81,44 +80,39 @@ enum tagTaskPriority
 	MAX_TASK_PRIORITY = COUNT_TASK_PRIORITY - 1,
 
 	KERNEL_TASK_PRIORITY = TASK_PRIORITY_HIGHEST
-};
+} TaskPriority;
 
-typedef struct tagTss Tss;
-struct tagTss
+typedef struct tagTss
 {
 	uint32_t backlink, esp0, ss0, esp1, ss1, esp2, ss2, cr3;
 	uint32_t eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;
 	uint32_t es, cs, ss, ds, fs, gs;
 	uint32_t ldtr, iomap;
-};
+} Tss;
 
-typedef enum tagTaskFlag TaskFlag;
-enum tagTaskFlag
+typedef enum tagTaskFlag
 {
 	TASK_FLAG_RUNNING,
 	TASK_FLAG_READY,
 	TASK_FLAG_WAIT,
 	TASK_FLAG_WAITFOREXIT,
-};
+} TaskFlag;
 
-typedef struct tagFpuContext FpuContext;
-struct tagFpuContext
+typedef struct tagFpuContext
 {
 	uint8_t data[512];
-} __attribute__((aligned(16)));
+} __attribute__((aligned(16))) FpuContext;
 
-typedef struct tagProcessData ProcessData;
-struct tagProcessData
+typedef struct tagProcessData
 {
 	// memory I/O mapping address
 	uint16_t *TermBuffer;
-};
+} ProcessData;
 
 // forward declaration
-typedef struct tagTask Task;
-typedef struct tagProcess Process;
+struct tagProcess;
 
-struct tagTask
+typedef struct tagTask
 {
 	LinkedListNode _node;
 
@@ -139,23 +133,23 @@ struct tagTask
 
 	volatile uint32_t UsedCpuTime;
 
-	Process *pProcess;
+	struct tagProcess *pProcess;
 	LinkedListNode ThreadNode;
 
 	void *stack;
 	uint32_t stacksize;
 
 	uint32_t id;
-} __attribute__((aligned(16)));
+} __attribute__((aligned(16))) Task;
 
-struct tagProcess
+typedef struct tagProcess
 {
 	LinkedListNode _node;
 
 	LinkedList ThreadList;
 	Task *pMainThread;			// NULL이면 idle에서 cleanup 대기중
 
-	Process *pParentProcess;
+	struct tagProcess *pParentProcess;
 	LinkedListNode ChildNode;
 
 	LinkedList ChildProcessList;
@@ -168,10 +162,9 @@ struct tagProcess
 	uint32_t id;
 
 	ProcessData ProcData;
-};
+} Process;
 
-typedef struct tagTaskStruct TaskStruct;
-struct tagTaskStruct
+typedef struct tagTaskStruct
 {
 	Task tasks[MAX_TASK];
 	uint32_t TaskIdMask;
@@ -196,7 +189,7 @@ struct tagTaskStruct
 	bool bSSEIsExist;
 
 	uint8_t _padding[3];
-};
+} TaskStruct;
 
 static TaskStruct * const g_pTaskStruct = (TaskStruct *)TASKSTRUCT_ADDRESS;
 

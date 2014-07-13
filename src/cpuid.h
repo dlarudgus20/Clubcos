@@ -45,11 +45,10 @@ enum
 /**
  * @brief cpuid 명령어의 결과인 eax, ebx, ecx, edx레지스터를 나타내는 구조체입니다.
  */
-typedef struct tagCpuidResult CpuidResult;
-struct tagCpuidResult
+typedef struct tagCpuidResult
 {
 	uint32_t eax, ebx, ecx, edx;
-};
+} CpuidResult;
 
 /** @brief "cpuid" 어셈블리 명령어 */
 static inline void ckAsmCpuid(uint32_t code, CpuidResult *cs)

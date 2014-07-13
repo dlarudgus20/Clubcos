@@ -39,18 +39,16 @@
  * @brief 이중 환형 연결 리스트의 한 노드를 나타내는 구조체입니다.
  * @sa LinkedList
  */
-typedef struct tagLinkedListNode LinkedListNode;
-struct tagLinkedListNode
+typedef struct tagLinkedListNode
 {
-	LinkedListNode * volatile pNext;
-	LinkedListNode * volatile pPrev;
-};
+	struct tagLinkedListNode * volatile pNext;
+	struct tagLinkedListNode * volatile pPrev;
+} LinkedListNode;
 
 /**
  * @brief 이중 환형 연결 리스트 구조체입니다.
  */
-typedef struct tagLinkedList LinkedList;
-struct tagLinkedList
+typedef struct tagLinkedList
 {
 	LinkedListNode dummy;
 
@@ -60,7 +58,7 @@ struct tagLinkedList
 	 *         하지만 그 함수가 실행을 마친 후에는 유효해야 합니다.
 	 */
 	uint32_t size;
-};
+} LinkedList;
 
 /**
  * @brief @ref LinkedList 구조체를 초기화합니다.

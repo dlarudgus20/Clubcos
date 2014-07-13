@@ -45,14 +45,13 @@
 typedef void (*CommandHandler)(const char *param);
 
 // Coshell의 명령어 엔트리입니다.
-typedef struct tagCommandEntry CommandEntry;
-struct tagCommandEntry
+typedef struct tagCommandEntry
 {
 	const char *cmd; 			// 명령어입니다.
 	CommandHandler handler;		// 명령어 처리기입니다.
 	const char *desc;			// 명령어의 간단한 설명입니다
 	const char *detail;			// 명령어의 자세한 설명입니다. NULL일 수 있습니다
-};
+} CommandEntry;
 
 static void csCoshellCmdHelp(const char *param);
 

@@ -39,11 +39,10 @@
 /**
  * @brief 바이너리 세마포어 구조체입니다.
  */
-typedef struct tagBiSem BiSem;
-struct tagBiSem
+typedef struct tagBiSem
 {
 	volatile uint32_t flag;
-};
+} BiSem;
 
 /**
  * @brief 바이너리 세마포어를 초기화합니다.

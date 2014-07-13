@@ -78,25 +78,23 @@ enum
  * @brief 키 하나를 나타내는 구조체입니다.
  * @sa g_KeyTable
  */
-typedef struct tagKeyStruct KeyStruct;
-struct tagKeyStruct
+typedef struct tagKeyStruct
 {
 	uint8_t NormalKey;		/**< 키가 다른 키와 조합되지 않았을 때의 cascii 코드입니다. */
 	uint8_t CombinedKey;	/**< 키가 Shift, Caps Lock 혹은 NumLock과 조합될 때의 cascii 코드입니다. */
 	bool bPushedKey;		/**< 키가 눌려 있는지의 여부입니다. */
-};
+} KeyStruct;
 
 /**
  * @brief 키보드 자료구조입니다.
  */
-typedef struct tagKeyboardStruct KeyboardStruct;
-struct tagKeyboardStruct
+typedef struct tagKeyboardStruct
 {
 	bool bNumLock;			/**< NumLock 활성화 여부입니다. */
 	bool bCapsLock;			/**< CapsLock 활성화 여부입니다. */
 	bool bScrollLock;		/**< ScrollLock 활성화 여부입니다. */
 	bool bShift;			/**< Shift키 활성화 여부입니다. */
-};
+} KeyboardStruct;
 
 /**
  * @brief 키 테이블입니다.

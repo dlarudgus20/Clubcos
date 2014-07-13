@@ -23,7 +23,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file queue.c
+ * @file circular_queue.c
  * @date 2014. 4. 27.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License

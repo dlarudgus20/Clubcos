@@ -135,21 +135,14 @@ void ckCoshellCmdTestDynSeq(const char *param)
 		for (uint32_t j = 0; j < (g_DynMem.CountOfUnitBlock >> i); j++)
 		{
 			uint32_t free_addr = g_DynMem.BeginAddr + (DYN_MEM_BUDDY_UNIT_SIZE << i) * j;
-			if (!ckDynMemFree((void *)free_addr, DYN_MEM_BUDDY_UNIT_SIZE << i))
-			{
-				ckTerminalPrintStringF(
-					"\nFree Fail : Level[%u] Size[%u] Free[%u]\n",
-					i, DYN_MEM_BUDDY_UNIT_SIZE << i, j);
-				return;
-			}
-
+			ckDynMemFree((void *)free_addr, DYN_MEM_BUDDY_UNIT_SIZE << i);
 			ckTerminalPutChar('.');
 		}
 
 		ckTerminalPutChar('\n');
 	}
 
-	ckTerminalPrintString("`testbuddyseq` completed.\n");
+	ckTerminalPrintString("`testdynseq` completed.\n");
 }
 
 static uint32_t testdynran_number;
@@ -188,11 +181,7 @@ static void testdynran_task(void *param)
 			}
 		}
 
-		if (!ckDynMemFree(mem, size))
-		{
-			ckTerminalWriteStringAt(60, y, TERMINAL_RED, ">>free fail");
-			ckTaskExit();
-		}
+		ckDynMemFree(mem, size);
 	}
 
 	ckTaskExit();

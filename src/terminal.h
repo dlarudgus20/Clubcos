@@ -44,8 +44,7 @@ enum
 
 #define ckMakeTermColor(fg, bg) (((bg) << 4) | (fg))
 
-typedef enum tagTerminalColor TerminalColor;
-enum tagTerminalColor
+typedef enum tagTerminalColor
 {
 	TERMINAL_BLACK = 0,
 	TERMINAL_BLUE = 1,
@@ -68,22 +67,20 @@ enum tagTerminalColor
 	TERMINAL_COLOR_LOG = ckMakeTermColor(TERMINAL_LIGHT_GREEN, TERMINAL_BLACK),
 	TERMINAL_COLOR_PANIC = ckMakeTermColor(TERMINAL_RED, TERMINAL_WHITE),
 
-};
+} TerminalColor;
 
-typedef enum tagTermStatus TermStatus;
-enum tagTermStatus
+typedef enum tagTermStatus
 {
 	TERMINAL_STATUS_STRING_INPUTING,
 	TERMINAL_STATUS_WAITING,
-};
+} TermStatus;
 
-typedef enum tagTerminalCursorType TerminalCursorType;
-enum tagTerminalCursorType
+typedef enum tagTerminalCursorType
 {
 	TERMINAL_CURSOR_NORMAL,
 	TERMINAL_CURSOR_SOLID,
 	TERMINAL_CURSOR_NOCURSOR,
-};
+} TerminalCursorType;
 
 void ckTerminalInitialize(void);
 void ckTerminalSetColor(uint8_t color);

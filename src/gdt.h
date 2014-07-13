@@ -86,8 +86,7 @@ typedef uint8_t GdtType2;
 /**
  * @brief GDT를 나타내는 구조체입니다.
  */
-typedef struct tagGdt Gdt;
-struct tagGdt
+typedef struct tagGdt
 {
 	uint16_t Size_0_15, Address_0_15;
 
@@ -113,7 +112,7 @@ struct tagGdt
 	};
 
 	uint8_t Address_24_32;
-};
+} Gdt;
 
 /** @brief GDT 테이블입니다. */
 static Gdt * const g_pGdtTable = (Gdt *)GDT_TABLE_ADDRESS;

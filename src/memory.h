@@ -41,15 +41,13 @@
 
 #define DYN_MEM_BUDDY_UNIT_SIZE (4 * 1024u)
 
-typedef struct tagBuddyBitmap BuddyBitmap;
-struct tagBuddyBitmap
+typedef struct tagBuddyBitmap
 {
 	uint8_t *bits;
 	uint32_t count;
-};
+} BuddyBitmap;
 
-typedef struct tagDynMemStruct DynMemStruct;
-struct tagDynMemStruct
+typedef struct tagDynMemStruct
 {
 	uint32_t DynMemSize;
 
@@ -60,7 +58,7 @@ struct tagDynMemStruct
 	uint32_t BitmapLevel;
 
 	BuddyBitmap *arBitmap;
-};
+} DynMemStruct;
 
 extern DynMemStruct g_DynMem;
 

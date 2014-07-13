@@ -23,7 +23,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file queue.h
+ * @file circular_queue.h
  * @date 2014. 4. 27.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
@@ -39,14 +39,13 @@
 /**
  * @brief 요소의 크기가 4바이트인 환형 큐 구조체입니다.
  */
-typedef struct tagCircularQueue32 CircularQueue32;
-struct tagCircularQueue32
+typedef struct tagCircularQueue32
 {
 	uint32_t *pQueueBuf;
 	uint32_t *pFirst, *pLast;
 	size_t size;
 	bool bEmpty;
-};
+} CircularQueue32;
 
 /**
  * @brief @ref CircularQueue32 구조체를 초기화합니다.
@@ -85,14 +84,13 @@ bool ckCircularQueue32Remove(CircularQueue32 *pQueue);
 /**
  * @brief 요소의 크기가 1바이트인 환형 큐 구조체입니다.
  */
-typedef struct tagCircularQueue8 CircularQueue8;
-struct tagCircularQueue8
+typedef struct tagCircularQueue8
 {
 	uint8_t *pQueueBuf;
 	uint8_t *pFirst, *pLast;
 	size_t size;
 	bool bEmpty;
-};
+} CircularQueue8;
 /** @brief @ref ckCircularQueue32Init 를 참조하십시오. */
 void ckCircularQueue8Init(CircularQueue8 *pQueue, uint8_t *pQueueBuf, size_t QueueSize);
 /** @brief @ref ckCircularQueue32Put 을 참조하십시오. */

@@ -335,9 +335,6 @@ static bool ckTaskTerminate_internal(Task *pTask)
 		pProc->pMainThread = NULL;
 	}
 
-	if (pTask->stack != NULL)
-		ckDynMemFree(pTask->stack, pTask->stacksize);
-
 	if (pTask == g_pTaskStruct->pNow)
 	{
 		assert(pTask->WaitObj == NULL);
@@ -366,6 +363,12 @@ static bool ckTaskTerminate_internal(Task *pTask)
 
 		if (pProc != NULL)
 			csCleanupProcess(pProc);
+
+		if (pTask->stack != NULL)
+			ckDynMemFree(pTask->stack, pTask->stacksize);
+
+		ckGdtInitNull(g_pGdtTable + pTask->selector);
+		pTask->selector = 0;
 
 		return true;
 	}

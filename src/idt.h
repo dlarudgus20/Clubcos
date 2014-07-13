@@ -43,8 +43,7 @@ typedef uint8_t IdtType;
 /**
  * @brief IDT를 나타내는 구조체입니다.
  */
-typedef struct tagIdt Idt;
-struct tagIdt
+typedef struct tagIdt
 {
 	uint16_t HandlerAddress_0_15;
 
@@ -68,7 +67,7 @@ struct tagIdt
 	};
 
 	uint16_t HandlerAddress_16_31;
-};
+} Idt;
 
 /** @brief IDT 테이블입니다. */
 static Idt * const g_pIdtTable = (Idt *)IDT_TABLE_ADDRESS;
@@ -77,7 +76,7 @@ static Idt * const g_pIdtTable = (Idt *)IDT_TABLE_ADDRESS;
  * @brief @ref Idt 구조체를 초기화합니다.
  * @param[in] pIdt 초기화할 @ref Idt 구조체입니다.
  * @param[in] HandlerAddress 어셈블리로 짜여진 ISR입니다.
- * @param[in] HandlerSegment @ref HandlerAddress 의 세그먼트 셀렉터입니다.
+ * @param[in] HandlerSegment <c>HandlerAddress</c>의 코드 세그먼트 셀렉터입니다.
  * @param[in] DPL 이 IDT의 DPL입니다.
  */
 void ckIdtInit(Idt *pIdt, void (*HandlerAddress)(), uint16_t HandlerSegment, uint8_t DPL);

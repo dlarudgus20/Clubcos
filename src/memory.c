@@ -33,16 +33,23 @@
 #include "port.h"
 #include "string.h"
 #include "likely.h"
+#include "assert.h"
 
 DynMemStruct g_DynMem;
 
+//static void *_memchr_not_without_size(const void *mem, int val)
+//{
+//	for (const uint8_t *p = (const uint8_t *)mem; ; p++)
+//		if (*p != (uint8_t)val)
+//			return (void *)p;
+//}
 static void *_memchr_not_without_size(const void *mem, int val)
 {
-	for (const uint8_t *p = (const uint8_t *)mem; ; p++)
-		if (*p != (uint8_t)val)
-			return (void *)p;
-	return NULL;
+	__asm__ ( "movl $0xffffffff, %%ecx \n\t cld \n\t repe scasb"
+		: "=D"(mem) : "D"(mem), "a"((uint8_t)val) : "ecx", "cc" );
+	return (char *)mem - 1;
 }
+
 static inline uint32_t _ceil_uint32(uint32_t num, uint32_t base)
 {
 	return (num + base - 1) / base * base;
@@ -173,9 +180,10 @@ void *ckDynMemAllocate(uint32_t size)
 bool ckDynMemFree(void *addr, uint32_t size)
 {
 	if (unlikely(size == 0))
-			return false;
+		return false;
 
-	if (unlikely((uint32_t)addr < g_DynMem.BeginAddr))
+	if (unlikely((uint32_t)addr < g_DynMem.BeginAddr
+		|| (uint32_t)addr > DYN_MEMORY_START_ADDRESS + g_DynMem.DynMemSize))
 		return false;
 
 	uint32_t rel_addr = _ceil_uint32((uint32_t)addr - g_DynMem.BeginAddr, DYN_MEM_BUDDY_UNIT_SIZE);
@@ -192,12 +200,11 @@ bool ckDynMemFree(void *addr, uint32_t size)
 
 	INTERRUPT_LOCK();
 
-	// 할당되지 않은 블록이면 false 리턴
-	if (BITMAP_GET_BIT(start, block))
-	{
-		INTERRUPT_UNLOCK();
-		return false;
-	}
+	// 주의! 해제된 블록을 다시 해제하려 하는 경우엔 false 리턴이 아니라 assert가 걸림
+	// 만일 현재 블록이 상위 블록에 합쳐진 경우라면, 블록이 이미 해제됬는지 아닌지를 판단하는 데
+	// 비용이 들기 때문에 에러 처리를 생략.
+	// 이 함수를 사용하는 쪽에서 주의 깊게 사용해야 함.
+	assert(!BITMAP_GET_BIT(start, block));
 
 	// 블록 해제
 	BITMAP_BIT_SET_1(start, block);

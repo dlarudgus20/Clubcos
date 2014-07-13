@@ -23,7 +23,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file sprintf.c
+ * @file snprintf.c
  * @date 2014. 4. 27.
  * @author Michael Ringgaard (http://www.jbox.dk/sanos/source/lib/vsprintf.c.html)
  *         modified by dlarudgus20

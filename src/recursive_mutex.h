@@ -40,15 +40,14 @@
 /**
  * @brief recursive mutex 구조체입니다.
  */
-typedef struct tagRecursiveMutex RecursiveMutex;
-struct tagRecursiveMutex
+typedef struct tagRecursiveMutex
 {
 	volatile uint32_t TaskId;
 	volatile uint32_t LockCount;
 
 	// 32비트 단위로 메모리를 mov하는 건 원자성이 있음.
 	volatile uint32_t bLocked;
-};
+} RecursiveMutex;
 
 /**
  * @brief @ref RecursiveMutex 구조체를 초기화합니다.

@@ -32,16 +32,10 @@
 #ifndef ASSERT_H_
 #define ASSERT_H_
 
-/**
- * @macro NDEBUG
- * @brief Debug모드로 빌드되는지, Release 모드로 빌드되는지를 나타냅니다.
- * Release 모드로 빌드된다면 이 매크로가 선언됩니다. Debug모드로 빌드된다면 이 매크로가 선언되지 않습니다.
- */
-
 #ifndef NDEBUG
 
 /**
- * @brief 단언 실패 메시지와 함께 PANIC합니다. @ref NDEBUG 매크로가 선언되지 않았을 경우에만 존재합니다.
+ * @brief 단언 실패 메시지와 함께 PANIC합니다. <c>NDEBUG</c> 매크로가 선언되지 않았을 경우에만 존재합니다.
  * @param[in] str 단언문입니다.
  * @param[in] file 단언문이 있는 파일입니다.
  * @param[in] func 단언문이 있는 함수입니다.
@@ -52,7 +46,7 @@ void ckAssertMessage(const char *str, const char *file, const char *func, unsign
 
 /**
  * @brief 단언문을 확인합니다. 단언문이 실패할 경우 @ref ckAssertMessage 를 통해 PANIC합니다.<br/>
- *        @ref NDEBUG 매크로가 선언되어있다면 아무 일도 하지 않습니다.
+ *        <c>NDEBUG</c> 매크로가 선언되어있다면 아무 일도 하지 않습니다.
  * @param exp 단언문입니다.
  */
 # define assert(exp) ((void)((exp) || (ckAssertMessage(#exp, __FILE__, __func__, __LINE__), 1)))
