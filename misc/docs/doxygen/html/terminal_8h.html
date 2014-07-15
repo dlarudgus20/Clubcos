@@ -1,0 +1,1394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>Clubcos: D:/EclipseWorkspace/Clubcos/src/terminal.h 파일 참조</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Clubcos
+   &#160;<span id="projectnumber">0.0.0</span>
+   </div>
+   <div id="projectbrief">Clubcos - Clubc Operating System</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 다음에 의해 생성됨 :  Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'검색');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>메인&#160;페이지</span></a></li>
+      <li><a href="annotated.html"><span>데이타&#160;구조</span></a></li>
+      <li class="current"><a href="files.html"><span>파일들</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="검색" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>파일&#160;목록</span></a></li>
+      <li><a href="globals.html"><span>전역</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('terminal_8h.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>모두</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>데이타 구조</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>파일들</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>함수</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>변수</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>타입정의</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>열거형 타입</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>열거형 멤버</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>매크로</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>페이지들</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">매크로</a> &#124;
+<a href="#typedef-members">타입정의</a> &#124;
+<a href="#enum-members">열거형 타입</a> &#124;
+<a href="#func-members">함수</a>  </div>
+  <div class="headertitle">
+<div class="title">terminal.h 파일 참조</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+terminal.h에 대한 include 의존 그래프</div>
+<div class="dyncontent">
+<div class="center"><img src="terminal_8h__incl.png" border="0" usemap="#_d_1_2_eclipse_workspace_2_clubcos_2src_2terminal_8h" alt=""/></div>
+</div>
+</div><div class="textblock"><div class="dynheader">
+이 그래프는 이 파일을 직/간접적으로 include 하는 파일들을 보여줍니다.:</div>
+<div class="dyncontent">
+<div class="center"><img src="terminal_8h__dep__incl.png" border="0" usemap="#_d_1_2_eclipse_workspace_2_clubcos_2src_2terminal_8hdep" alt=""/></div>
+<map name="_d_1_2_eclipse_workspace_2_clubcos_2src_2terminal_8hdep" id="_d_1_2_eclipse_workspace_2_clubcos_2src_2terminal_8hdep">
+<area shape="rect" id="node2" href="assert_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/assert.c" alt="" coords="5,95,153,136"/><area shape="rect" id="node3" href="ck_main_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/ckMain.c" alt="" coords="178,95,330,136"/><area shape="rect" id="node4" href="coshell__cmd_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/coshell_cmd.c" alt="" coords="355,95,537,136"/><area shape="rect" id="node5" href="int__except_8c.html" title="CPU 예외 핸들러입니다. " alt="" coords="562,95,733,136"/><area shape="rect" id="node6" href="interrupt_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/interrupt.c" alt="" coords="757,95,914,136"/><area shape="rect" id="node7" href="keys_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/keys.c" alt="" coords="939,95,1087,136"/><area shape="rect" id="node8" href="skout-sokoban_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/skout&#45;sokoban.c" alt="" coords="1111,95,1306,136"/><area shape="rect" id="node9" href="terminal_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/terminal.c" alt="" coords="1331,95,1487,136"/><area shape="rect" id="node10" href="timer_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/timer.c" alt="" coords="1511,95,1659,136"/></map>
+</div>
+</div>
+<p><a href="terminal_8h_source.html">이 파일의 소스 코드 페이지로 가기</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+매크로</h2></td></tr>
+<tr class="memitem:ab2aff7680451fe20cc175941770fa2e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#ab2aff7680451fe20cc175941770fa2e7">ckMakeTermColor</a>(fg, bg)&#160;&#160;&#160;(((bg) &lt;&lt; 4) | (fg))</td></tr>
+<tr class="memdesc:ab2aff7680451fe20cc175941770fa2e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">지정한 전경색과 배경색을 조합한 색 코드를 만듭니다.  <a href="#ab2aff7680451fe20cc175941770fa2e7">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ab2aff7680451fe20cc175941770fa2e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+타입정의</h2></td></tr>
+<tr class="memitem:aced15ef3a09fe0e79164236b3f4043d6"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871">tagTerminalColor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#aced15ef3a09fe0e79164236b3f4043d6">TerminalColor</a></td></tr>
+<tr class="memdesc:aced15ef3a09fe0e79164236b3f4043d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">터미널의 색상 코드입니다.  <a href="#aced15ef3a09fe0e79164236b3f4043d6">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:aced15ef3a09fe0e79164236b3f4043d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d866a67f0417ce7c05ae9a8b15b6d39"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="terminal_8h.html#abd2bcf4e380fdfdb5a0731886a40b599">tagTermStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a8d866a67f0417ce7c05ae9a8b15b6d39">TermStatus</a></td></tr>
+<tr class="memdesc:a8d866a67f0417ce7c05ae9a8b15b6d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">터미널의 상태를 나타내는 열거형입니다.  <a href="#a8d866a67f0417ce7c05ae9a8b15b6d39">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a8d866a67f0417ce7c05ae9a8b15b6d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ebe7f698b41dc910d78abb82af53969"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="terminal_8h.html#a376edbb36ddca6f8640408223a972ae0">tagTerminalCursorType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a0ebe7f698b41dc910d78abb82af53969">TerminalCursorType</a></td></tr>
+<tr class="memdesc:a0ebe7f698b41dc910d78abb82af53969"><td class="mdescLeft">&#160;</td><td class="mdescRight">터미널의 커서 모양을 나타내는 열거형입니다.  <a href="#a0ebe7f698b41dc910d78abb82af53969">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a0ebe7f698b41dc910d78abb82af53969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+열거형 타입</h2></td></tr>
+<tr class="memitem:a77867ab4129f63159b37bca3b652a798"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="terminal_8h.html#a77867ab4129f63159b37bca3b652a798ae725ac69d20c1169cc1021872f1f9abf">TERMINAL_WIDTH</a> = 80, 
+<a class="el" href="terminal_8h.html#a77867ab4129f63159b37bca3b652a798a940152c9dd73be886427d54f04d51e74">TERMINAL_HEIGHT</a> = 24
+ }</td></tr>
+<tr class="separator:a77867ab4129f63159b37bca3b652a798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a284a97bd0578c799e15fb06820239871"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871">tagTerminalColor</a> { <br />
+&#160;&#160;<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871a85bea1999691cecacdf6a1ade555bb6e">TERMINAL_BLACK</a> = 0, 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871ade671483d03ca857053db16640e773ad">TERMINAL_BLUE</a> = 1, 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871a8f680face32a5ff6f08cf5a24fa63672">TERMINAL_GREEN</a> = 2, 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871a360af058a4eecb45cc8ce50509db9412">TERMINAL_CYAN</a> = 3, 
+<br />
+&#160;&#160;<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871a28406d987d938c59514b96d26a89fc41">TERMINAL_RED</a> = 4, 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871aa12c8208bb5412bd800f3807e4109981">TERMINAL_MAGENTA</a> = 5, 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871a595d925afcd2be36c23b6c07abbc9f3d">TERMINAL_BROWN</a> = 6, 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871afa8e54710ebd208facedd409eb7acb0a">TERMINAL_LIGHT_GREY</a> = 7, 
+<br />
+&#160;&#160;<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871a18195d89d754776c2334c6482c1ba9b1">TERMINAL_DARK_GREY</a> = 8, 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871af835f92c05c0ce5a071a94986032c87d">TERMINAL_LIGHT_BLUE</a> = 9, 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871a645622519dfde7a426b632a84e5478dc">TERMINAL_LIGHT_GREEN</a> = 10, 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871ad7921218dbf9e744cb5514ca7344a58e">TERMINAL_LIGHT_CYAN</a> = 11, 
+<br />
+&#160;&#160;<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871a54fcec1e6d14a358397239080a1f88d6">TERMINAL_LIGHT_RED</a> = 12, 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871a75f874a1e215d08e62b3a270c4827441">TERMINAL_LIGHT_MAGENTA</a> = 13, 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871a78a7ea7189969ba84b43633824009347">TERMINAL_LIGHT_BROWN</a> = 14, 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871a1fc9f07d3c77150ad0d23f5c044cd98b">TERMINAL_WHITE</a> = 15, 
+<br />
+&#160;&#160;<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871a31d7934672721d39287692a8a5c0e914">TERMINAL_COLOR_DEFAULT</a> = ckMakeTermColor(TERMINAL_LIGHT_GREY, TERMINAL_BLACK), 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871ac064cdf4d04d49fbbfa12488f37a628a">TERMINAL_COLOR_LOG</a> = ckMakeTermColor(TERMINAL_LIGHT_GREEN, TERMINAL_BLACK), 
+<a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871ad37293fc41e20114e64d8c6e5f173fa2">TERMINAL_COLOR_PANIC</a> = ckMakeTermColor(TERMINAL_RED, TERMINAL_WHITE)
+<br />
+ }</td></tr>
+<tr class="memdesc:a284a97bd0578c799e15fb06820239871"><td class="mdescLeft">&#160;</td><td class="mdescRight">터미널의 색상 코드입니다.  <a href="terminal_8h.html#a284a97bd0578c799e15fb06820239871">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a284a97bd0578c799e15fb06820239871"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd2bcf4e380fdfdb5a0731886a40b599"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#abd2bcf4e380fdfdb5a0731886a40b599">tagTermStatus</a> { <a class="el" href="terminal_8h.html#abd2bcf4e380fdfdb5a0731886a40b599a6670259a66fc1d638a9bbc889ee8592a">TERMINAL_STATUS_STRING_INPUTING</a>, 
+<a class="el" href="terminal_8h.html#abd2bcf4e380fdfdb5a0731886a40b599a7493aa54a75efcb8cbaff184c589fed3">TERMINAL_STATUS_WAITING</a>
+ }</td></tr>
+<tr class="memdesc:abd2bcf4e380fdfdb5a0731886a40b599"><td class="mdescLeft">&#160;</td><td class="mdescRight">터미널의 상태를 나타내는 열거형입니다.  <a href="terminal_8h.html#abd2bcf4e380fdfdb5a0731886a40b599">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:abd2bcf4e380fdfdb5a0731886a40b599"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a376edbb36ddca6f8640408223a972ae0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a376edbb36ddca6f8640408223a972ae0">tagTerminalCursorType</a> { <a class="el" href="terminal_8h.html#a376edbb36ddca6f8640408223a972ae0a485407ce338f714061d091dfcd60f4bd">TERMINAL_CURSOR_NORMAL</a>, 
+<a class="el" href="terminal_8h.html#a376edbb36ddca6f8640408223a972ae0a5428367031dbb216501bd88e0aee66c3">TERMINAL_CURSOR_SOLID</a>, 
+<a class="el" href="terminal_8h.html#a376edbb36ddca6f8640408223a972ae0a536a1c92d3d25a6528cd49ec9cd04627">TERMINAL_CURSOR_NOCURSOR</a>
+ }</td></tr>
+<tr class="memdesc:a376edbb36ddca6f8640408223a972ae0"><td class="mdescLeft">&#160;</td><td class="mdescRight">터미널의 커서 모양을 나타내는 열거형입니다.  <a href="terminal_8h.html#a376edbb36ddca6f8640408223a972ae0">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a376edbb36ddca6f8640408223a972ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+함수</h2></td></tr>
+<tr class="memitem:a262b2e5f4c32da080e56df11eb404cb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a262b2e5f4c32da080e56df11eb404cb1">ckTerminalInitialize</a> (void)</td></tr>
+<tr class="memdesc:a262b2e5f4c32da080e56df11eb404cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">터미널을 초기화합니다.  <a href="#a262b2e5f4c32da080e56df11eb404cb1">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a262b2e5f4c32da080e56df11eb404cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0be1708f6fa563874a656f8c0b27ac18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a0be1708f6fa563874a656f8c0b27ac18">ckTerminalSetColor</a> (uint8_t color)</td></tr>
+<tr class="memdesc:a0be1708f6fa563874a656f8c0b27ac18"><td class="mdescLeft">&#160;</td><td class="mdescRight">터미널의 색을 설정합니다.  <a href="#a0be1708f6fa563874a656f8c0b27ac18">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a0be1708f6fa563874a656f8c0b27ac18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5adb55a4024e2fd154a2438ee006c78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#aa5adb55a4024e2fd154a2438ee006c78">ckTerminalSetStatus</a> (<a class="el" href="terminal_8h.html#a8d866a67f0417ce7c05ae9a8b15b6d39">TermStatus</a> stat)</td></tr>
+<tr class="memdesc:aa5adb55a4024e2fd154a2438ee006c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">터미널의 상태를 설정합니다.  <a href="#aa5adb55a4024e2fd154a2438ee006c78">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:aa5adb55a4024e2fd154a2438ee006c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c276233f2c35a200c4ee5136674cff2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a4c276233f2c35a200c4ee5136674cff2">ckTerminalPutEntryAt</a> (char c, uint8_t color, uint16_t x, uint16_t y)</td></tr>
+<tr class="memdesc:a4c276233f2c35a200c4ee5136674cff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">특정 위치에 지정한 색 코드로 문자를 출력합니다.  <a href="#a4c276233f2c35a200c4ee5136674cff2">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a4c276233f2c35a200c4ee5136674cff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54e8f1bd3b0f497a0d64768761ff29d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a54e8f1bd3b0f497a0d64768761ff29d7">ckTerminalPutCharEntryAt</a> (char c, uint16_t x, uint16_t y)</td></tr>
+<tr class="memdesc:a54e8f1bd3b0f497a0d64768761ff29d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">특정 위치에 문자를 출력합니다.  <a href="#a54e8f1bd3b0f497a0d64768761ff29d7">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a54e8f1bd3b0f497a0d64768761ff29d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26f4ac8b16544cf696525e9130306619"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a26f4ac8b16544cf696525e9130306619">ckTerminalPutChar</a> (char c)</td></tr>
+<tr class="memdesc:a26f4ac8b16544cf696525e9130306619"><td class="mdescLeft">&#160;</td><td class="mdescRight">터미널에 문자를 출력합니다.  <a href="#a26f4ac8b16544cf696525e9130306619">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a26f4ac8b16544cf696525e9130306619"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a742ebc59ce81a6afee760cd5cd70622a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a742ebc59ce81a6afee760cd5cd70622a">ckTerminalDelete</a> (void)</td></tr>
+<tr class="memdesc:a742ebc59ce81a6afee760cd5cd70622a"><td class="mdescLeft">&#160;</td><td class="mdescRight">커서가 가리키고 있는 입력 문자를 삭제합니다.  <a href="#a742ebc59ce81a6afee760cd5cd70622a">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a742ebc59ce81a6afee760cd5cd70622a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1711952e6f39f5f746bb5f5e2e9c2f46"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a1711952e6f39f5f746bb5f5e2e9c2f46">ckTerminalBackspace</a> (void)</td></tr>
+<tr class="memdesc:a1711952e6f39f5f746bb5f5e2e9c2f46"><td class="mdescLeft">&#160;</td><td class="mdescRight">커서 바로 뒤의 입력 문자를 삭제합니다.  <a href="#a1711952e6f39f5f746bb5f5e2e9c2f46">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a1711952e6f39f5f746bb5f5e2e9c2f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30c87e01e87ae31e3deb6a7991f7bc7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a30c87e01e87ae31e3deb6a7991f7bc7e">ckTerminalCls</a> (void)</td></tr>
+<tr class="memdesc:a30c87e01e87ae31e3deb6a7991f7bc7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">화면을 지웁니다.  <a href="#a30c87e01e87ae31e3deb6a7991f7bc7e">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a30c87e01e87ae31e3deb6a7991f7bc7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac92944da69dc62b8379bf1c47f65dd44"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#ac92944da69dc62b8379bf1c47f65dd44">ckTerminalOnInput</a> (uint8_t cascii)</td></tr>
+<tr class="memdesc:ac92944da69dc62b8379bf1c47f65dd44"><td class="mdescLeft">&#160;</td><td class="mdescRight">사용자의 입력을 터미널로 전송합니다.  <a href="#ac92944da69dc62b8379bf1c47f65dd44">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ac92944da69dc62b8379bf1c47f65dd44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54d4c398f622770f02e2ba09f68211d0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a54d4c398f622770f02e2ba09f68211d0">ckTerminalClearLineBuffer</a> (void)</td></tr>
+<tr class="memdesc:a54d4c398f622770f02e2ba09f68211d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">사용자가 현재 입력한 내용을 비웁니다.  <a href="#a54d4c398f622770f02e2ba09f68211d0">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a54d4c398f622770f02e2ba09f68211d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30afb11fe14e385c0fba287ee1eaeea5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a30afb11fe14e385c0fba287ee1eaeea5">ckTerminalWriteStringAt</a> (uint16_t x, uint16_t y, uint8_t color, const char *str)</td></tr>
+<tr class="memdesc:a30afb11fe14e385c0fba287ee1eaeea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">특정 위치에 문자열을 출력합니다.  <a href="#a30afb11fe14e385c0fba287ee1eaeea5">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a30afb11fe14e385c0fba287ee1eaeea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9bcfc6c15fd3b47c94b17714038c024"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#ae9bcfc6c15fd3b47c94b17714038c024">ckTerminalWriteStringAtF</a> (uint16_t x, uint16_t y, uint8_t color, const char *format,...)</td></tr>
+<tr class="memdesc:ae9bcfc6c15fd3b47c94b17714038c024"><td class="mdescLeft">&#160;</td><td class="mdescRight">특정 위치에 서식 문자열을 조립해 출력합니다.  <a href="#ae9bcfc6c15fd3b47c94b17714038c024">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ae9bcfc6c15fd3b47c94b17714038c024"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af00ad313bd85c5f463e8de8187159caa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#af00ad313bd85c5f463e8de8187159caa">ckTerminalPrintStatusBar_unsafe</a> (const char *str)</td></tr>
+<tr class="memdesc:af00ad313bd85c5f463e8de8187159caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">동기화 없이 상태 바에 문자열을 출력합니다.  <a href="#af00ad313bd85c5f463e8de8187159caa">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:af00ad313bd85c5f463e8de8187159caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba40f22e5a5f14886adbd42a90609049"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#aba40f22e5a5f14886adbd42a90609049">ckTerminalPrintStatusBar</a> (const char *str)</td></tr>
+<tr class="memdesc:aba40f22e5a5f14886adbd42a90609049"><td class="mdescLeft">&#160;</td><td class="mdescRight">상태 바에 문자열을 출력합니다.  <a href="#aba40f22e5a5f14886adbd42a90609049">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:aba40f22e5a5f14886adbd42a90609049"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ee35e11f2b3a6446cad465e9e7321e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a8ee35e11f2b3a6446cad465e9e7321e3">ckTerminalPrintStatusBarF</a> (const char *format,...)</td></tr>
+<tr class="memdesc:a8ee35e11f2b3a6446cad465e9e7321e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">상태 바에 서식 문자열을 조립해 출력합니다.  <a href="#a8ee35e11f2b3a6446cad465e9e7321e3">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a8ee35e11f2b3a6446cad465e9e7321e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2536359ddc97ac38438b5beae7a98b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#ad2536359ddc97ac38438b5beae7a98b2">ckTerminalClearStatusBar</a> (void)</td></tr>
+<tr class="memdesc:ad2536359ddc97ac38438b5beae7a98b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">상태 바를 비웁니다.  <a href="#ad2536359ddc97ac38438b5beae7a98b2">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ad2536359ddc97ac38438b5beae7a98b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae605339da6b4bc38b3813d2767165849"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#ae605339da6b4bc38b3813d2767165849">ckTerminalPanic</a> (const char *str)</td></tr>
+<tr class="memdesc:ae605339da6b4bc38b3813d2767165849"><td class="mdescLeft">&#160;</td><td class="mdescRight">panic 메시지를 출력하고 시스템을 panic 상태로 만듭니다.  <a href="#ae605339da6b4bc38b3813d2767165849">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ae605339da6b4bc38b3813d2767165849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6a4ebebb4f5f82d7aa2fc2dc6f4e600"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#aa6a4ebebb4f5f82d7aa2fc2dc6f4e600">ckTerminalSetCursorWidth</a> (uint8_t BeginHeight, uint8_t EndHeight)</td></tr>
+<tr class="memdesc:aa6a4ebebb4f5f82d7aa2fc2dc6f4e600"><td class="mdescLeft">&#160;</td><td class="mdescRight">커서의 모양을 설정합니다.  <a href="#aa6a4ebebb4f5f82d7aa2fc2dc6f4e600">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:aa6a4ebebb4f5f82d7aa2fc2dc6f4e600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ec057f1c6c0825a0155d8a1e3756351"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a3ec057f1c6c0825a0155d8a1e3756351">ckTerminalSetCursorType</a> (<a class="el" href="terminal_8h.html#a0ebe7f698b41dc910d78abb82af53969">TerminalCursorType</a> cur)</td></tr>
+<tr class="memdesc:a3ec057f1c6c0825a0155d8a1e3756351"><td class="mdescLeft">&#160;</td><td class="mdescRight">커서의 모양을 지정된 타입으로 설정합니다.  <a href="#a3ec057f1c6c0825a0155d8a1e3756351">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a3ec057f1c6c0825a0155d8a1e3756351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1d68cbc5553e4d0852055231a53f441"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#ac1d68cbc5553e4d0852055231a53f441">ckTerminalWhereX</a> (void)</td></tr>
+<tr class="memdesc:ac1d68cbc5553e4d0852055231a53f441"><td class="mdescLeft">&#160;</td><td class="mdescRight">커서의 현재 위치의 x 좌표를 구합니다.  <a href="#ac1d68cbc5553e4d0852055231a53f441">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ac1d68cbc5553e4d0852055231a53f441"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15f28e2417423fa2a63100ef8ad54746"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a15f28e2417423fa2a63100ef8ad54746">ckTerminalWhereY</a> (void)</td></tr>
+<tr class="memdesc:a15f28e2417423fa2a63100ef8ad54746"><td class="mdescLeft">&#160;</td><td class="mdescRight">커서의 현재 위치의 y 좌표를 구합니다.  <a href="#a15f28e2417423fa2a63100ef8ad54746">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a15f28e2417423fa2a63100ef8ad54746"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9adb7555ddfe04777503e9e877b5b54c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a9adb7555ddfe04777503e9e877b5b54c">ckTerminalGotoXY</a> (uint16_t x, uint16_t y)</td></tr>
+<tr class="memdesc:a9adb7555ddfe04777503e9e877b5b54c"><td class="mdescLeft">&#160;</td><td class="mdescRight">커서를 이동합니다.  <a href="#a9adb7555ddfe04777503e9e877b5b54c">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a9adb7555ddfe04777503e9e877b5b54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab839d4e82dbeecc22b5f5a1e85660906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#ab839d4e82dbeecc22b5f5a1e85660906">ckTerminalPrintString_unsafe</a> (const char *str)</td></tr>
+<tr class="memdesc:ab839d4e82dbeecc22b5f5a1e85660906"><td class="mdescLeft">&#160;</td><td class="mdescRight">동기화 없이 문자열을 출력합니다.  <a href="#ab839d4e82dbeecc22b5f5a1e85660906">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ab839d4e82dbeecc22b5f5a1e85660906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad310f1441f6f7b524ca8f9acc5d870bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#ad310f1441f6f7b524ca8f9acc5d870bb">ckTerminalPrintString</a> (const char *str)</td></tr>
+<tr class="memdesc:ad310f1441f6f7b524ca8f9acc5d870bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">문자열을 출력합니다.  <a href="#ad310f1441f6f7b524ca8f9acc5d870bb">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ad310f1441f6f7b524ca8f9acc5d870bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee83e54125213700be3d7f016572c102"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#aee83e54125213700be3d7f016572c102">ckTerminalPrintStringF</a> (const char *format,...)</td></tr>
+<tr class="memdesc:aee83e54125213700be3d7f016572c102"><td class="mdescLeft">&#160;</td><td class="mdescRight">서식 문자열을 조립해 출력합니다.  <a href="#aee83e54125213700be3d7f016572c102">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:aee83e54125213700be3d7f016572c102"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ec1eaf8a7ef867fa78d7f8502abed66"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a1ec1eaf8a7ef867fa78d7f8502abed66">ckTerminalGetLine</a> (char *buf, size_t size)</td></tr>
+<tr class="memdesc:a1ec1eaf8a7ef867fa78d7f8502abed66"><td class="mdescLeft">&#160;</td><td class="mdescRight">입력 문자 버퍼에서 한 행을 꺼냅니다.  <a href="#a1ec1eaf8a7ef867fa78d7f8502abed66">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a1ec1eaf8a7ef867fa78d7f8502abed66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a108726f4d19fc6939424657b39e7363d"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a108726f4d19fc6939424657b39e7363d">ckTerminalGetChar</a> (void)</td></tr>
+<tr class="memdesc:a108726f4d19fc6939424657b39e7363d"><td class="mdescLeft">&#160;</td><td class="mdescRight">입력 문자 버퍼에서 한 문자를 꺼냅니다.  <a href="#a108726f4d19fc6939424657b39e7363d">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a108726f4d19fc6939424657b39e7363d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fcb1c08e72e7133c33be0a803425d6c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a1fcb1c08e72e7133c33be0a803425d6c">ckTerminalGetch</a> (void)</td></tr>
+<tr class="memdesc:a1fcb1c08e72e7133c33be0a803425d6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">입력 키 버퍼에서 cascii 문자 하나를 꺼냅니다.  <a href="#a1fcb1c08e72e7133c33be0a803425d6c">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a1fcb1c08e72e7133c33be0a803425d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2deb5183e21198738589a9bc96cacdd3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a2deb5183e21198738589a9bc96cacdd3">ckTerminalClearInputBuffer</a> (void)</td></tr>
+<tr class="memdesc:a2deb5183e21198738589a9bc96cacdd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">입력 문자 버퍼를 지웁니다.  <a href="#a2deb5183e21198738589a9bc96cacdd3">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a2deb5183e21198738589a9bc96cacdd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa62edee663009f398cb63f4fefa6834"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#aaa62edee663009f398cb63f4fefa6834">ckTerminalClearHitKeyBuffer</a> (void)</td></tr>
+<tr class="memdesc:aaa62edee663009f398cb63f4fefa6834"><td class="mdescLeft">&#160;</td><td class="mdescRight">입력 키 버퍼를 지웁니다.  <a href="#aaa62edee663009f398cb63f4fefa6834">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:aaa62edee663009f398cb63f4fefa6834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c9f2352dba39adb7e1eb9918e5966dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#a4c9f2352dba39adb7e1eb9918e5966dc">ckTerminalClearAllBuffers</a> (void)</td></tr>
+<tr class="memdesc:a4c9f2352dba39adb7e1eb9918e5966dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">사용자의 입력 내용, 입력 문자 버퍼, 입력 키 버퍼를 모두 비웁니다.  <a href="#a4c9f2352dba39adb7e1eb9918e5966dc">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a4c9f2352dba39adb7e1eb9918e5966dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab78a9c569745a42e0dc3e5d378103d3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="terminal_8h.html#aab78a9c569745a42e0dc3e5d378103d3">ckTerminalIsHitKeyBufferFull</a> (void)</td></tr>
+<tr class="memdesc:aab78a9c569745a42e0dc3e5d378103d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">입력 키 버퍼에 키가 있는지의 여부를 검사합니다.  <a href="#aab78a9c569745a42e0dc3e5d378103d3">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:aab78a9c569745a42e0dc3e5d378103d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">상세한 설명</h2>
+<div class="textblock"><dl class="section date"><dt>날짜</dt><dd>2014. 4. 26. </dd></dl>
+<dl class="section author"><dt>작성자</dt><dd>dlarudgus20 </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>The BSD (2-Clause) License </dd></dl>
+</div><h2 class="groupheader">매크로 문서화</h2>
+<a class="anchor" id="ab2aff7680451fe20cc175941770fa2e7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ckMakeTermColor</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fg, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">bg&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(((bg) &lt;&lt; 4) | (fg))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>지정한 전경색과 배경색을 조합한 색 코드를 만듭니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fg</td><td>전경색입니다. </td></tr>
+    <tr><td class="paramname">bg</td><td>배경색입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">타입정의 문서화</h2>
+<a class="anchor" id="aced15ef3a09fe0e79164236b3f4043d6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871">tagTerminalColor</a>  <a class="el" href="terminal_8h.html#aced15ef3a09fe0e79164236b3f4043d6">TerminalColor</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>터미널의 색상 코드입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a0ebe7f698b41dc910d78abb82af53969"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="terminal_8h.html#a376edbb36ddca6f8640408223a972ae0">tagTerminalCursorType</a>  <a class="el" href="terminal_8h.html#a0ebe7f698b41dc910d78abb82af53969">TerminalCursorType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>터미널의 커서 모양을 나타내는 열거형입니다. </p>
+<dl class="section see"><dt>참고</dt><dd><a class="el" href="terminal_8h.html#a3ec057f1c6c0825a0155d8a1e3756351" title="커서의 모양을 지정된 타입으로 설정합니다. ">ckTerminalSetCursorType</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8d866a67f0417ce7c05ae9a8b15b6d39"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="terminal_8h.html#abd2bcf4e380fdfdb5a0731886a40b599">tagTermStatus</a>  <a class="el" href="terminal_8h.html#a8d866a67f0417ce7c05ae9a8b15b6d39">TermStatus</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>터미널의 상태를 나타내는 열거형입니다. </p>
+<dl class="section see"><dt>참고</dt><dd><a class="el" href="terminal_8h.html#aa5adb55a4024e2fd154a2438ee006c78" title="터미널의 상태를 설정합니다. ">ckTerminalSetStatus</a> </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">열거형 타입 문서화</h2>
+<a class="anchor" id="a77867ab4129f63159b37bca3b652a798"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">열거형 멤버</th></tr><tr><td class="fieldname"><a class="anchor" id="a77867ab4129f63159b37bca3b652a798ae725ac69d20c1169cc1021872f1f9abf"></a>TERMINAL_WIDTH&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a77867ab4129f63159b37bca3b652a798a940152c9dd73be886427d54f04d51e74"></a>TERMINAL_HEIGHT&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="a284a97bd0578c799e15fb06820239871"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="terminal_8h.html#a284a97bd0578c799e15fb06820239871">tagTerminalColor</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>터미널의 색상 코드입니다. </p>
+<table class="fieldtable">
+<tr><th colspan="2">열거형 멤버</th></tr><tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871a85bea1999691cecacdf6a1ade555bb6e"></a>TERMINAL_BLACK&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871ade671483d03ca857053db16640e773ad"></a>TERMINAL_BLUE&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871a8f680face32a5ff6f08cf5a24fa63672"></a>TERMINAL_GREEN&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871a360af058a4eecb45cc8ce50509db9412"></a>TERMINAL_CYAN&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871a28406d987d938c59514b96d26a89fc41"></a>TERMINAL_RED&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871aa12c8208bb5412bd800f3807e4109981"></a>TERMINAL_MAGENTA&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871a595d925afcd2be36c23b6c07abbc9f3d"></a>TERMINAL_BROWN&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871afa8e54710ebd208facedd409eb7acb0a"></a>TERMINAL_LIGHT_GREY&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871a18195d89d754776c2334c6482c1ba9b1"></a>TERMINAL_DARK_GREY&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871af835f92c05c0ce5a071a94986032c87d"></a>TERMINAL_LIGHT_BLUE&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871a645622519dfde7a426b632a84e5478dc"></a>TERMINAL_LIGHT_GREEN&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871ad7921218dbf9e744cb5514ca7344a58e"></a>TERMINAL_LIGHT_CYAN&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871a54fcec1e6d14a358397239080a1f88d6"></a>TERMINAL_LIGHT_RED&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871a75f874a1e215d08e62b3a270c4827441"></a>TERMINAL_LIGHT_MAGENTA&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871a78a7ea7189969ba84b43633824009347"></a>TERMINAL_LIGHT_BROWN&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871a1fc9f07d3c77150ad0d23f5c044cd98b"></a>TERMINAL_WHITE&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871a31d7934672721d39287692a8a5c0e914"></a>TERMINAL_COLOR_DEFAULT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871ac064cdf4d04d49fbbfa12488f37a628a"></a>TERMINAL_COLOR_LOG&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a284a97bd0578c799e15fb06820239871ad37293fc41e20114e64d8c6e5f173fa2"></a>TERMINAL_COLOR_PANIC&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="a376edbb36ddca6f8640408223a972ae0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="terminal_8h.html#a376edbb36ddca6f8640408223a972ae0">tagTerminalCursorType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>터미널의 커서 모양을 나타내는 열거형입니다. </p>
+<dl class="section see"><dt>참고</dt><dd><a class="el" href="terminal_8h.html#a3ec057f1c6c0825a0155d8a1e3756351" title="커서의 모양을 지정된 타입으로 설정합니다. ">ckTerminalSetCursorType</a> </dd></dl>
+<table class="fieldtable">
+<tr><th colspan="2">열거형 멤버</th></tr><tr><td class="fieldname"><a class="anchor" id="a376edbb36ddca6f8640408223a972ae0a485407ce338f714061d091dfcd60f4bd"></a>TERMINAL_CURSOR_NORMAL&#160;</td><td class="fielddoc">
+<p>일반적인 커서 모양입니다. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a376edbb36ddca6f8640408223a972ae0a5428367031dbb216501bd88e0aee66c3"></a>TERMINAL_CURSOR_SOLID&#160;</td><td class="fielddoc">
+<p>꽉 찬 모양의 커서입니다. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a376edbb36ddca6f8640408223a972ae0a536a1c92d3d25a6528cd49ec9cd04627"></a>TERMINAL_CURSOR_NOCURSOR&#160;</td><td class="fielddoc">
+<p>커서가 없음을 나타냅니다. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="abd2bcf4e380fdfdb5a0731886a40b599"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="terminal_8h.html#abd2bcf4e380fdfdb5a0731886a40b599">tagTermStatus</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>터미널의 상태를 나타내는 열거형입니다. </p>
+<dl class="section see"><dt>참고</dt><dd><a class="el" href="terminal_8h.html#aa5adb55a4024e2fd154a2438ee006c78" title="터미널의 상태를 설정합니다. ">ckTerminalSetStatus</a> </dd></dl>
+<table class="fieldtable">
+<tr><th colspan="2">열거형 멤버</th></tr><tr><td class="fieldname"><a class="anchor" id="abd2bcf4e380fdfdb5a0731886a40b599a6670259a66fc1d638a9bbc889ee8592a"></a>TERMINAL_STATUS_STRING_INPUTING&#160;</td><td class="fielddoc">
+<p>터미널이 문자열을 입력받고 있는 상태입니다. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="abd2bcf4e380fdfdb5a0731886a40b599a7493aa54a75efcb8cbaff184c589fed3"></a>TERMINAL_STATUS_WAITING&#160;</td><td class="fielddoc">
+<p>터미널이 대기 상태입니다. 이 상태에서는 사용자로부터의 입력을 무시합니다. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">함수 문서화</h2>
+<a class="anchor" id="a1711952e6f39f5f746bb5f5e2e9c2f46"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalBackspace </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>커서 바로 뒤의 입력 문자를 삭제합니다. </p>
+<p>키보드의 [BackSpace] 키를 누른 효과가 납니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4c9f2352dba39adb7e1eb9918e5966dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalClearAllBuffers </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>사용자의 입력 내용, 입력 문자 버퍼, 입력 키 버퍼를 모두 비웁니다. </p>
+<dl class="section remark"><dt>Remarks</dt><dd>이 함수는 <a class="el" href="terminal_8h.html#aaa62edee663009f398cb63f4fefa6834">ckTerminalClearHitKeyBuffer</a> <a class="el" href="terminal_8h.html#a2deb5183e21198738589a9bc96cacdd3">ckTerminalClearInputBuffer</a> <a class="el" href="terminal_8h.html#a54d4c398f622770f02e2ba09f68211d0">ckTerminalClearLineBuffer</a> 를 차례대로 호출합니다. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aaa62edee663009f398cb63f4fefa6834"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalClearHitKeyBuffer </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>입력 키 버퍼를 지웁니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2deb5183e21198738589a9bc96cacdd3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalClearInputBuffer </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>입력 문자 버퍼를 지웁니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a54d4c398f622770f02e2ba09f68211d0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalClearLineBuffer </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>사용자가 현재 입력한 내용을 비웁니다. </p>
+<dl class="section remark"><dt>Remarks</dt><dd>이 함수를 호출하면 사용자가 입력했던 내용이 모두 무효화됩니다. 화면에 echo된 문자가 지워지지 않는다는 점에 유의하십시오. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad2536359ddc97ac38438b5beae7a98b2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalClearStatusBar </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>상태 바를 비웁니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a30c87e01e87ae31e3deb6a7991f7bc7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalCls </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>화면을 지웁니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a742ebc59ce81a6afee760cd5cd70622a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalDelete </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>커서가 가리키고 있는 입력 문자를 삭제합니다. </p>
+<p>키보드의 [del] 키를 누른 효과가 납니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1fcb1c08e72e7133c33be0a803425d6c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ckTerminalGetch </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>입력 키 버퍼에서 cascii 문자 하나를 꺼냅니다. </p>
+<dl class="section return"><dt>반환값</dt><dd>입력된 키의 cascii 코드입니다. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a108726f4d19fc6939424657b39e7363d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char ckTerminalGetChar </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>입력 문자 버퍼에서 한 문자를 꺼냅니다. </p>
+<p>표준 C의 <code><a class="el" href="skout-sokoban_8c.html#ac0484b3e3a4d8361d91c3322440f9195">getchar()</a></code> 함수와 같은 역할을 합니다. </p><dl class="section return"><dt>반환값</dt><dd>입력된 문자입니다. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>이 함수는 <a class="el" href="terminal_8h.html#aaa62edee663009f398cb63f4fefa6834">ckTerminalClearHitKeyBuffer</a> 함수를 호출해서 입력 키 버퍼를 비웁니다. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1ec1eaf8a7ef867fa78d7f8502abed66"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t ckTerminalGetLine </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>입력 문자 버퍼에서 한 행을 꺼냅니다. </p>
+<p>표준 C의 <code>gets()</code> 함수와 같은 역할을 합니다. </p><dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">buf</td><td>입력한 문자열입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>버퍼의 크기입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>반환값</dt><dd>입력된 문자열의 길이입니다. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>이 함수는 <a class="el" href="terminal_8h.html#aaa62edee663009f398cb63f4fefa6834">ckTerminalClearHitKeyBuffer</a> 함수를 호출해서 입력 키 버퍼를 비웁니다. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9adb7555ddfe04777503e9e877b5b54c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalGotoXY </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>커서를 이동합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>커서가 이동될 위치의 x 좌표입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">y</td><td>커서가 이동될 위치의 y 좌표입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>이 함수가 커서를 이동할 때 <a class="el" href="terminal_8h.html#a54d4c398f622770f02e2ba09f68211d0">ckTerminalClearLineBuffer</a> 함수를 호출해서 사용자의 입력을 비우고, <a class="el" href="terminal_8h.html#a2deb5183e21198738589a9bc96cacdd3">ckTerminalClearInputBuffer</a> 함수를 호출해 입력 문자 버퍼의 내용을 비웁니다. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a262b2e5f4c32da080e56df11eb404cb1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalInitialize </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>터미널을 초기화합니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="aab78a9c569745a42e0dc3e5d378103d3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ckTerminalIsHitKeyBufferFull </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>입력 키 버퍼에 키가 있는지의 여부를 검사합니다. </p>
+<p><code>kbhit()</code> 함수와 같은 역할을 합니다. </p><dl class="section return"><dt>반환값</dt><dd>입력 키 버퍼에 키가 있다면 <code>true</code>고, 그렇지 않으면 <code>false</code>입니다. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac92944da69dc62b8379bf1c47f65dd44"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalOnInput </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>cascii</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>사용자의 입력을 터미널로 전송합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cascii</td><td>사용자가 입력한 키의 cascii 코드입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>사용자가 키를 입력했을 때, 사용자의 입력을 처리하는 함수입니다. 이 함수는 키보드 처리기에서 호출됩니다. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae605339da6b4bc38b3813d2767165849"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalPanic </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>panic 메시지를 출력하고 시스템을 panic 상태로 만듭니다. </p>
+<p><a class="el" href="assert_8h.html#a6f56363b38edbe2c8f3f447f891ee2c0">assert</a> 매크로에서 사용됩니다. </p><dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>출력할 panic 문자열입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aba40f22e5a5f14886adbd42a90609049"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalPrintStatusBar </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>상태 바에 문자열을 출력합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>상태 바에 출력할 문자열입니다. <a class="el" href="terminal_8h.html#a77867ab4129f63159b37bca3b652a798ae725ac69d20c1169cc1021872f1f9abf">TERMINAL_WIDTH</a> 보다 길이가 클 경우 짤라서 출력됩니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="af00ad313bd85c5f463e8de8187159caa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalPrintStatusBar_unsafe </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>동기화 없이 상태 바에 문자열을 출력합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>상태 바에 출력할 문자열입니다. <a class="el" href="terminal_8h.html#a77867ab4129f63159b37bca3b652a798ae725ac69d20c1169cc1021872f1f9abf">TERMINAL_WIDTH</a> 보다 길이가 클 경우 짤라서 출력됩니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8ee35e11f2b3a6446cad465e9e7321e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalPrintStatusBarF </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>상태 바에 서식 문자열을 조립해 출력합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">format</td><td>상태 바에 출력할 서식 문자열입니다. <a class="el" href="terminal_8h.html#a77867ab4129f63159b37bca3b652a798ae725ac69d20c1169cc1021872f1f9abf">TERMINAL_WIDTH</a> 보다 길이가 클 경우 짤라서 출력됩니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad310f1441f6f7b524ca8f9acc5d870bb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalPrintString </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>문자열을 출력합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>출력할 문자열입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>참고</dt><dd><a class="el" href="terminal_8h.html#a26f4ac8b16544cf696525e9130306619" title="터미널에 문자를 출력합니다. ">ckTerminalPutChar</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab839d4e82dbeecc22b5f5a1e85660906"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalPrintString_unsafe </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>동기화 없이 문자열을 출력합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>출력할 문자열입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aee83e54125213700be3d7f016572c102"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalPrintStringF </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>서식 문자열을 조립해 출력합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">format</td><td>출력할 서식 문자열입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a26f4ac8b16544cf696525e9130306619"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ckTerminalPutChar </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>터미널에 문자를 출력합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>출력할 문자입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a54e8f1bd3b0f497a0d64768761ff29d7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalPutCharEntryAt </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>특정 위치에 문자를 출력합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>출력할 문자입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>출력할 위치의 x 좌표입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">y</td><td>출력할 위치의 y 좌표입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a4c276233f2c35a200c4ee5136674cff2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalPutEntryAt </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>color</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>특정 위치에 지정한 색 코드로 문자를 출력합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>출력할 문자입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>출력할 문자의 색 코드입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>출력할 위치의 x 좌표입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">y</td><td>출력할 위치의 y 좌표입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a0be1708f6fa563874a656f8c0b27ac18"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalSetColor </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>color</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>터미널의 색을 설정합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>터미널의 색 코드입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a3ec057f1c6c0825a0155d8a1e3756351"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalSetCursorType </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="terminal_8h.html#a0ebe7f698b41dc910d78abb82af53969">TerminalCursorType</a>&#160;</td>
+          <td class="paramname"><em>cur</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>커서의 모양을 지정된 타입으로 설정합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cur</td><td>커서의 모양 타입입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa6a4ebebb4f5f82d7aa2fc2dc6f4e600"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalSetCursorWidth </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>BeginHeight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>EndHeight</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>커서의 모양을 설정합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">BeginHeight</td><td>커서의 시작 높이입니다. 0 ~ 0x1f 사이의 값입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">EndHeight</td><td>커서의 끝 높이입니다. 0 ~ 0x1f 사이의 값입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>이 함수는 VGA 포트에 직접 커서의 높이를 전달합니다. 일반적인 경우엔 <a class="el" href="terminal_8h.html#a3ec057f1c6c0825a0155d8a1e3756351">ckTerminalSetCursorType</a> 함수의 사용를 권장합니다. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa5adb55a4024e2fd154a2438ee006c78"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalSetStatus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="terminal_8h.html#a8d866a67f0417ce7c05ae9a8b15b6d39">TermStatus</a>&#160;</td>
+          <td class="paramname"><em>stat</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>터미널의 상태를 설정합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">stat</td><td>터미널의 상태입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac1d68cbc5553e4d0852055231a53f441"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ckTerminalWhereX </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>커서의 현재 위치의 x 좌표를 구합니다. </p>
+<dl class="section return"><dt>반환값</dt><dd>커서의 현재 x 좌표입니다. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a15f28e2417423fa2a63100ef8ad54746"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ckTerminalWhereY </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>커서의 현재 위치의 y 좌표를 구합니다. </p>
+<dl class="section return"><dt>반환값</dt><dd>커서의 현재 y 좌표입니다. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a30afb11fe14e385c0fba287ee1eaeea5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalWriteStringAt </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>color</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>특정 위치에 문자열을 출력합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>출력할 위치의 x 좌표입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">y</td><td>출력할 위치의 y 좌표입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>출력할 문자열의 색 코드입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>출력할 문자열입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae9bcfc6c15fd3b47c94b17714038c024"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckTerminalWriteStringAtF </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>color</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>특정 위치에 서식 문자열을 조립해 출력합니다. </p>
+<dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>출력할 위치의 x 좌표입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">y</td><td>출력할 위치의 y 좌표입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>출력할 문자열의 색 코드입니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">format</td><td>출력할 서식 문자열입니다. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="terminal_8h.html">terminal.h</a></li>
+    <li class="footer">생성시간 : 화 7월 15 2014 20:24:38, 프로젝트명 : Clubcos, 생성자 : 
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
+  </ul>
+</div>
+</body>
+</html>

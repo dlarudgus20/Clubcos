@@ -1,0 +1,400 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>Clubcos: tagTaskStruct 구조체 참조</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Clubcos
+   &#160;<span id="projectnumber">0.0.0</span>
+   </div>
+   <div id="projectbrief">Clubcos - Clubc Operating System</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 다음에 의해 생성됨 :  Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'검색');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>메인&#160;페이지</span></a></li>
+      <li class="current"><a href="annotated.html"><span>데이타&#160;구조</span></a></li>
+      <li><a href="files.html"><span>파일들</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="검색" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>데이타&#160;구조</span></a></li>
+      <li><a href="classes.html"><span>데이타&#160;구조&#160;색인</span></a></li>
+      <li><a href="functions.html"><span>데이타&#160;필드</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('structtag_task_struct.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>모두</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>데이타 구조</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>파일들</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>함수</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>변수</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>타입정의</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>열거형 타입</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>열거형 멤버</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>매크로</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>페이지들</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">데이타 필드</a>  </div>
+  <div class="headertitle">
+<div class="title">tagTaskStruct 구조체 참조</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>태스크 관리 구조체입니다.  
+ <a href="structtag_task_struct.html#details">더 자세히 ...</a></p>
+
+<p><code>#include &lt;<a class="el" href="task_8h_source.html">task.h</a>&gt;</code></p>
+<div class="dynheader">
+tagTaskStruct에 대한 협력 다이어그램:</div>
+<div class="dyncontent">
+<div class="center"><img src="structtag_task_struct__coll__graph.png" border="0" usemap="#tag_task_struct_coll__map" alt="Collaboration graph"/></div>
+<map name="tag_task_struct_coll__map" id="tag_task_struct_coll__map">
+<area shape="rect" id="node2" href="structtag_process_data.html" title="프로세스 별로 가지는 데이터입니다. " alt="" coords="5,99,120,125"/><area shape="rect" id="node3" href="structtag_process.html" title="프로세스를 나타내는 구조체입니다. " alt="" coords="137,213,225,239"/><area shape="rect" id="node4" href="structtag_linked_list.html" title="이중 환형 연결 리스트 구조체입니다. " alt="" coords="269,99,368,125"/><area shape="rect" id="node5" href="structtag_linked_list_node.html" title="이중 환형 연결 리스트의 한 노드를 나타내는 구조체입니다. " alt="" coords="162,7,291,33"/></map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">범례</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+데이타 필드</h2></td></tr>
+<tr class="memitem:a7e33109ee043aaf5e6e515bbdd704a3a"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#a7e33109ee043aaf5e6e515bbdd704a3a">tasks</a> [<a class="el" href="task_8h.html#a458e651af6690959efa2afb96be7d609a6b393b327ac861d484d6eab6e29428d7">MAX_TASK</a>]</td></tr>
+<tr class="memdesc:a7e33109ee043aaf5e6e515bbdd704a3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">태스크의 배열입니다.  <a href="#a7e33109ee043aaf5e6e515bbdd704a3a">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a7e33109ee043aaf5e6e515bbdd704a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7803c768297a39dbb89c6ff49bab4f7e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#a7803c768297a39dbb89c6ff49bab4f7e">TaskIdMask</a></td></tr>
+<tr class="memdesc:a7803c768297a39dbb89c6ff49bab4f7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">태스크 id 중복 방지를 위해 사용되는 비트 마스크입니다.  <a href="#a7803c768297a39dbb89c6ff49bab4f7e">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a7803c768297a39dbb89c6ff49bab4f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad85e8a0253f62a3e9a8a22cc3c8054c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="task_8h.html#a3223550787798571893ed50642b3b9b7">Process</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#ad85e8a0253f62a3e9a8a22cc3c8054c5">processes</a> [<a class="el" href="task_8h.html#a1f9aebf1de3ebbf4283a4dcf73308562aafddd86e0591b47e1c0f7cff81b4588b">MAX_PROCESS</a>]</td></tr>
+<tr class="memdesc:ad85e8a0253f62a3e9a8a22cc3c8054c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">프로세스의 배열입니다.  <a href="#ad85e8a0253f62a3e9a8a22cc3c8054c5">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ad85e8a0253f62a3e9a8a22cc3c8054c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8961f0d5eec0fc435fc509eca8fdcb47"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#a8961f0d5eec0fc435fc509eca8fdcb47">ProcessIdMask</a></td></tr>
+<tr class="memdesc:a8961f0d5eec0fc435fc509eca8fdcb47"><td class="mdescLeft">&#160;</td><td class="mdescRight">프로세스 id 중복 방지를 위해 사용되는 비트 마스크입니다.  <a href="#a8961f0d5eec0fc435fc509eca8fdcb47">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a8961f0d5eec0fc435fc509eca8fdcb47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e7c1f2208f1bdc86c86d482179450c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="linkedlist_8h.html#af19941a2254be1591e9c73705a660041">LinkedList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#a2e7c1f2208f1bdc86c86d482179450c5">ReadyList</a> [<a class="el" href="task_8h.html#ab2ddb966741d701a33c7883cda191050a02bae61be3e30142877a0f17c1f7ba1c">COUNT_TASK_PRIORITY</a>]</td></tr>
+<tr class="memdesc:a2e7c1f2208f1bdc86c86d482179450c5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="task_8h.html#af4b8db12188e1de6e0733675f6f1f2dba42797b0c4da778603ccf14c8eb191521">TASK_FLAG_RUNNING</a> 상태의 태스크의 우선순위 큐입니다.  <a href="#a2e7c1f2208f1bdc86c86d482179450c5">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a2e7c1f2208f1bdc86c86d482179450c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77e49ccd5704a360a40ad00891526e41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="linkedlist_8h.html#af19941a2254be1591e9c73705a660041">LinkedList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#a77e49ccd5704a360a40ad00891526e41">WaitList</a></td></tr>
+<tr class="memdesc:a77e49ccd5704a360a40ad00891526e41"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="task_8h.html#af4b8db12188e1de6e0733675f6f1f2dba054ea6f7a64078188122bf9227ad508a">TASK_FLAG_WAIT</a> 상태의 태스크의 목록입니다.  <a href="#a77e49ccd5704a360a40ad00891526e41">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a77e49ccd5704a360a40ad00891526e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29bde9750d0f08618b3ba7467962d2be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="linkedlist_8h.html#af19941a2254be1591e9c73705a660041">LinkedList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#a29bde9750d0f08618b3ba7467962d2be">WaitForExitList</a></td></tr>
+<tr class="memdesc:a29bde9750d0f08618b3ba7467962d2be"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="task_8h.html#af4b8db12188e1de6e0733675f6f1f2dba8aea3f4272686662b9def8eeca902783">TASK_FLAG_WAITFOREXIT</a> 상태의 태스크의 목록입니다.  <a href="#a29bde9750d0f08618b3ba7467962d2be">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a29bde9750d0f08618b3ba7467962d2be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51302d0dfcc45fa4fa656f2a71a25907"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#a51302d0dfcc45fa4fa656f2a71a25907">ExecuteCount</a> [<a class="el" href="task_8h.html#ab2ddb966741d701a33c7883cda191050a02bae61be3e30142877a0f17c1f7ba1c">COUNT_TASK_PRIORITY</a>]</td></tr>
+<tr class="memdesc:a51302d0dfcc45fa4fa656f2a71a25907"><td class="mdescLeft">&#160;</td><td class="mdescRight">각 우선순위별로 실행된 횟수를 기록하는 배열입니다.  <a href="#a51302d0dfcc45fa4fa656f2a71a25907">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a51302d0dfcc45fa4fa656f2a71a25907"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9573dbc5d9f0237d72f1af553b93afa8"><td class="memItemLeft" align="right" valign="top">Task *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#a9573dbc5d9f0237d72f1af553b93afa8">pNow</a></td></tr>
+<tr class="memdesc:a9573dbc5d9f0237d72f1af553b93afa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">현재 실행중인 태스크입니다.  <a href="#a9573dbc5d9f0237d72f1af553b93afa8">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a9573dbc5d9f0237d72f1af553b93afa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44e937e072fad80e7e9e83721e939c47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="task_8h.html#a18856870fcd91ece4bb18b9a310f0e21">ProcessData</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#a44e937e072fad80e7e9e83721e939c47">pProcData</a></td></tr>
+<tr class="memdesc:a44e937e072fad80e7e9e83721e939c47"><td class="mdescLeft">&#160;</td><td class="mdescRight">현재 실행중인 프로세스의 data입니다. <code>pNow-&gt;pProcess-&gt;ProcData</code>와 동일합니다.  <a href="#a44e937e072fad80e7e9e83721e939c47">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a44e937e072fad80e7e9e83721e939c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dbc38e20bf5a5459f1e32709f4dfbab"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#a9dbc38e20bf5a5459f1e32709f4dfbab">ProcessorLoad</a></td></tr>
+<tr class="memdesc:a9dbc38e20bf5a5459f1e32709f4dfbab"><td class="mdescLeft">&#160;</td><td class="mdescRight">현재 프로세스 점유율입니다. 단위는 입니다.  <a href="#a9dbc38e20bf5a5459f1e32709f4dfbab">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a9dbc38e20bf5a5459f1e32709f4dfbab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afebabe9d382aba0ca113401e5cd2d67b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#afebabe9d382aba0ca113401e5cd2d67b">RemainQuantum</a></td></tr>
+<tr class="memdesc:afebabe9d382aba0ca113401e5cd2d67b"><td class="mdescLeft">&#160;</td><td class="mdescRight">태스크 스위칭까지 남은 CPU 시간입니다.  <a href="#afebabe9d382aba0ca113401e5cd2d67b">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:afebabe9d382aba0ca113401e5cd2d67b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac20397b9c0aca0d98409d91f8a94fb12"><td class="memItemLeft" align="right" valign="top">Task *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#ac20397b9c0aca0d98409d91f8a94fb12">pLastTaskUsedFPU</a></td></tr>
+<tr class="memdesc:ac20397b9c0aca0d98409d91f8a94fb12"><td class="mdescLeft">&#160;</td><td class="mdescRight">마지막으로 FPU를 사용한 태스크입니다.  <a href="#ac20397b9c0aca0d98409d91f8a94fb12">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ac20397b9c0aca0d98409d91f8a94fb12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87b2ba5347ce01f3bf6d271c4d5e33af"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#a87b2ba5347ce01f3bf6d271c4d5e33af">bSSEIsExist</a></td></tr>
+<tr class="memdesc:a87b2ba5347ce01f3bf6d271c4d5e33af"><td class="mdescLeft">&#160;</td><td class="mdescRight">SSE의 사용 가능 여부입니다.  <a href="#a87b2ba5347ce01f3bf6d271c4d5e33af">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a87b2ba5347ce01f3bf6d271c4d5e33af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2248eee55dafb10dcf98c5904b0490cc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_task_struct.html#a2248eee55dafb10dcf98c5904b0490cc">_padding</a> [3]</td></tr>
+<tr class="separator:a2248eee55dafb10dcf98c5904b0490cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">상세한 설명</h2>
+<div class="textblock"><p>태스크 관리 구조체입니다. </p>
+</div><h2 class="groupheader">필드 문서화</h2>
+<a class="anchor" id="a2248eee55dafb10dcf98c5904b0490cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _padding[3]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a87b2ba5347ce01f3bf6d271c4d5e33af"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bSSEIsExist</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>SSE의 사용 가능 여부입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a51302d0dfcc45fa4fa656f2a71a25907"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ExecuteCount[<a class="el" href="task_8h.html#ab2ddb966741d701a33c7883cda191050a02bae61be3e30142877a0f17c1f7ba1c">COUNT_TASK_PRIORITY</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>각 우선순위별로 실행된 횟수를 기록하는 배열입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac20397b9c0aca0d98409d91f8a94fb12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task* pLastTaskUsedFPU</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>마지막으로 FPU를 사용한 태스크입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9573dbc5d9f0237d72f1af553b93afa8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task* pNow</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>현재 실행중인 태스크입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a44e937e072fad80e7e9e83721e939c47"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="task_8h.html#a18856870fcd91ece4bb18b9a310f0e21">ProcessData</a>* pProcData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>현재 실행중인 프로세스의 data입니다. <code>pNow-&gt;pProcess-&gt;ProcData</code>와 동일합니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad85e8a0253f62a3e9a8a22cc3c8054c5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="task_8h.html#a3223550787798571893ed50642b3b9b7">Process</a> processes[<a class="el" href="task_8h.html#a1f9aebf1de3ebbf4283a4dcf73308562aafddd86e0591b47e1c0f7cff81b4588b">MAX_PROCESS</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>프로세스의 배열입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a8961f0d5eec0fc435fc509eca8fdcb47"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ProcessIdMask</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>프로세스 id 중복 방지를 위해 사용되는 비트 마스크입니다. </p>
+<p>한번 사용될 때마다 <a class="el" href="task_8h.html#a1f9aebf1de3ebbf4283a4dcf73308562ad8c29bc51ec5a0a81d29c856ac22ddf0">PROCESS_IDMASK_UNIT</a> 씩 증가합니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9dbc38e20bf5a5459f1e32709f4dfbab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint32_t ProcessorLoad</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>현재 프로세스 점유율입니다. 단위는 입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2e7c1f2208f1bdc86c86d482179450c5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="linkedlist_8h.html#af19941a2254be1591e9c73705a660041">LinkedList</a> ReadyList[<a class="el" href="task_8h.html#ab2ddb966741d701a33c7883cda191050a02bae61be3e30142877a0f17c1f7ba1c">COUNT_TASK_PRIORITY</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="task_8h.html#af4b8db12188e1de6e0733675f6f1f2dba42797b0c4da778603ccf14c8eb191521">TASK_FLAG_RUNNING</a> 상태의 태스크의 우선순위 큐입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="afebabe9d382aba0ca113401e5cd2d67b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t RemainQuantum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>태스크 스위칭까지 남은 CPU 시간입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7803c768297a39dbb89c6ff49bab4f7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t TaskIdMask</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>태스크 id 중복 방지를 위해 사용되는 비트 마스크입니다. </p>
+<p>한번 사용될 때마다 <a class="el" href="task_8h.html#a458e651af6690959efa2afb96be7d609ae4f2facae09004626a320ea297dca648">TASK_IDMASK_UNIT</a> 씩 증가합니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7e33109ee043aaf5e6e515bbdd704a3a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task tasks[<a class="el" href="task_8h.html#a458e651af6690959efa2afb96be7d609a6b393b327ac861d484d6eab6e29428d7">MAX_TASK</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>태스크의 배열입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a29bde9750d0f08618b3ba7467962d2be"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="linkedlist_8h.html#af19941a2254be1591e9c73705a660041">LinkedList</a> WaitForExitList</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="task_8h.html#af4b8db12188e1de6e0733675f6f1f2dba8aea3f4272686662b9def8eeca902783">TASK_FLAG_WAITFOREXIT</a> 상태의 태스크의 목록입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a77e49ccd5704a360a40ad00891526e41"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="linkedlist_8h.html#af19941a2254be1591e9c73705a660041">LinkedList</a> WaitList</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="task_8h.html#af4b8db12188e1de6e0733675f6f1f2dba054ea6f7a64078188122bf9227ad508a">TASK_FLAG_WAIT</a> 상태의 태스크의 목록입니다. </p>
+
+</div>
+</div>
+<hr/>이 구조체에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.:<ul>
+<li>D:/EclipseWorkspace/Clubcos/src/<a class="el" href="task_8h_source.html">task.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="structtag_task_struct.html">tagTaskStruct</a></li>
+    <li class="footer">생성시간 : 화 7월 15 2014 20:24:38, 프로젝트명 : Clubcos, 생성자 : 
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
+  </ul>
+</div>
+</body>
+</html>

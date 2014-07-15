@@ -43,9 +43,9 @@
  */
 typedef struct tagArray8
 {
-	uint8_t *buf; /**< 배열의 버퍼입니다. */
-	uint8_t *now; /**< 현재 배열의 끝점입니다.*/
-	uint8_t *end; /**< 배열 버퍼의 끝점입니다. */
+	uint8_t *buf; //!< 배열의 버퍼입니다.
+	uint8_t *now; //!< 현재 배열의 끝점입니다.
+	uint8_t *end; //!< 배열 버퍼의 끝점입니다.
 } Array8;
 
 /**

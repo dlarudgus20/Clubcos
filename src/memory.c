@@ -186,7 +186,10 @@ bool ckDynMemFree(void *addr, uint32_t size)
 		|| (uint32_t)addr > DYN_MEMORY_START_ADDRESS + g_DynMem.DynMemSize))
 		return false;
 
-	uint32_t rel_addr = _ceil_uint32((uint32_t)addr - g_DynMem.BeginAddr, DYN_MEM_BUDDY_UNIT_SIZE);
+	// DYN_MEM_BUDDY_UNIT_SIZE 단위로 내림 처리
+	addr = (void *)((uint32_t)addr / DYN_MEM_BUDDY_UNIT_SIZE * DYN_MEM_BUDDY_UNIT_SIZE);
+
+	uint32_t rel_addr = (uint32_t)addr - g_DynMem.BeginAddr;
 	size = _ceil_uint32(size, DYN_MEM_BUDDY_UNIT_SIZE);
 
 	uint32_t BitmapIdx;

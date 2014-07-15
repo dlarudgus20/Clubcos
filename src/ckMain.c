@@ -43,6 +43,17 @@
 #include "likely.h"
 #include "string.h"
 
+// TODO: 타이머 최적화 (linkedlist, sentinal)
+// TODO: string.c 인라인 어셈블리화 및 순수 C 버전과의 성능 비교
+
+/**
+ * @mainpage Clubcos 소스 레퍼런스
+ * @author dlarudgus20 (임경현)
+ * @version 0.0.0
+ * @section intro_sec 소개
+ * the source reference of Clubcos - Clubc Operating System
+ */
+
 /**
  * @brief Clubcos 커널의 시작 부분입니다. boot.asm에서 호출됩니다.
  */

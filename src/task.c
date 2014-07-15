@@ -41,6 +41,7 @@
 #include "memory.h"
 #include "likely.h"
 
+// id로부터 Task *를 얻어옴 - 무효할 경우 NULL
 static inline Task *csGetTaskFromId(uint32_t id)
 {
 	if (id == TASK_INVALID_ID)
@@ -52,6 +53,7 @@ static inline Task *csGetTaskFromId(uint32_t id)
 	else
 		return NULL;
 }
+// id로부터 Process *를 얻어옴 - 무효할 경우 NULL
 static inline Process *csGetProcessFromId(uint32_t id)
 {
 	if (id == PROCESS_INVALID_ID)
@@ -73,9 +75,10 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
 	void *stack, uint32_t stacksize,
 	Process *pProcess, TaskPriority priority);
 
+// 프로세스가 종료된 후 정리 처리
 static void csCleanupProcess(Process *pProc);
 
-static bool ckTaskTerminate_internal(Task *pTask);
+static void ckTaskTerminate_internal(Task *pTask);
 static void ckTaskSchedule_internal(void);
 
 static void csIdleTask(void);
@@ -248,40 +251,43 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
 	return ret;
 }
 
-// TODO: pParentProcess => ParentProcessId
 uint32_t ckProcessCreate(uint32_t eip, uint32_t esp,
 	void *stack, uint32_t stacksize, TaskPriority priority,
-	uint32_t **PageDirectory, uint32_t cr3, ProcessData ProcData, Process *pParentProcess)
+	uint32_t **PageDirectory, uint32_t cr3, ProcessData ProcData, uint32_t ParentProcessId)
 {
 	uint32_t ret_id = PROCESS_INVALID_ID;
 	Process *ret;
 
 	INTERRUPT_LOCK();
 
-	for (int i = 0; i < MAX_PROCESS; i++)
+	Process *pParentProcess = csGetProcessFromId(ParentProcessId);
+	if (pParentProcess != NULL)
 	{
-		ret = &g_pTaskStruct->processes[i];
-		if (ret->PageDirectory == NULL)
+		for (int i = 0; i < MAX_PROCESS; i++)
 		{
-			ckLinkedListInit(&ret->ThreadList);
+			ret = &g_pTaskStruct->processes[i];
+			if (ret->PageDirectory == NULL)
+			{
+				ckLinkedListInit(&ret->ThreadList);
 
-			ret->pParentProcess = pParentProcess;
-			ckLinkedListInit(&ret->ChildProcessList);
+				ret->pParentProcess = pParentProcess;
+				ckLinkedListInit(&ret->ChildProcessList);
 
-			ret->PageDirectory = PageDirectory;
-			ret->cr3 = cr3;
-			ret->UsedCpuTime = 0;
+				ret->PageDirectory = PageDirectory;
+				ret->cr3 = cr3;
+				ret->UsedCpuTime = 0;
 
-			ret_id = ret->id = g_pTaskStruct->ProcessIdMask | i;
-			g_pTaskStruct->ProcessIdMask += PROCESS_IDMASK_UNIT;
+				ret_id = ret->id = g_pTaskStruct->ProcessIdMask | i;
+				g_pTaskStruct->ProcessIdMask += PROCESS_IDMASK_UNIT;
 
-			ckLinkedListPushBack_lockfree(&pParentProcess->ChildProcessList, &ret->ChildNode);
+				ckLinkedListPushBack_lockfree(&pParentProcess->ChildProcessList, &ret->ChildNode);
 
-			ret->ProcData = ProcData;
+				ret->ProcData = ProcData;
 
-			ret->pMainThread = ckTaskCreate_unsafe(eip, esp, stack, stacksize, ret, priority);
+				ret->pMainThread = ckTaskCreate_unsafe(eip, esp, stack, stacksize, ret, priority);
 
-			break;
+				break;
+			}
 		}
 	}
 
@@ -299,13 +305,14 @@ bool ckTaskTerminate(uint32_t TaskId)
 	Task *pTask = csGetTaskFromId(TaskId);
 	if (pTask != NULL)
 	{
-		bRet = ckTaskTerminate_internal(pTask);
+		ckTaskTerminate_internal(pTask);
+		bRet = true;
 	}
 
 	INTERRUPT_UNLOCK();
 	return bRet;
 }
-static bool ckTaskTerminate_internal(Task *pTask)
+static void ckTaskTerminate_internal(Task *pTask)
 {
 	LinkedList *pList = &pTask->WaitMeList;
 	for (LinkedListNode *node = ckLinkedListHead(pList);
@@ -369,8 +376,6 @@ static bool ckTaskTerminate_internal(Task *pTask)
 
 		ckGdtInitNull(g_pGdtTable + pTask->selector);
 		pTask->selector = 0;
-
-		return true;
 	}
 }
 
@@ -384,7 +389,8 @@ bool ckProcessTerminate(uint32_t ProcessId)
 	Process *pProc = csGetProcessFromId(ProcessId);
 	if (pProc != NULL)
 	{
-		bRet = ckTaskTerminate_internal(pProc->pMainThread);
+		ckTaskTerminate_internal(pProc->pMainThread);
+		bRet = true;
 	}
 
 	INTERRUPT_UNLOCK();

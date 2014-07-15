@@ -68,11 +68,11 @@ static inline uint32_t ckAsmGetEFlag(void);
 /** @brief EFLAG에 쓰는 어셈블리 함수 */
 static inline void ckAsmSetEFlag(uint32_t eflag);
 
-/** @brief "cli" 어셈블리 함수 */
+/** @brief <c>cli</c> 어셈블리 함수 */
 static inline void ckAsmCli(void);
-/** @brief "sti" 어셈블리 함수 */
+/** @brief <c>sti</c> 어셈블리 함수 */
 static inline void ckAsmSti(void);
-/** @brief "hlt" 어셈블리 함수 */
+/** @brief <c>hlt</c> 어셈블리 함수 */
 static inline void ckAsmHlt(void);
 
 /**

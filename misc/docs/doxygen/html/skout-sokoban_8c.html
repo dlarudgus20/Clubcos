@@ -1,0 +1,638 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>Clubcos: D:/EclipseWorkspace/Clubcos/src/skout-sokoban.c 파일 참조</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Clubcos
+   &#160;<span id="projectnumber">0.0.0</span>
+   </div>
+   <div id="projectbrief">Clubcos - Clubc Operating System</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 다음에 의해 생성됨 :  Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'검색');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>메인&#160;페이지</span></a></li>
+      <li><a href="annotated.html"><span>데이타&#160;구조</span></a></li>
+      <li class="current"><a href="files.html"><span>파일들</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="검색" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>파일&#160;목록</span></a></li>
+      <li><a href="globals.html"><span>전역</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('skout-sokoban_8c.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>모두</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>데이타 구조</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>파일들</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>함수</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>변수</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>타입정의</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>열거형 타입</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>열거형 멤버</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>매크로</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>페이지들</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">매크로</a> &#124;
+<a href="#typedef-members">타입정의</a> &#124;
+<a href="#func-members">함수</a> &#124;
+<a href="#var-members">변수</a>  </div>
+  <div class="headertitle">
+<div class="title">skout-sokoban.c 파일 참조</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="terminal_8h_source.html">terminal.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="timer_8h_source.html">timer.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="task_8h_source.html">task.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="keyboard_8h_source.html">keyboard.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="string_8h_source.html">string.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="memory_8h_source.html">memory.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+skout-sokoban.c에 대한 include 의존 그래프</div>
+<div class="dyncontent">
+<div class="center"><img src="skout-sokoban_8c__incl.png" border="0" usemap="#_d_1_2_eclipse_workspace_2_clubcos_2src_2skout-sokoban_8c" alt=""/></div>
+<map name="_d_1_2_eclipse_workspace_2_clubcos_2src_2skout-sokoban_8c" id="_d_1_2_eclipse_workspace_2_clubcos_2src_2skout-sokoban_8c">
+<area shape="rect" id="node2" href="terminal_8h.html" title="terminal.h" alt="" coords="530,169,609,196"/><area shape="rect" id="node6" href="timer_8h.html" title="timer.h" alt="" coords="285,169,347,196"/><area shape="rect" id="node7" href="task_8h.html" title="task.h" alt="" coords="775,95,833,121"/><area shape="rect" id="node10" href="keyboard_8h.html" title="keyboard.h" alt="" coords="387,95,474,121"/><area shape="rect" id="node15" href="string_8h.html" title="some os&#45;independent functions of standard C " alt="" coords="999,169,1065,196"/><area shape="rect" id="node17" href="memory_8h.html" title="memory.h" alt="" coords="633,169,713,196"/><area shape="rect" id="node8" href="linkedlist_8h.html" title="linkedlist.h" alt="" coords="839,169,923,196"/><area shape="rect" id="node9" href="memory__map_8h.html" title="memory_map.h" alt="" coords="796,244,908,271"/><area shape="rect" id="node11" href="port_8h.html" title="several assembly function about port and other miscellaneous things. " alt="" coords="154,169,209,196"/><area shape="rect" id="node14" href="keytable_8h.html" title="keytable.h" alt="" coords="423,169,505,196"/><area shape="rect" id="node12" href="port__impl_8h.html" title="port_impl.h" alt="" coords="153,244,239,271"/><area shape="rect" id="node13" href="control__register_8h.html" title="control_register.h" alt="" coords="5,244,128,271"/></map>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+매크로</h2></td></tr>
+<tr class="memitem:a0f459d16901ef591acaafa4b67fd4be5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a0f459d16901ef591acaafa4b67fd4be5">printf</a>(format,...)&#160;&#160;&#160;<a class="el" href="terminal_8h.html#aee83e54125213700be3d7f016572c102">ckTerminalPrintStringF</a>(format, ##__VA_ARGS__)</td></tr>
+<tr class="separator:a0f459d16901ef591acaafa4b67fd4be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0484b3e3a4d8361d91c3322440f9195"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#ac0484b3e3a4d8361d91c3322440f9195">getchar</a>()&#160;&#160;&#160;<a class="el" href="terminal_8h.html#a108726f4d19fc6939424657b39e7363d">ckTerminalGetChar</a>()</td></tr>
+<tr class="separator:ac0484b3e3a4d8361d91c3322440f9195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada0430ff0133c72d1ab38ca336610f5a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#ada0430ff0133c72d1ab38ca336610f5a">clrscr</a>()&#160;&#160;&#160;<a class="el" href="terminal_8h.html#a30c87e01e87ae31e3deb6a7991f7bc7e">ckTerminalCls</a>()</td></tr>
+<tr class="separator:ada0430ff0133c72d1ab38ca336610f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6901f76533597237c3ea11a28e668b83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a6901f76533597237c3ea11a28e668b83">exit</a>(i)&#160;&#160;&#160;ckTaskExit()</td></tr>
+<tr class="separator:a6901f76533597237c3ea11a28e668b83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8cecfc5c5c054d2875c03e77b7be15d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>&#160;&#160;&#160;true</td></tr>
+<tr class="separator:aa8cecfc5c5c054d2875c03e77b7be15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa93f0eb578d23995850d61f7d61c55c1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#aa93f0eb578d23995850d61f7d61c55c1">FALSE</a>&#160;&#160;&#160;false</td></tr>
+<tr class="separator:aa93f0eb578d23995850d61f7d61c55c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4af1b6159e447ba72652bb7fcdfa726e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a4af1b6159e447ba72652bb7fcdfa726e">ESC</a>&#160;&#160;&#160;<a class="el" href="keytable_8h.html#ac053cd4cd7021f0ed3ad4fd40a643497a33eb0570fc6c2e2bed873e01c9b3827f">CASCII_ESC</a></td></tr>
+<tr class="separator:a4af1b6159e447ba72652bb7fcdfa726e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a437ef08681e7210d6678427030446a54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a437ef08681e7210d6678427030446a54">LEFT</a>&#160;&#160;&#160;<a class="el" href="keytable_8h.html#ac053cd4cd7021f0ed3ad4fd40a643497a7ccb8232242bd5c217c885d6cac31ba8">CASCII_LEFT</a></td></tr>
+<tr class="separator:a437ef08681e7210d6678427030446a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80fb826a684cf3f0d306b22aa100ddac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a80fb826a684cf3f0d306b22aa100ddac">RIGHT</a>&#160;&#160;&#160;<a class="el" href="keytable_8h.html#ac053cd4cd7021f0ed3ad4fd40a643497a8348f9537916d875a276ac8ce8373e95">CASCII_RIGHT</a></td></tr>
+<tr class="separator:a80fb826a684cf3f0d306b22aa100ddac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1965eaca47dbf3f87acdafc2208f04eb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a1965eaca47dbf3f87acdafc2208f04eb">UP</a>&#160;&#160;&#160;<a class="el" href="keytable_8h.html#ac053cd4cd7021f0ed3ad4fd40a643497a64eb0630f962845ad7edb69d9098269c">CASCII_UP</a></td></tr>
+<tr class="separator:a1965eaca47dbf3f87acdafc2208f04eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4193cd1c8c2e6ebd0e056fa2364a663f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a4193cd1c8c2e6ebd0e056fa2364a663f">DOWN</a>&#160;&#160;&#160;<a class="el" href="keytable_8h.html#ac053cd4cd7021f0ed3ad4fd40a643497afd1a28069173338876c967221271ff64">CASCII_DOWN</a></td></tr>
+<tr class="separator:a4193cd1c8c2e6ebd0e056fa2364a663f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61b5cbd8991f1842488bdbfad636c4a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a61b5cbd8991f1842488bdbfad636c4a0">MAXSTAGE</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:a61b5cbd8991f1842488bdbfad636c4a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d2bb4e7bd470ed9bfd0d1a2471c1062"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a6d2bb4e7bd470ed9bfd0d1a2471c1062">putchxy</a>(x, y, c)&#160;&#160;&#160;<a class="el" href="terminal_8h.html#a54e8f1bd3b0f497a0d64768761ff29d7">ckTerminalPutCharEntryAt</a>((c), (x), (y))</td></tr>
+<tr class="separator:a6d2bb4e7bd470ed9bfd0d1a2471c1062"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+타입정의</h2></td></tr>
+<tr class="memitem:ab40a1f154aa44511af7f97b88296f7d3"><td class="memItemLeft" align="right" valign="top">typedef bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#ab40a1f154aa44511af7f97b88296f7d3">BOOL</a></td></tr>
+<tr class="separator:ab40a1f154aa44511af7f97b88296f7d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+함수</h2></td></tr>
+<tr class="memitem:ae68e29642589b006532e1d26a0001e73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#ae68e29642589b006532e1d26a0001e73">SokobanMain</a> (void)</td></tr>
+<tr class="separator:ae68e29642589b006532e1d26a0001e73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31c5d0193618be5679476327f095b023"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a31c5d0193618be5679476327f095b023">ckCoshellCmdSkoutSokoban</a> (const char *param)</td></tr>
+<tr class="separator:a31c5d0193618be5679476327f095b023"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87ef9733e4de66a2c114256c2e25c753"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a87ef9733e4de66a2c114256c2e25c753">LoadingStage</a> (void)</td></tr>
+<tr class="separator:a87ef9733e4de66a2c114256c2e25c753"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a547abb553100623c7ce87d6352bc94cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a547abb553100623c7ce87d6352bc94cd">DrawStage</a> (void)</td></tr>
+<tr class="separator:a547abb553100623c7ce87d6352bc94cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a607358b95765dd96af6ef7611d9ad2fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a607358b95765dd96af6ef7611d9ad2fb">PlayerMoveAction</a> (void)</td></tr>
+<tr class="separator:a607358b95765dd96af6ef7611d9ad2fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdb004d25d3f12a1e73ec5559d7afcc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="skout-sokoban_8c.html#ab40a1f154aa44511af7f97b88296f7d3">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#acdb004d25d3f12a1e73ec5559d7afcc3">TestStageClear</a> (void)</td></tr>
+<tr class="separator:acdb004d25d3f12a1e73ec5559d7afcc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a559a0f80b5f0304186a929fa3ff03d0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a559a0f80b5f0304186a929fa3ff03d0d">PrintInfo</a> (void)</td></tr>
+<tr class="separator:a559a0f80b5f0304186a929fa3ff03d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa73c4939039655ce71f41bf1bf8a11ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#aa73c4939039655ce71f41bf1bf8a11ca">Restart</a> (void)</td></tr>
+<tr class="separator:aa73c4939039655ce71f41bf1bf8a11ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+변수</h2></td></tr>
+<tr class="memitem:a0a05ed4cc100ffc8bfb438a237130a2e"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a0a05ed4cc100ffc8bfb438a237130a2e">stage</a> [18][21]</td></tr>
+<tr class="separator:a0a05ed4cc100ffc8bfb438a237130a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80c46a784eabbc848730656124ff31a4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a80c46a784eabbc848730656124ff31a4">RoundNum</a></td></tr>
+<tr class="separator:a80c46a784eabbc848730656124ff31a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c1ab6f36cb6796ed825bcc0f0377575"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a7c1ab6f36cb6796ed825bcc0f0377575">Roundx</a></td></tr>
+<tr class="separator:a7c1ab6f36cb6796ed825bcc0f0377575"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25d5871144146f4b618c8e17fa4b1509"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a25d5871144146f4b618c8e17fa4b1509">Roundy</a></td></tr>
+<tr class="separator:a25d5871144146f4b618c8e17fa4b1509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3699d6562dd699e621e02619c2efc567"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a3699d6562dd699e621e02619c2efc567">NumMove</a></td></tr>
+<tr class="separator:a3699d6562dd699e621e02619c2efc567"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97e002f941e07608ed20ecc223b1cb36"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a97e002f941e07608ed20ecc223b1cb36">OnRestart</a></td></tr>
+<tr class="separator:a97e002f941e07608ed20ecc223b1cb36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a037619f8f04b62c4b45eee76e2bdbcd1"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skout-sokoban_8c.html#a037619f8f04b62c4b45eee76e2bdbcd1">StageData</a> [<a class="el" href="skout-sokoban_8c.html#a61b5cbd8991f1842488bdbfad636c4a0">MAXSTAGE</a>][18][21]</td></tr>
+<tr class="separator:a037619f8f04b62c4b45eee76e2bdbcd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">매크로 문서화</h2>
+<a class="anchor" id="ada0430ff0133c72d1ab38ca336610f5a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define clrscr</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="terminal_8h.html#a30c87e01e87ae31e3deb6a7991f7bc7e">ckTerminalCls</a>()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4193cd1c8c2e6ebd0e056fa2364a663f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DOWN&#160;&#160;&#160;<a class="el" href="keytable_8h.html#ac053cd4cd7021f0ed3ad4fd40a643497afd1a28069173338876c967221271ff64">CASCII_DOWN</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4af1b6159e447ba72652bb7fcdfa726e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ESC&#160;&#160;&#160;<a class="el" href="keytable_8h.html#ac053cd4cd7021f0ed3ad4fd40a643497a33eb0570fc6c2e2bed873e01c9b3827f">CASCII_ESC</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6901f76533597237c3ea11a28e668b83"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define exit</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">i</td><td>)</td>
+          <td>&#160;&#160;&#160;ckTaskExit()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa93f0eb578d23995850d61f7d61c55c1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FALSE&#160;&#160;&#160;false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac0484b3e3a4d8361d91c3322440f9195"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define getchar</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="terminal_8h.html#a108726f4d19fc6939424657b39e7363d">ckTerminalGetChar</a>()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a437ef08681e7210d6678427030446a54"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LEFT&#160;&#160;&#160;<a class="el" href="keytable_8h.html#ac053cd4cd7021f0ed3ad4fd40a643497a7ccb8232242bd5c217c885d6cac31ba8">CASCII_LEFT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a61b5cbd8991f1842488bdbfad636c4a0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAXSTAGE&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0f459d16901ef591acaafa4b67fd4be5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define printf</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">format, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="terminal_8h.html#aee83e54125213700be3d7f016572c102">ckTerminalPrintStringF</a>(format, ##__VA_ARGS__)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6d2bb4e7bd470ed9bfd0d1a2471c1062"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define putchxy</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">y, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">c&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="terminal_8h.html#a54e8f1bd3b0f497a0d64768761ff29d7">ckTerminalPutCharEntryAt</a>((c), (x), (y))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a80fb826a684cf3f0d306b22aa100ddac"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RIGHT&#160;&#160;&#160;<a class="el" href="keytable_8h.html#ac053cd4cd7021f0ed3ad4fd40a643497a8348f9537916d875a276ac8ce8373e95">CASCII_RIGHT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa8cecfc5c5c054d2875c03e77b7be15d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRUE&#160;&#160;&#160;true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1965eaca47dbf3f87acdafc2208f04eb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UP&#160;&#160;&#160;<a class="el" href="keytable_8h.html#ac053cd4cd7021f0ed3ad4fd40a643497a64eb0630f962845ad7edb69d9098269c">CASCII_UP</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">타입정의 문서화</h2>
+<a class="anchor" id="ab40a1f154aa44511af7f97b88296f7d3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef bool <a class="el" href="skout-sokoban_8c.html#ab40a1f154aa44511af7f97b88296f7d3">BOOL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">함수 문서화</h2>
+<a class="anchor" id="a31c5d0193618be5679476327f095b023"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckCoshellCmdSkoutSokoban </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a547abb553100623c7ce87d6352bc94cd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DrawStage </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a87ef9733e4de66a2c114256c2e25c753"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LoadingStage </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a607358b95765dd96af6ef7611d9ad2fb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PlayerMoveAction </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a559a0f80b5f0304186a929fa3ff03d0d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PrintInfo </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa73c4939039655ce71f41bf1bf8a11ca"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Restart </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae68e29642589b006532e1d26a0001e73"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SokobanMain </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acdb004d25d3f12a1e73ec5559d7afcc3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="skout-sokoban_8c.html#ab40a1f154aa44511af7f97b88296f7d3">BOOL</a> TestStageClear </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">변수 문서화</h2>
+<a class="anchor" id="a3699d6562dd699e621e02619c2efc567"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int NumMove</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a97e002f941e07608ed20ecc223b1cb36"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int OnRestart</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a80c46a784eabbc848730656124ff31a4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RoundNum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7c1ab6f36cb6796ed825bcc0f0377575"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Roundx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a25d5871144146f4b618c8e17fa4b1509"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Roundy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0a05ed4cc100ffc8bfb438a237130a2e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char stage[18][21]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a037619f8f04b62c4b45eee76e2bdbcd1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char StageData[<a class="el" href="skout-sokoban_8c.html#a61b5cbd8991f1842488bdbfad636c4a0">MAXSTAGE</a>][18][21]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="skout-sokoban_8c.html">skout-sokoban.c</a></li>
+    <li class="footer">생성시간 : 화 7월 15 2014 20:24:38, 프로젝트명 : Clubcos, 생성자 : 
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
+  </ul>
+</div>
+</body>
+</html>

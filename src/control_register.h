@@ -32,7 +32,8 @@
 #ifndef CONTROL_REGISTER_H_
 #define CONTROL_REGISTER_H_
 
-enum
+/** @brief <c>cr0</c> 레지스터의 플래그입니다. */
+enum tagCr0Flags
 {
 	CR0_MONITOR_COPROC	= 1 << 1,
 	CR0_FPU_EMULATION	= 1 << 2,
@@ -42,7 +43,8 @@ enum
 	CR0_PAGING			= 1 << 31,
 };
 
-enum
+/** @brief <c>cr4</c> 레지스터의 플래그입니다. */
+enum tagCr3Flags
 {
 	CR4_OSFXSR			= 1 << 9,
 	CR4_OSXMMEXCPT		= 1 << 10,

@@ -82,7 +82,7 @@ static Idt * const g_pIdtTable = (Idt *)IDT_TABLE_ADDRESS;
 void ckIdtInit(Idt *pIdt, void (*HandlerAddress)(), uint16_t HandlerSegment, uint8_t DPL);
 
 /**
- * @brief lidt 명령어로 IDT 테이블을 로드합니다. asmfunc.asm에 구현부가 있습니다.
+ * @brief <c>lidt</c> 명령어로 IDT 테이블을 로드합니다. asmfunc.asm에 구현부가 있습니다.
  */
 void ckIdtLoad(uint16_t size, Idt *address);
 

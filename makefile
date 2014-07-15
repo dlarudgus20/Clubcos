@@ -238,6 +238,8 @@ $(DIR_DEPENS):
 	mkdir -p $(DIR_GEN)
 
 # include dependencies
+ifneq ($(MAKECMDGOALS), rebuild)
+ifneq ($(MAKECMDGOALS), rerun)
 ifneq ($(MAKECMDGOALS), distclean)
 ifneq ($(MAKECMDGOALS), clean)
 ifneq ($(MAKECMDGOALS), mostlyclean)
@@ -245,6 +247,8 @@ ifneq ($(MAKECMDGOALS), dep-clean)
 ifneq ($(MAKECMDGOALS), tools)
 ifneq ($(MAKECMDGOALS), tools-clean)
 include $(DEPENDENCIES)
+endif
+endif
 endif
 endif
 endif

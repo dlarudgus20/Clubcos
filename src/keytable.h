@@ -36,8 +36,19 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-// cascii 코드
-enum
+/**
+ * @brief cascii 코드를 나타내는 열거형입니다.
+ * @remark cascii (Clubcos ASCII)란, ascii코드를 확장한 키 코드로, clubcos 내부에서 키를 처리하는 데 사용됩니다.<br/>
+ *         키보드로부터 스캔 코드를 읽어들인 이후에, clubcos는 이 스캔 코드를 조립해 키 코드를 만듭니다.<br/>
+ *         키 코드는 가변 길이의 스캔 코드를 1바이트만으로 표현하는 코드입니다.
+ *         구제적으로, 0x00 ~ 0x58 사이의 스캔 코드는 그 자신이 스캔 코드와 같고, 0x59 이후에는 확장키가 배열되는 코드입니다.
+ *         또한, 만일 눌렸던 키가 unpush되는 것을 의미하는 스캔 코드였을 경우,
+ *         키 코드의 32번째 비트 (@ref KEYCODE_FLAG_UNPUSH )를 1로 만드는 것으로 표시합니다.
+ *         때문에 키 코드는 <c>uint16_t</c>형으로 나타냅니다.<br/>
+ *         변환된 스캔 코드는 @ref ckGetCasciiFromKeyCode 에서 @ref g_KeyTable 를 통해 cascii코드로 변환됩니다.<br/>
+ *         자세한 정보는 keys.c 파일을 참조하십시오.
+ */
+enum tagCascii
 {
 /* ascii */
 	CASCII_NONE				= 0x00,

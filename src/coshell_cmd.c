@@ -501,7 +501,7 @@ void ckCoshellCmdTestProcess(const char *param)
 	uint32_t id = ckProcessCreate(0x00100000, 0x00102000,
 		NULL, 0, TASK_PRIORITY_NORMAL,
 		PageDirectory, ckDynMemLogicalToPhysical((uint32_t)PageDirectory),
-		(ProcessData) { .TermBuffer = (uint16_t *)0x00102000 }, ckProcessGetCurrent());
+		(ProcessData) { .TermBuffer = (uint16_t *)0x00102000 }, ckProcessGetCurrentId());
 
 	ckTerminalPrintStringF("process id : %u", id);
 }

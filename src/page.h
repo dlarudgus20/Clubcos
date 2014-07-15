@@ -38,21 +38,21 @@
 
 enum
 {
-	PAGE_DIRENT_S = 0x080,	// page Size - 4KB or 4MB page
-	PAGE_DIRENT_C = 0x010,	// Cache disable
-	PAGE_DIRENT_W = 0x008,	// Write-through
-	PAGE_DIRENT_U = 0x004,	// User/supervisor
-	PAGE_DIRENT_R = 0x002,	// Read/Write
-	PAGE_DIRENT_P = 0x001	// Present
+	PAGE_DIRENT_S = 0x080,	//!< 페이지 크기입니다. 0이면 4KB 페이지이고, 1이면 4MB 페이지입니다.
+	PAGE_DIRENT_C = 0x010,	//!< 1이면 캐시를 비활성화합니다.
+	PAGE_DIRENT_W = 0x008,	//!< 1면 Write-through를 사용하고, 0이면 Write-back을 사용합니다.
+	PAGE_DIRENT_U = 0x004,	//!< 1이면 User 페이지이고, 0이면 Supervisor 페이지입니다.
+	PAGE_DIRENT_R = 0x002,	//!< 1이면 R/W 모두 가능한 페이지이고, 0이면 Read만 가능한 페이지입니다.
+	PAGE_DIRENT_P = 0x001	//!< Present 비트입니다.
 };
 enum
 {
-	PAGE_TBLENT_G = 0x100,	// Global - ??
-	PAGE_TBLENT_C = 0x010,	// Cache disable
-	PAGE_TBLENT_W = 0x008,	// Write-through
-	PAGE_TBLENT_U = 0x004,	// User/supervisor
-	PAGE_TBLENT_R = 0x002,	// Read/Write
-	PAGE_TBLENT_P = 0x001	// Present
+	PAGE_TBLENT_G = 0x100,	//!< Global 페이지입니다.
+	PAGE_TBLENT_C = 0x010,	//!< 1이면 캐시를 비활성화합니다.
+	PAGE_TBLENT_W = 0x008,	//!< 1면 Write-through를 사용하고, 0이면 Write-back을 사용합니다.
+	PAGE_TBLENT_U = 0x004,	//!< 1이면 User 페이지이고, 0이면 Supervisor 페이지입니다.
+	PAGE_TBLENT_R = 0x002,	//!< 1이면 R/W 모두 가능한 페이지이고, 0이면 Read만 가능한 페이지입니다.
+	PAGE_TBLENT_P = 0x001	//!< Present 비트입니다.
 };
 
 #endif /* PAGE_H_ */

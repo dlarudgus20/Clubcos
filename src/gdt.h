@@ -136,7 +136,7 @@ static inline void ckGdtInitNull(Gdt *pGdt)
 }
 
 /**
- * @brief lgdt 명령어로 GDT 테이블을 로드합니다. asmfunc.asm에 구현부가 있습니다.
+ * @brief <c>lgdt</c> 명령어로 GDT 테이블을 로드합니다. asmfunc.asm에 구현부가 있습니다.
  */
 void ckGdtLoad(uint16_t size, Gdt *address);
 

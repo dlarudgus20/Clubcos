@@ -41,7 +41,7 @@
  */
 typedef struct tagBiSem
 {
-	volatile uint32_t flag;
+	volatile uint32_t flag;		//!< binary semaphore의 flag입니다.
 } BiSem;
 
 /**
