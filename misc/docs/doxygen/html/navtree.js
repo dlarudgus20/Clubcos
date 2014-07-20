@@ -30,9 +30,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"keyboard_8h.html#a4608960e9bf011a2755e624a9c0df56c",
-"rtc_8h.html#a96a58e29e8dbf2b5bdeb775cba46556ea5c3899de97443dc86b92fba535445cab",
-"structtag_time_out.html#ab5627d8d8b095c198e2523c44ca380ac",
+"keyboard_8h.html#a46d4ee82d7d5a3c563075342464e9c75",
+"rtc_8h.html#a96a58e29e8dbf2b5bdeb775cba46556ea7df344b72b9dbc5aa23bad1d4519bf5e",
+"structtag_time_out.html#ac0cb844ba93809d976a809fb6b2f60a2",
 "timer_8h.html#ae56d250df6bbb0046091d3f31b0103ac"
 ];
 

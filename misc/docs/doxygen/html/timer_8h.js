@@ -17,10 +17,9 @@ var timer_8h =
     [ "PIT_CONTROL_BCDCOUNTER", "timer_8h.html#a16685eea158879e41b101ca3634de462a1eb7854a94b62043adfee3e57eab878f", null ],
     [ "PIT_CONTROL_COUNTER0_ONCE", "timer_8h.html#a16685eea158879e41b101ca3634de462a5f0e989507b95c4c5bb9e61068dd764e", null ],
     [ "PIT_CONTROL_COUNTER0_PERIODIC", "timer_8h.html#a16685eea158879e41b101ca3634de462a57286c0cb4259f9d9237163d98ab354b", null ],
-    [ "ckOnTimerInterrupt", "timer_8h.html#a72bde90e2f77f917efe087e94abdb4fd", null ],
     [ "ckTimerBusyDirectWait_ms", "timer_8h.html#ae56d250df6bbb0046091d3f31b0103ac", null ],
     [ "ckTimerInitialize", "timer_8h.html#ad16a43dd340e350a94e7da0ab882a66b", null ],
     [ "ckTimerIntHandler", "timer_8h.html#ab3a26f3d7ccfae5665f92d2f13581806", null ],
-    [ "ckTimerSetFor", "timer_8h.html#a5cb71da78903f8e69f24eb1bd98ebccd", null ],
+    [ "ckTimerSet", "timer_8h.html#a2201b4d2b853681c0282c5f1c0daebce", null ],
     [ "g_TimerStruct", "timer_8h.html#a0d4430c67879f9dc155a6b38e6eb3b95", null ]
 ];

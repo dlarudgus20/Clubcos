@@ -159,9 +159,7 @@ static inline bool ckKeyboardIsOutputBufferFull(void)
 	return (ckPortInByte(KEYBOARD_PORT_STATUS) & KEYBOARD_STATUS_OUTB) != 0;
 }
 
-/**
- * @brief 어셈블리로 짜여진 키보드 인터럽트 ISR입니다.
- */
+/** @brief 키보드 인터럽트 ISR입니다. */
 void ckKeyboardIntHandler();
 
 #endif /* KEYBOARD_H_ */

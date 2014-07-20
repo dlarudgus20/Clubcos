@@ -99,17 +99,38 @@ void ckRTCReadDate(RTCDate *pDate)
 	if (s_IsBCD)
 		pDate->dayofmonth = ckBCD8toBinary(pDate->dayofmonth);
 
-	ckPortOutByte(RTC_CMOSADDRESS, RTC_ADDRESS_DAYOFWEEK);
-	pDate->dayofweek = ckPortInByte(RTC_CMOSDATA);
-	if (s_IsBCD)
-		pDate->dayofweek = ckBCD8toBinary(pDate->dayofweek);
+//	ckPortOutByte(RTC_CMOSADDRESS, RTC_ADDRESS_DAYOFWEEK);
+//	pDate->dayofweek = ckPortInByte(RTC_CMOSDATA);
+//	if (s_IsBCD)
+//		pDate->dayofweek = ckBCD8toBinary(pDate->dayofweek);
+	/* CMOS의 day of week은 믿을 수 없음 - 직접 계산 */
 
 	ckBiSemPost(&s_RtcMutex);
+
+	// http://en.wikipedia.org/wiki/Weekday_determination#A_tabular_method_to_calculate_the_day_of_the_week
+	static uint8_t MonthsTable[] = {
+		0, 3, 3, 6,	1, 4, 6, 2, 5, 0, 3, 5
+	};
+	static uint8_t CenturyNumTable[] = {
+		6, 4, 2, 0
+	};
+
+	if ((pDate->year % 4 == 0 && pDate->year % 100 != 0) || pDate->year % 400 == 0)
+	{
+		MonthsTable[0] = 6;
+		MonthsTable[1] = 2;
+	}
+
+	uint8_t y = pDate->year % 100;
+
+	uint32_t formula = pDate->dayofmonth + MonthsTable[pDate->month - 1]
+		+ y + y / 4 + CenturyNumTable[(y / 100) % 4];
+
+	pDate->dayofweek = formula % 7 + 1;
 }
 
 const char *ckRTCDayOfWeekStr(uint8_t dayofweek)
 {
-	// TODO: virtualbox에서는 1-7 이 아니라 0-6 을 사용한다.
 	static char *arstr[] = {
 		"Error",
 		"Sunday",

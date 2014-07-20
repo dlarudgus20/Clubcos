@@ -40,6 +40,8 @@
 #include "interrupt.h"
 #include "memory.h"
 #include "likely.h"
+#include "terminal.h"
+#include "timer.h"
 
 // id로부터 Task *를 얻어옴 - 무효할 경우 NULL
 static inline Task *csGetTaskFromId(uint32_t id)
@@ -709,6 +711,14 @@ static void csIdleTask(void)
 	uint32_t ProcessorLoad;
 	Task *pTask;
 
+	LinkedList NoticeQueue;
+	TimeOut timeout;
+
+	ckLinkedListInit(&NoticeQueue);
+	timeout.timeout = g_TimerStruct.TickCountLow + 500;
+	timeout.NoticeQueue = &NoticeQueue;
+	ckTimerSet(&timeout);
+
 	while (1)
 	{
 		/* 프로세서 사용률 측정*/
@@ -757,6 +767,17 @@ static void csIdleTask(void)
 
 			ckGdtInitNull(g_pGdtTable + pTask->selector);
 			pTask->selector = 0;
+		}
+
+		/* 0.5초마다 processor load 출력 */
+
+		if (ckLinkedListPopFront_lockfree(&NoticeQueue) != NULL)
+		{
+			ckTerminalPrintStatusBarF("ProcessorLoad : %03u%%", ProcessorLoad);
+
+			timeout.timeout = g_TimerStruct.TickCountLow + 500;
+			timeout.NoticeQueue = &NoticeQueue;
+			ckTimerSet(&timeout);
 		}
 
 		/* 끝 - 다른 태스크에게 시간 양보 */

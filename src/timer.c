@@ -43,9 +43,11 @@
 
 TimerStruct g_TimerStruct = { 0 };
 
-static TimeOut * const TimeOutTable = (TimeOut *)TIMEOUT_TABLE_ADDRESS;
-static const size_t CountOfTimeOutTable = 4096;
-static TimeOut *pTimeOutEnd;
+static TimeOut s_SentinalTimeOut = {
+	.timeout = 0xffffffff,
+	.NoticeQueue = NULL,
+	.pNextTimeOut = &s_SentinalTimeOut
+};
 
 static void ckTimerReinitialize(void);
 static void ckTimerInit_internal(uint16_t count, bool periodic);
@@ -55,8 +57,7 @@ static uint16_t ckTimerReadPITCounter(void);
 
 void ckTimerInitialize(void)
 {
-	pTimeOutEnd = TimeOutTable;
-	memset(TimeOutTable, 0, CountOfTimeOutTable * sizeof(TimeOut));
+	g_TimerStruct.pTimeOutHead = &s_SentinalTimeOut;
 
 	ckTimerReinitialize();
 
@@ -76,56 +77,81 @@ static void ckTimerInit_internal(uint16_t count, bool periodic)
 	ckPortOutByte(PIT_COUNTER0_PORT, (uint8_t)(count >> 8));
 }
 
-bool ckTimerSetFor(unsigned timespan, uint32_t code)
+bool ckTimerSet(TimeOut *pTimeOut)
 {
-	assert((code & 0xff000000) == 0);
-
-	bool bRet = true;
+	if (pTimeOut->NoticeQueue == NULL)
+		return false;
 
 	INTERRUPT_LOCK();
 
-	if (pTimeOutEnd < TimeOutTable + CountOfTimeOutTable && timespan != 0)
+	uint32_t tick = g_TimerStruct.TickCountLow;
+
+	s_SentinalTimeOut.timeout = tick + 0xffffffff;
+
+	TimeOut *before = (TimeOut *)&g_TimerStruct.pTimeOutHead;
+	TimeOut *node = before->pNextTimeOut;
+	while (1)
 	{
-		*pTimeOutEnd++ = (TimeOut){ g_TimerStruct.TickCountLow + timespan, code };
-	}
-	else
-	{
-		bRet = false;
+		if ((pTimeOut->timeout - tick) <= (node->timeout - tick))
+		{
+			before->pNextTimeOut = pTimeOut;
+			pTimeOut->pNextTimeOut = node;
+			break;
+		}
+		else
+		{
+			before = node;
+			node = node->pNextTimeOut;
+		}
 	}
 
 	INTERRUPT_UNLOCK();
-	return bRet;
-}
 
-void ckOnTimerInterrupt(uint32_t QueueData)
-{
+	return true;
 }
 
 void ck_TimerIntHandler(InterruptContext *pContext)
 {
 	ckPicSendEOI(PIC_IRQ_TIMER);
 
-	// 타이머
+	// tick count
 	uint32_t low = ++g_TimerStruct.TickCountLow;
 	if (low == 0)
 		g_TimerStruct.TickCountHigh++;
 
-	TimeOut *pTimeOut = TimeOutTable;
-	while (pTimeOut->timeout == low && pTimeOut != pTimeOutEnd)
+	// TimeOut
+	TimeOut *pTimeOut = g_TimerStruct.pTimeOutHead;
+	while (1)
 	{
-		ckCircularQueue32Put(&g_InterruptQueue, pTimeOut->code | INTERRUPT_QUEUE_FLAG_TIMER);
-		pTimeOut++;
+		if (pTimeOut->timeout == low)
+		{
+			g_TimerStruct.pTimeOutHead = pTimeOut->pNextTimeOut;
+
+			if (pTimeOut->NoticeQueue != NULL)
+			{
+				ckLinkedListPushBack_lockfree(pTimeOut->NoticeQueue, &pTimeOut->NoticeNode);
+			}
+			else // sentinal
+			{
+				pTimeOut->timeout += 0xffffffff;
+			}
+
+			pTimeOut = pTimeOut->pNextTimeOut;
+		}
+		else
+		{
+			break;
+		}
 	}
-
-	memmove(TimeOutTable, pTimeOut, (pTimeOutEnd - pTimeOut) * sizeof(TimeOut));
-
-	uint32_t diff = (uint32_t)(pTimeOut - TimeOutTable);
-	pTimeOutEnd -= diff;
-	memset(pTimeOutEnd, 0, diff * sizeof(TimeOut));
 
 	// 태스크 스케쥴링
 	ckTaskScheduleOnTimerInt();
 }
+
+//TimeOut *ckTimerAllocTimeOut(uint32_t timeout, uint32_t code, LinkedList *NoticeQueue)
+//{
+//
+//}
 
 #define MS_TO_COUNT(ms) (PIT_FREQUENCY * (ms) / 1000)
 void ckTimerBusyDirectWait_ms(uint32_t milli)

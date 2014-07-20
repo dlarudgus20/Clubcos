@@ -215,9 +215,9 @@ $(document).ready(function(){initNavTree('keyboard_8h_source.html','');});
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keywordflow">return</span> (ckPortInByte(<a class="code" href="keyboard_8h.html#aae05225933a42f81e7c4a9fb286596f9a943d5b91f265f17e0cb0461a2d54d877">KEYBOARD_PORT_STATUS</a>) &amp; <a class="code" href="keyboard_8h.html#aaf8fd5f0e57d456151c951e0f3715fc4a65d1a6f591a6e50f74b3a875634df0c4">KEYBOARD_STATUS_OUTB</a>) != 0;</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;}</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="keywordtype">void</span> <a class="code" href="keyboard_8h.html#ab226fbfe90954a524214937503e9c953">ckKeyboardIntHandler</a>();</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* KEYBOARD_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="keywordtype">void</span> <a class="code" href="keyboard_8h.html#ab226fbfe90954a524214937503e9c953">ckKeyboardIntHandler</a>();</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* KEYBOARD_H_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="keyboard_8h_html_aae05225933a42f81e7c4a9fb286596f9a943d5b91f265f17e0cb0461a2d54d877"><div class="ttname"><a href="keyboard_8h.html#aae05225933a42f81e7c4a9fb286596f9a943d5b91f265f17e0cb0461a2d54d877">KEYBOARD_PORT_STATUS</a></div><div class="ttdef"><b>Definition:</b> keyboard.h:43</div></div>
 <div class="ttc" id="keyboard_8h_html_a39fca1837c5ce7715cbf571669660c13ab3f3c0f74bf796e59200fced0dab60b3"><div class="ttname"><a href="keyboard_8h.html#a39fca1837c5ce7715cbf571669660c13ab3f3c0f74bf796e59200fced0dab60b3">KEYBOARD_CONTROL_DEACTIVATE_KEYBOARD</a></div><div class="ttdef"><b>Definition:</b> keyboard.h:53</div></div>
 <div class="ttc" id="keyboard_8h_html_a94798fdadfbf49a7c658ace669a1d310a9848502d1865afbe313e593e6585e6a9"><div class="ttname"><a href="keyboard_8h.html#a94798fdadfbf49a7c658ace669a1d310a9848502d1865afbe313e593e6585e6a9">KEYBOARD_COMMAND_LED</a></div><div class="ttdef"><b>Definition:</b> keyboard.h:71</div></div>
@@ -253,7 +253,7 @@ $(document).ready(function(){initNavTree('keyboard_8h_source.html','');});
 <div class="ttc" id="structtag_keyboard_struct_html_ac044b99cf87ffcde4d134d7fb0fba25c"><div class="ttname"><a href="structtag_keyboard_struct.html#ac044b99cf87ffcde4d134d7fb0fba25c">tagKeyboardStruct::bShift</a></div><div class="ttdeci">bool bShift</div><div class="ttdoc">Shift키 활성화 여부입니다. </div><div class="ttdef"><b>Definition:</b> keyboard.h:96</div></div>
 <div class="ttc" id="structtag_keyboard_struct_html_aa6afa0711d3f95e9a201600bf41c7ddf"><div class="ttname"><a href="structtag_keyboard_struct.html#aa6afa0711d3f95e9a201600bf41c7ddf">tagKeyboardStruct::bCapsLock</a></div><div class="ttdeci">bool bCapsLock</div><div class="ttdoc">CapsLock 활성화 여부입니다. </div><div class="ttdef"><b>Definition:</b> keyboard.h:94</div></div>
 <div class="ttc" id="structtag_key_struct_html_a75a9e425462621ed8366a8c1eb7d0ec0"><div class="ttname"><a href="structtag_key_struct.html#a75a9e425462621ed8366a8c1eb7d0ec0">tagKeyStruct::CombinedKey</a></div><div class="ttdeci">uint8_t CombinedKey</div><div class="ttdoc">키가 Shift, Caps Lock 혹은 NumLock과 조합될 때의 cascii 코드입니다. </div><div class="ttdef"><b>Definition:</b> keyboard.h:84</div></div>
-<div class="ttc" id="keyboard_8h_html_ab226fbfe90954a524214937503e9c953"><div class="ttname"><a href="keyboard_8h.html#ab226fbfe90954a524214937503e9c953">ckKeyboardIntHandler</a></div><div class="ttdeci">void ckKeyboardIntHandler()</div><div class="ttdoc">어셈블리로 짜여진 키보드 인터럽트 ISR입니다. </div></div>
+<div class="ttc" id="keyboard_8h_html_ab226fbfe90954a524214937503e9c953"><div class="ttname"><a href="keyboard_8h.html#ab226fbfe90954a524214937503e9c953">ckKeyboardIntHandler</a></div><div class="ttdeci">void ckKeyboardIntHandler()</div><div class="ttdoc">키보드 인터럽트 ISR입니다. </div></div>
 <div class="ttc" id="keyboard_8h_html_aaf8fd5f0e57d456151c951e0f3715fc4a9632d19f6aa293d3d298d64eb9dd03b3"><div class="ttname"><a href="keyboard_8h.html#aaf8fd5f0e57d456151c951e0f3715fc4a9632d19f6aa293d3d298d64eb9dd03b3">KEYBOARD_STATUS_TIM</a></div><div class="ttdef"><b>Definition:</b> keyboard.h:60</div></div>
 <div class="ttc" id="keyboard_8h_html_a4608960e9bf011a2755e624a9c0df56c"><div class="ttname"><a href="keyboard_8h.html#a4608960e9bf011a2755e624a9c0df56c">ckKeyboardResetPC</a></div><div class="ttdeci">void ckKeyboardResetPC(void)</div><div class="ttdoc">키보드 컨트롤러를 통해 PC를 재부팅 시킵니다. </div><div class="ttdef"><b>Definition:</b> keyboard.c:140</div></div>
 <div class="ttc" id="keyboard_8h_html_aae05225933a42f81e7c4a9fb286596f9a385c26a5e01fa20972416f4a362393da"><div class="ttname"><a href="keyboard_8h.html#aae05225933a42f81e7c4a9fb286596f9a385c26a5e01fa20972416f4a362393da">KEYBOARD_PORT_INPUT</a></div><div class="ttdef"><b>Definition:</b> keyboard.h:44</div></div>
@@ -267,7 +267,7 @@ $(document).ready(function(){initNavTree('keyboard_8h_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="keyboard_8h.html">keyboard.h</a></li>
-    <li class="footer">생성시간 : 화 7월 15 2014 20:24:38, 프로젝트명 : Clubcos, 생성자 : 
+    <li class="footer">생성시간 : 일 7월 20 2014 16:31:54, 프로젝트명 : Clubcos, 생성자 : 
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

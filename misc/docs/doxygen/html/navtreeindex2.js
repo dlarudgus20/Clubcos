@@ -1,7 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"rtc_8h.html#a96a58e29e8dbf2b5bdeb775cba46556ea5c3899de97443dc86b92fba535445cab":[2,0,0,42,13],
-"rtc_8h.html#a96a58e29e8dbf2b5bdeb775cba46556ea71b0a0fd171b40b79ea1cd4674903df4":[2,0,0,42,15],
 "rtc_8h.html#a96a58e29e8dbf2b5bdeb775cba46556ea7df344b72b9dbc5aa23bad1d4519bf5e":[2,0,0,42,7],
 "rtc_8h.html#a96a58e29e8dbf2b5bdeb775cba46556eab43e47b5db74c2314cf36fa9c6aedc40":[2,0,0,42,14],
 "rtc_8h.html#a96a58e29e8dbf2b5bdeb775cba46556eacc4a2de29703bba5557913a23408ebdc":[2,0,0,42,10],
@@ -249,5 +247,7 @@ var NAVTREEINDEX2 =
 "structtag_task_struct.html#ac20397b9c0aca0d98409d91f8a94fb12":[1,0,21,3],
 "structtag_task_struct.html#ad85e8a0253f62a3e9a8a22cc3c8054c5":[1,0,21,6],
 "structtag_task_struct.html#afebabe9d382aba0ca113401e5cd2d67b":[1,0,21,10],
-"structtag_time_out.html":[1,0,22]
+"structtag_time_out.html":[1,0,22],
+"structtag_time_out.html#a5dcf26164b6f29a7f8bf06483bbda69f":[1,0,22,1],
+"structtag_time_out.html#ab5627d8d8b095c198e2523c44ca380ac":[1,0,22,4]
 };

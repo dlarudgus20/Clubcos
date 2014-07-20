@@ -123,6 +123,8 @@ BOCHSRC := bochsrc_$(CONFIG).bxrc
 .PHONY: all rebuild run rerun run-dbg dbg dbg-vm run-bochs \
 		distclean clean mostlyclean dep-clean tools tools-clean
 
+NODEPEN_TARGETS := rebuild rerun distclean clean mostlyclean dep-clean tools tools-clean
+
 all: $(OUTPUT_IMG)
 
 rebuild:
@@ -238,20 +240,7 @@ $(DIR_DEPENS):
 	mkdir -p $(DIR_GEN)
 
 # include dependencies
-ifneq ($(MAKECMDGOALS), rebuild)
-ifneq ($(MAKECMDGOALS), rerun)
-ifneq ($(MAKECMDGOALS), distclean)
-ifneq ($(MAKECMDGOALS), clean)
-ifneq ($(MAKECMDGOALS), mostlyclean)
-ifneq ($(MAKECMDGOALS), dep-clean)
-ifneq ($(MAKECMDGOALS), tools)
-ifneq ($(MAKECMDGOALS), tools-clean)
+ifeq ($(filter $(NODEPEN_TARGETS), $(MAKECMDGOALS)), )
 include $(DEPENDENCIES)
 endif
-endif
-endif
-endif
-endif
-endif
-endif
-endif
+

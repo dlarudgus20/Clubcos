@@ -243,7 +243,7 @@ memory.h에 대한 include 의존 그래프</div>
 </div><div class="memdoc">
 
 <p>동적 메모리에서 메모리를 할당받습니다. </p>
-<dl class="section return"><dt>반환값</dt><dd>할당된 메모리의 시작 주소입니다. <a class="el" href="memory_8h.html#a2b8672413df7d35da534648e0218ae1d">DYN_MEM_BUDDY_UNIT_SIZE</a> 단위로 올림 처리됩니다. </dd></dl>
+<dl class="section return"><dt>반환값</dt><dd>할당된 메모리의 시작 주소입니다. 버디블록 단위로 올림 처리됩니다. </dd></dl>
 
 </div>
 </div>
@@ -291,10 +291,10 @@ memory.h에 대한 include 의존 그래프</div>
 </div><div class="memdoc">
 
 <p>동적 메모리에서 할당한 메모리를 해제합니다. </p>
-<p>size는 <a class="el" href="memory_8h.html#a2b8672413df7d35da534648e0218ae1d">DYN_MEM_BUDDY_UNIT_SIZE</a> 단위로 올림 처리됩니다. </p><dl class="params"><dt>매개변수</dt><dd>
+<p>size는 버디블록 단위로 올림 처리됩니다. </p><dl class="params"><dt>매개변수</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>해제할 메모리의 시작 주소입니다. <a class="el" href="memory_8h.html#a2b8672413df7d35da534648e0218ae1d">DYN_MEM_BUDDY_UNIT_SIZE</a> 단위로 <em>내림</em> 처리됩니다. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>해제할 메모리의 크기입니다. <a class="el" href="memory_8h.html#a2b8672413df7d35da534648e0218ae1d">DYN_MEM_BUDDY_UNIT_SIZE</a> 단위로 올림 처리됩니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>해제할 메모리의 시작 주소입니다. 버디블록 단위로 <em>내림</em> 처리됩니다. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>해제할 메모리의 크기입니다. 버디블록 단위로 올림 처리됩니다. </td></tr>
   </table>
   </dd>
 </dl>
@@ -340,7 +340,7 @@ memory.h에 대한 include 의존 그래프</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="memory_8h.html">memory.h</a></li>
-    <li class="footer">생성시간 : 화 7월 15 2014 20:24:38, 프로젝트명 : Clubcos, 생성자 : 
+    <li class="footer">생성시간 : 일 7월 20 2014 16:31:58, 프로젝트명 : Clubcos, 생성자 : 
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

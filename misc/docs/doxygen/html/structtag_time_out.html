@@ -110,16 +110,54 @@ $(document).ready(function(){initNavTree('structtag_time_out.html','');});
 </div><!--header-->
 <div class="contents">
 
+<p>타임아웃을 나타내는 구조체입니다.  
+ <a href="structtag_time_out.html#details">더 자세히 ...</a></p>
+
 <p><code>#include &lt;<a class="el" href="timer_8h_source.html">timer.h</a>&gt;</code></p>
+<div class="dynheader">
+tagTimeOut에 대한 협력 다이어그램:</div>
+<div class="dyncontent">
+<div class="center"><img src="structtag_time_out__coll__graph.png" border="0" usemap="#tag_time_out_coll__map" alt="Collaboration graph"/></div>
+<map name="tag_time_out_coll__map" id="tag_time_out_coll__map">
+<area shape="rect" id="node2" href="structtag_linked_list.html" title="이중 환형 연결 리스트 구조체입니다. " alt="" coords="119,97,218,124"/><area shape="rect" id="node3" href="structtag_linked_list_node.html" title="이중 환형 연결 리스트의 한 노드를 나타내는 구조체입니다. " alt="" coords="5,7,135,33"/></map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">범례</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 데이타 필드</h2></td></tr>
+<tr class="memitem:a53ffd9994f9a66ef4b7f8d295a487155"><td class="memItemLeft" >union {</td></tr>
+<tr class="memitem:ac0cb844ba93809d976a809fb6b2f60a2"><td class="memItemLeft" >&#160;&#160;&#160;struct <a class="el" href="structtag_time_out.html">tagTimeOut</a> *&#160;&#160;&#160;<a class="el" href="structtag_time_out.html#ac0cb844ba93809d976a809fb6b2f60a2">pNextTimeOut</a></td></tr>
+<tr class="memdesc:ac0cb844ba93809d976a809fb6b2f60a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer 내부에서 사용하는 순방향 연결 리스트의 노드입니다.  <a href="#ac0cb844ba93809d976a809fb6b2f60a2">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ac0cb844ba93809d976a809fb6b2f60a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dcf26164b6f29a7f8bf06483bbda69f"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="linkedlist_8h.html#af57f43788295ea6c879f5c98492afcb4">LinkedListNode</a>&#160;&#160;&#160;<a class="el" href="structtag_time_out.html#a5dcf26164b6f29a7f8bf06483bbda69f">NoticeNode</a></td></tr>
+<tr class="memdesc:a5dcf26164b6f29a7f8bf06483bbda69f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structtag_time_out.html#ae7fb786ec3588c30652a4ff052a7b583">NoticeQueue</a> 에 push하는 데 사용되는 노드입니다.  <a href="#a5dcf26164b6f29a7f8bf06483bbda69f">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a5dcf26164b6f29a7f8bf06483bbda69f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53ffd9994f9a66ef4b7f8d295a487155"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a53ffd9994f9a66ef4b7f8d295a487155"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5627d8d8b095c198e2523c44ca380ac"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_time_out.html#ab5627d8d8b095c198e2523c44ca380ac">timeout</a></td></tr>
+<tr class="memdesc:ab5627d8d8b095c198e2523c44ca380ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">타임아웃이 발생할 tick count입니다.  <a href="#ab5627d8d8b095c198e2523c44ca380ac">더 자세히 ...</a><br /></td></tr>
 <tr class="separator:ab5627d8d8b095c198e2523c44ca380ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe73fa7a655419b386e0a10c7beaace3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_time_out.html#afe73fa7a655419b386e0a10c7beaace3">code</a></td></tr>
+<tr class="memdesc:afe73fa7a655419b386e0a10c7beaace3"><td class="mdescLeft">&#160;</td><td class="mdescRight">사용자가 마음대로 사용할 수 있는 추가 정보입니다.  <a href="#afe73fa7a655419b386e0a10c7beaace3">더 자세히 ...</a><br /></td></tr>
 <tr class="separator:afe73fa7a655419b386e0a10c7beaace3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7fb786ec3588c30652a4ff052a7b583"><td class="memItemLeft" align="right" valign="top"><a class="el" href="linkedlist_8h.html#af19941a2254be1591e9c73705a660041">LinkedList</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_time_out.html#ae7fb786ec3588c30652a4ff052a7b583">NoticeQueue</a></td></tr>
+<tr class="memdesc:ae7fb786ec3588c30652a4ff052a7b583"><td class="mdescLeft">&#160;</td><td class="mdescRight">타임아웃이 발생한 후에 이 구조체가 push될 연결 리스트입니다.  <a href="#ae7fb786ec3588c30652a4ff052a7b583">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ae7fb786ec3588c30652a4ff052a7b583"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">필드 문서화</h2>
+<a name="details" id="details"></a><h2 class="groupheader">상세한 설명</h2>
+<div class="textblock"><p>타임아웃을 나타내는 구조체입니다. </p>
+</div><h2 class="groupheader">필드 문서화</h2>
+<a class="anchor" id="a53ffd9994f9a66ef4b7f8d295a487155"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union { ... } </td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="afe73fa7a655419b386e0a10c7beaace3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -129,6 +167,51 @@ $(document).ready(function(){initNavTree('structtag_time_out.html','');});
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>사용자가 마음대로 사용할 수 있는 추가 정보입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5dcf26164b6f29a7f8bf06483bbda69f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="linkedlist_8h.html#af57f43788295ea6c879f5c98492afcb4">LinkedListNode</a> NoticeNode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="structtag_time_out.html#ae7fb786ec3588c30652a4ff052a7b583">NoticeQueue</a> 에 push하는 데 사용되는 노드입니다. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae7fb786ec3588c30652a4ff052a7b583"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="linkedlist_8h.html#af19941a2254be1591e9c73705a660041">LinkedList</a>* NoticeQueue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>타임아웃이 발생한 후에 이 구조체가 push될 연결 리스트입니다. </p>
+<dl class="section remark"><dt>Remarks</dt><dd>Push/Pop 연산 시에 lockfree 함수를 사용해야 합니다. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac0cb844ba93809d976a809fb6b2f60a2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structtag_time_out.html">tagTimeOut</a>* pNextTimeOut</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Timer 내부에서 사용하는 순방향 연결 리스트의 노드입니다. </p>
 
 </div>
 </div>
@@ -142,6 +225,8 @@ $(document).ready(function(){initNavTree('structtag_time_out.html','');});
       </table>
 </div><div class="memdoc">
 
+<p>타임아웃이 발생할 tick count입니다. </p>
+
 </div>
 </div>
 <hr/>이 구조체에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.:<ul>
@@ -153,7 +238,7 @@ $(document).ready(function(){initNavTree('structtag_time_out.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structtag_time_out.html">tagTimeOut</a></li>
-    <li class="footer">생성시간 : 화 7월 15 2014 20:24:38, 프로젝트명 : Clubcos, 생성자 : 
+    <li class="footer">생성시간 : 일 7월 20 2014 16:32:01, 프로젝트명 : Clubcos, 생성자 : 
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

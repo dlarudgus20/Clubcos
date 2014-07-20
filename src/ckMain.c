@@ -43,9 +43,6 @@
 #include "likely.h"
 #include "string.h"
 
-// TODO: 타이머 최적화 (linkedlist, sentinal)
-// TODO: string.c 인라인 어셈블리화 및 순수 C 버전과의 성능 비교
-
 /**
  * @mainpage Clubcos 소스 레퍼런스
  * @author dlarudgus20 (임경현)
@@ -92,10 +89,6 @@ void ckMain(void)
 	ckDynMemInitialize();
 	ckTerminalPrintString_unsafe("Dynamic Memory Manager is initialized\n");
 
-	// 멀티태스킹 초기화
-	ckTaskStructInitialize();
-	ckTerminalPrintString_unsafe("Tasking is initialized\n");
-
 	// 인터럽트 큐 초기화
 	ckInterruptQueueInitialize();
 
@@ -107,6 +100,10 @@ void ckMain(void)
 	ckTimerInitialize();
 	ckRTCInitialize();
 	ckTerminalPrintString_unsafe("Timer & RTC are initialized\n");
+
+	// 멀티태스킹 초기화 (타이머 이후)
+	ckTaskStructInitialize();
+	ckTerminalPrintString_unsafe("Tasking is initialized\n");
 
 	// 키보드 초기화
 	if (unlikely(!ckKeyboardInitialize()))
@@ -126,9 +123,6 @@ void ckMain(void)
 	volatile CircularQueue32 *pQueue = &g_InterruptQueue;
 	uint32_t QueueData, data;
 
-	// 0.5초마다 프로세서 사용률을 표시합니다.
-	ckTimerSetFor(500, 3);
-
 	while (1)
 	{
 		while (!pQueue->bEmpty)
@@ -140,16 +134,6 @@ void ckMain(void)
 			data = QueueData & 0xffffff;
 			switch (QueueData & 0xff000000)
 			{
-				case INTERRUPT_QUEUE_FLAG_TIMER:
-					if (data == 3)
-					{
-						ckTerminalPrintStatusBarF("ProcessorLoad : %03u%%",
-							g_pTaskStruct->ProcessorLoad);
-
-						ckTimerSetFor(500, 3);
-					}
-					ckOnTimerInterrupt(data);
-					break;
 				case INTERRUPT_QUEUE_FLAG_KEYBOARD:
 					ckOnKeyboardInterrupt(data);
 					break;

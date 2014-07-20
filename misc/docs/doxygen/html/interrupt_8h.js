@@ -2,7 +2,6 @@ var interrupt_8h =
 [
     [ "tagInterruptContext", "structtag_interrupt_context.html", "structtag_interrupt_context" ],
     [ "InterruptContext", "interrupt_8h.html#a05c12a719590aa579b4c687cd9e98e19", null ],
-    [ "INTERRUPT_QUEUE_FLAG_TIMER", "interrupt_8h.html#a16af7b253440dadd46a80a4b9fddba4da57b72c6adcfba95ac6d9c7a45226acc4", null ],
     [ "INTERRUPT_QUEUE_FLAG_KEYBOARD", "interrupt_8h.html#a16af7b253440dadd46a80a4b9fddba4da9be90a1f289a08d7c54ec18b414686dd", null ],
     [ "ckExceptIntHandler00", "interrupt_8h.html#a9df9e7e2a6686b3fbc7ebc08a3e01773", null ],
     [ "ckExceptIntHandler01", "interrupt_8h.html#a3552f496460e5e1184852aee05babfe9", null ],

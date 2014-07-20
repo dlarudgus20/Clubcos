@@ -63,14 +63,11 @@
 /** @brief IDT 테이블의 선형 주소입니다. @sa g_pIdtTable */
 #define IDT_TABLE_ADDRESS 0xfe611000
 
-/** @brief TimeOut 테이블의 선형 주소입니다. @sa TimeOut */
-#define TIMEOUT_TABLE_ADDRESS 0xfe611800
-
 /** @brief TaskStruct 구조체의 선형 주소입니다. @sa g_pTaskStruct */
-#define TASKSTRUCT_ADDRESS 0xfe619800
+#define TASKSTRUCT_ADDRESS 0xfe611800
 
 /** @brief Coshell 태스크의 스택 최상단의 선형 주소입니다. */
-#define COSHELL_TASK_STACK_TOP 0xfe7ad0c4
+#define COSHELL_TASK_STACK_TOP 0xfe780000
 
 /** @brief 아이들 태스크의 스택 최상단의 선형 주소입니다. */
 #define IDLE_TASK_STACK_TOP 0xfe800000

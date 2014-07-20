@@ -72,13 +72,13 @@ extern DynMemStruct g_DynMem;
 void ckDynMemInitialize(void);
 /**
  * @brief 동적 메모리에서 메모리를 할당받습니다.
- * @return 할당된 메모리의 시작 주소입니다. @ref DYN_MEM_BUDDY_UNIT_SIZE 단위로 올림 처리됩니다.
+ * @return 할당된 메모리의 시작 주소입니다. 버디블록 단위로 올림 처리됩니다.
  */
 void *ckDynMemAllocate(uint32_t size);
 /**
- * @brief 동적 메모리에서 할당한 메모리를 해제합니다. size는 @ref DYN_MEM_BUDDY_UNIT_SIZE 단위로 올림 처리됩니다.
- * @param[in] addr 해제할 메모리의 시작 주소입니다. @ref DYN_MEM_BUDDY_UNIT_SIZE 단위로 <i>내림</i> 처리됩니다.
- * @param[in] size 해제할 메모리의 크기입니다. @ref DYN_MEM_BUDDY_UNIT_SIZE 단위로 올림 처리됩니다.
+ * @brief 동적 메모리에서 할당한 메모리를 해제합니다. size는 버디블록 단위로 올림 처리됩니다.
+ * @param[in] addr 해제할 메모리의 시작 주소입니다. 버디블록 단위로 <i>내림</i> 처리됩니다.
+ * @param[in] size 해제할 메모리의 크기입니다. 버디블록 단위로 올림 처리됩니다.
  */
 bool ckDynMemFree(void *addr, uint32_t size);
 

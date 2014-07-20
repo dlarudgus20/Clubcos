@@ -102,7 +102,6 @@ var searchData=
   ['cklinkedlistpushback_5flockfree',['ckLinkedListPushBack_lockfree',['../linkedlist_8c.html#a30cb5f1e407adf08d6f51d79e126b8f9',1,'ckLinkedListPushBack_lockfree(LinkedList *pList, LinkedListNode *pNode):&#160;linkedlist.c'],['../linkedlist_8h.html#a30cb5f1e407adf08d6f51d79e126b8f9',1,'ckLinkedListPushBack_lockfree(LinkedList *pList, LinkedListNode *pNode):&#160;linkedlist.c']]],
   ['ckmain',['ckMain',['../ck_main_8c.html#a394f6ce718cc6e78487a4933ed71199f',1,'ckMain.c']]],
   ['ckonkeyboardinterrupt',['ckOnKeyboardInterrupt',['../keys_8c.html#ae3289a83b5a9c72ce6e418b5f81fe1e0',1,'ckOnKeyboardInterrupt(uint32_t QueueData):&#160;keys.c'],['../keys_8h.html#ae3289a83b5a9c72ce6e418b5f81fe1e0',1,'ckOnKeyboardInterrupt(uint32_t QueueData):&#160;keys.c']]],
-  ['ckontimerinterrupt',['ckOnTimerInterrupt',['../timer_8c.html#a72bde90e2f77f917efe087e94abdb4fd',1,'ckOnTimerInterrupt(uint32_t QueueData):&#160;timer.c'],['../timer_8h.html#a72bde90e2f77f917efe087e94abdb4fd',1,'ckOnTimerInterrupt(uint32_t QueueData):&#160;timer.c']]],
   ['ckpicinitialize',['ckPicInitialize',['../pic_8c.html#a3a9aad53bec8f2f53a8813c58819b04e',1,'ckPicInitialize(void):&#160;pic.c'],['../pic_8h.html#a3a9aad53bec8f2f53a8813c58819b04e',1,'ckPicInitialize(void):&#160;pic.c']]],
   ['ckpicmaskinterrupt',['ckPicMaskInterrupt',['../pic_8c.html#a1ef78d89255ee0b7f7e02001b3aa2dd2',1,'ckPicMaskInterrupt(uint16_t mask):&#160;pic.c'],['../pic_8h.html#a1ef78d89255ee0b7f7e02001b3aa2dd2',1,'ckPicMaskInterrupt(uint16_t mask):&#160;pic.c']]],
   ['ckpicsendeoi',['ckPicSendEOI',['../pic_8c.html#a4b0102fdbfb41949cb144f73be0a1d9a',1,'ckPicSendEOI(uint8_t irq):&#160;pic.c'],['../pic_8h.html#a4b0102fdbfb41949cb144f73be0a1d9a',1,'ckPicSendEOI(uint8_t irq):&#160;pic.c']]],
@@ -162,6 +161,6 @@ var searchData=
   ['cktimerbusydirectwait_5fms',['ckTimerBusyDirectWait_ms',['../timer_8c.html#ae56d250df6bbb0046091d3f31b0103ac',1,'ckTimerBusyDirectWait_ms(uint32_t milli):&#160;timer.c'],['../timer_8h.html#ae56d250df6bbb0046091d3f31b0103ac',1,'ckTimerBusyDirectWait_ms(uint32_t milli):&#160;timer.c']]],
   ['cktimerinitialize',['ckTimerInitialize',['../timer_8c.html#ad16a43dd340e350a94e7da0ab882a66b',1,'ckTimerInitialize(void):&#160;timer.c'],['../timer_8h.html#ad16a43dd340e350a94e7da0ab882a66b',1,'ckTimerInitialize(void):&#160;timer.c']]],
   ['cktimerinthandler',['ckTimerIntHandler',['../timer_8h.html#ab3a26f3d7ccfae5665f92d2f13581806',1,'timer.h']]],
-  ['cktimersetfor',['ckTimerSetFor',['../timer_8c.html#a5cb71da78903f8e69f24eb1bd98ebccd',1,'ckTimerSetFor(unsigned timespan, uint32_t code):&#160;timer.c'],['../timer_8h.html#a5cb71da78903f8e69f24eb1bd98ebccd',1,'ckTimerSetFor(unsigned timespan, uint32_t code):&#160;timer.c']]],
+  ['cktimerset',['ckTimerSet',['../timer_8c.html#a2201b4d2b853681c0282c5f1c0daebce',1,'ckTimerSet(TimeOut *pTimeOut):&#160;timer.c'],['../timer_8h.html#a2201b4d2b853681c0282c5f1c0daebce',1,'ckTimerSet(TimeOut *pTimeOut):&#160;timer.c']]],
   ['ckunknowninthandler',['ckUnknownIntHandler',['../interrupt_8h.html#a1f9fe3e1bc76e801ffb8415b38b2e151',1,'interrupt.h']]]
 ];
