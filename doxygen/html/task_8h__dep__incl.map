@@ -1,0 +1,11 @@
+<map id="D:/EclipseWorkspace/Clubcos/src/task.h" name="D:/EclipseWorkspace/Clubcos/src/task.h">
+<area shape="rect" id="node2" href="$binary__semaphore_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/binary\l_semaphore.c" alt="" coords="5,95,153,151"/>
+<area shape="rect" id="node3" href="$ck_main_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/ckMain.c" alt="" coords="178,102,330,143"/>
+<area shape="rect" id="node4" href="$coshell__cmd_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/coshell_cmd.c" alt="" coords="285,206,468,247"/>
+<area shape="rect" id="node5" href="$recursive__mutex_8h.html" title="D:/EclipseWorkspace\l/Clubcos/src/recursive\l_mutex.h" alt="" coords="405,95,556,151"/>
+<area shape="rect" id="node6" href="$recursive__mutex_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/recursive\l_mutex.c" alt="" coords="509,199,660,255"/>
+<area shape="rect" id="node7" href="$skout-sokoban_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/skout&#45;sokoban.c" alt="" coords="631,102,826,143"/>
+<area shape="rect" id="node8" href="$task_8c.html" title="multi&#45;tasking &amp; floating&#45;point support " alt="" coords="851,102,999,143"/>
+<area shape="rect" id="node9" href="$terminal_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/terminal.c" alt="" coords="1023,102,1179,143"/>
+<area shape="rect" id="node10" href="$timer_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/timer.c" alt="" coords="1203,102,1351,143"/>
+</map>

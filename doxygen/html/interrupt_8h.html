@@ -1,0 +1,624 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>Clubcos: D:/EclipseWorkspace/Clubcos/src/interrupt.h 파일 참조</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Clubcos
+   &#160;<span id="projectnumber">0.0.0</span>
+   </div>
+   <div id="projectbrief">Clubcos - Clubc Operating System</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 다음에 의해 생성됨 :  Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'검색');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>메인&#160;페이지</span></a></li>
+      <li><a href="annotated.html"><span>데이타&#160;구조</span></a></li>
+      <li class="current"><a href="files.html"><span>파일들</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="검색" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>파일&#160;목록</span></a></li>
+      <li><a href="globals.html"><span>전역</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('interrupt_8h.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>모두</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>데이타 구조</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>파일들</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>함수</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>변수</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>타입정의</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>열거형 타입</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>열거형 멤버</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>매크로</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>페이지들</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">데이타 구조</a> &#124;
+<a href="#typedef-members">타입정의</a> &#124;
+<a href="#enum-members">열거형 타입</a> &#124;
+<a href="#func-members">함수</a> &#124;
+<a href="#var-members">변수</a>  </div>
+  <div class="headertitle">
+<div class="title">interrupt.h 파일 참조</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="circular__queue_8h_source.html">circular_queue.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="pic_8h_source.html">pic.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+interrupt.h에 대한 include 의존 그래프</div>
+<div class="dyncontent">
+<div class="center"><img src="interrupt_8h__incl.png" border="0" usemap="#_d_1_2_eclipse_workspace_2_clubcos_2src_2interrupt_8h" alt=""/></div>
+<map name="_d_1_2_eclipse_workspace_2_clubcos_2src_2interrupt_8h" id="_d_1_2_eclipse_workspace_2_clubcos_2src_2interrupt_8h">
+<area shape="rect" id="node4" href="circular__queue_8h.html" title="circular_queue.h" alt="" coords="5,95,123,121"/><area shape="rect" id="node6" href="pic_8h.html" title="pic.h" alt="" coords="197,95,248,121"/></map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+이 그래프는 이 파일을 직/간접적으로 include 하는 파일들을 보여줍니다.:</div>
+<div class="dyncontent">
+<div class="center"><img src="interrupt_8h__dep__incl.png" border="0" usemap="#_d_1_2_eclipse_workspace_2_clubcos_2src_2interrupt_8hdep" alt=""/></div>
+<map name="_d_1_2_eclipse_workspace_2_clubcos_2src_2interrupt_8hdep" id="_d_1_2_eclipse_workspace_2_clubcos_2src_2interrupt_8hdep">
+<area shape="rect" id="node2" href="ck_main_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/ckMain.c" alt="" coords="5,95,157,136"/><area shape="rect" id="node3" href="idt_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/idt.c" alt="" coords="182,95,330,136"/><area shape="rect" id="node4" href="int__except_8c.html" title="CPU 예외 핸들러입니다. " alt="" coords="355,95,525,136"/><area shape="rect" id="node5" href="interrupt_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/interrupt.c" alt="" coords="549,95,707,136"/><area shape="rect" id="node6" href="keyboard_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/keyboard.c" alt="" coords="731,95,893,136"/><area shape="rect" id="node7" href="task_8c.html" title="multi&#45;tasking &amp; floating&#45;point support " alt="" coords="918,95,1066,136"/><area shape="rect" id="node8" href="timer_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/timer.c" alt="" coords="1090,95,1238,136"/></map>
+</div>
+</div>
+<p><a href="interrupt_8h_source.html">이 파일의 소스 코드 페이지로 가기</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+데이타 구조</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_interrupt_context.html">tagInterruptContext</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">인터럽트 콘텍스트입니다.  <a href="structtag_interrupt_context.html#details">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+타입정의</h2></td></tr>
+<tr class="memitem:a05c12a719590aa579b4c687cd9e98e19"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structtag_interrupt_context.html">tagInterruptContext</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a05c12a719590aa579b4c687cd9e98e19">InterruptContext</a></td></tr>
+<tr class="memdesc:a05c12a719590aa579b4c687cd9e98e19"><td class="mdescLeft">&#160;</td><td class="mdescRight">인터럽트 콘텍스트입니다.  <a href="#a05c12a719590aa579b4c687cd9e98e19">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a05c12a719590aa579b4c687cd9e98e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+열거형 타입</h2></td></tr>
+<tr class="memitem:a16af7b253440dadd46a80a4b9fddba4d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="interrupt_8h.html#a16af7b253440dadd46a80a4b9fddba4da9be90a1f289a08d7c54ec18b414686dd">INTERRUPT_QUEUE_FLAG_KEYBOARD</a> = PIC_IRQ_KEYBOARD &lt;&lt; 24
+ }</td></tr>
+<tr class="separator:a16af7b253440dadd46a80a4b9fddba4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+함수</h2></td></tr>
+<tr class="memitem:a4ba258ca95d77b1f5d1b5cfa70075144"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a4ba258ca95d77b1f5d1b5cfa70075144">ckInterruptQueueInitialize</a> (void)</td></tr>
+<tr class="memdesc:a4ba258ca95d77b1f5d1b5cfa70075144"><td class="mdescLeft">&#160;</td><td class="mdescRight">인터럽트 큐를 초기화합니다.  <a href="#a4ba258ca95d77b1f5d1b5cfa70075144">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a4ba258ca95d77b1f5d1b5cfa70075144"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9df9e7e2a6686b3fbc7ebc08a3e01773"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a9df9e7e2a6686b3fbc7ebc08a3e01773">ckExceptIntHandler00</a> ()</td></tr>
+<tr class="separator:a9df9e7e2a6686b3fbc7ebc08a3e01773"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3552f496460e5e1184852aee05babfe9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a3552f496460e5e1184852aee05babfe9">ckExceptIntHandler01</a> ()</td></tr>
+<tr class="separator:a3552f496460e5e1184852aee05babfe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f0184c3a93ddf35dad0110dc41f0cdb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a3f0184c3a93ddf35dad0110dc41f0cdb">ckExceptIntHandler02</a> ()</td></tr>
+<tr class="separator:a3f0184c3a93ddf35dad0110dc41f0cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fff9bdd4e1eb2febad18b15eb6c7b07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a3fff9bdd4e1eb2febad18b15eb6c7b07">ckExceptIntHandler03</a> ()</td></tr>
+<tr class="separator:a3fff9bdd4e1eb2febad18b15eb6c7b07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e136a30f58eb2e4f56a98be5564a23e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a9e136a30f58eb2e4f56a98be5564a23e">ckExceptIntHandler04</a> ()</td></tr>
+<tr class="separator:a9e136a30f58eb2e4f56a98be5564a23e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6badfd24e196b00a3694cda27efafdc2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a6badfd24e196b00a3694cda27efafdc2">ckExceptIntHandler05</a> ()</td></tr>
+<tr class="separator:a6badfd24e196b00a3694cda27efafdc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad205aeebd5234fe0974006668ef5d2eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#ad205aeebd5234fe0974006668ef5d2eb">ckExceptIntHandler06</a> ()</td></tr>
+<tr class="separator:ad205aeebd5234fe0974006668ef5d2eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d22cb267839f1c5377e1ed7c9cdcbc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a4d22cb267839f1c5377e1ed7c9cdcbc5">ckExceptIntHandler07</a> ()</td></tr>
+<tr class="separator:a4d22cb267839f1c5377e1ed7c9cdcbc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d90e03c1fdd039ed716bc1c14a37027"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a9d90e03c1fdd039ed716bc1c14a37027">ckExceptIntHandler08</a> ()</td></tr>
+<tr class="separator:a9d90e03c1fdd039ed716bc1c14a37027"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f701dc0b09022e547da7b54a855048b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a2f701dc0b09022e547da7b54a855048b">ckExceptIntHandler09</a> ()</td></tr>
+<tr class="separator:a2f701dc0b09022e547da7b54a855048b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0226715b5c10a16ef3ab3a6655ead14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#ac0226715b5c10a16ef3ab3a6655ead14">ckExceptIntHandler0A</a> ()</td></tr>
+<tr class="separator:ac0226715b5c10a16ef3ab3a6655ead14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fa88b08ae32f45bfb7b962633c15b3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a5fa88b08ae32f45bfb7b962633c15b3a">ckExceptIntHandler0B</a> ()</td></tr>
+<tr class="separator:a5fa88b08ae32f45bfb7b962633c15b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a376faed294ab2e30d0ae9b1f5e0ef4df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a376faed294ab2e30d0ae9b1f5e0ef4df">ckExceptIntHandler0C</a> ()</td></tr>
+<tr class="separator:a376faed294ab2e30d0ae9b1f5e0ef4df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32874a2ad48aaf06da47ba8d346ca339"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a32874a2ad48aaf06da47ba8d346ca339">ckExceptIntHandler0D</a> ()</td></tr>
+<tr class="separator:a32874a2ad48aaf06da47ba8d346ca339"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a014ba1f7404242bc748622f5f1bfc3c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a014ba1f7404242bc748622f5f1bfc3c5">ckExceptIntHandler0E</a> ()</td></tr>
+<tr class="separator:a014ba1f7404242bc748622f5f1bfc3c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7599e42d93c8c9597588a1b520e4d4ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a7599e42d93c8c9597588a1b520e4d4ea">ckExceptIntHandler0F</a> ()</td></tr>
+<tr class="separator:a7599e42d93c8c9597588a1b520e4d4ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a028d415e55926315262024c090c981d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a028d415e55926315262024c090c981d3">ckExceptIntHandler10</a> ()</td></tr>
+<tr class="separator:a028d415e55926315262024c090c981d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cea3ce1946436f08fc6b849610059eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a1cea3ce1946436f08fc6b849610059eb">ckExceptIntHandler11</a> ()</td></tr>
+<tr class="separator:a1cea3ce1946436f08fc6b849610059eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbd4aaf373776c890b2940cd65a358f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#abbd4aaf373776c890b2940cd65a358f6">ckExceptIntHandler12</a> ()</td></tr>
+<tr class="separator:abbd4aaf373776c890b2940cd65a358f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d601dfe117784fd0dd14f4fe961f2e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a8d601dfe117784fd0dd14f4fe961f2e5">ckExceptIntHandler13</a> ()</td></tr>
+<tr class="separator:a8d601dfe117784fd0dd14f4fe961f2e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca79a3f097d60a626f9fd4202b87178f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#aca79a3f097d60a626f9fd4202b87178f">ckExceptIntHandler14</a> ()</td></tr>
+<tr class="separator:aca79a3f097d60a626f9fd4202b87178f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f9fe3e1bc76e801ffb8415b38b2e151"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a1f9fe3e1bc76e801ffb8415b38b2e151">ckUnknownIntHandler</a> ()</td></tr>
+<tr class="separator:a1f9fe3e1bc76e801ffb8415b38b2e151"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+변수</h2></td></tr>
+<tr class="memitem:ac60cae5d7b8a7c634f07b5afc8b07ec1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="circular__queue_8h.html#a79ba4338fcb352d43b75dac39faacd9b">CircularQueue32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#ac60cae5d7b8a7c634f07b5afc8b07ec1">g_InterruptQueue</a></td></tr>
+<tr class="memdesc:ac60cae5d7b8a7c634f07b5afc8b07ec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">인터럽트 큐입니다.  <a href="#ac60cae5d7b8a7c634f07b5afc8b07ec1">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:ac60cae5d7b8a7c634f07b5afc8b07ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">상세한 설명</h2>
+<div class="textblock"><dl class="section date"><dt>날짜</dt><dd>2014. 4. 27. </dd></dl>
+<dl class="section author"><dt>작성자</dt><dd>dlarudgus20 </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>The BSD (2-Clause) License </dd></dl>
+</div><h2 class="groupheader">타입정의 문서화</h2>
+<a class="anchor" id="a05c12a719590aa579b4c687cd9e98e19"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structtag_interrupt_context.html">tagInterruptContext</a>  <a class="el" href="interrupt_8h.html#a05c12a719590aa579b4c687cd9e98e19">InterruptContext</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>인터럽트 콘텍스트입니다. </p>
+<p>C로 짜여진 ISR에 어셈블리로 짜여진 ISR이 인수로 이 콘텍스트의 포인터를 넘깁니다. </p>
+
+</div>
+</div>
+<h2 class="groupheader">열거형 타입 문서화</h2>
+<a class="anchor" id="a16af7b253440dadd46a80a4b9fddba4d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">열거형 멤버</th></tr><tr><td class="fieldname"><a class="anchor" id="a16af7b253440dadd46a80a4b9fddba4da9be90a1f289a08d7c54ec18b414686dd"></a>INTERRUPT_QUEUE_FLAG_KEYBOARD&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">함수 문서화</h2>
+<a class="anchor" id="a9df9e7e2a6686b3fbc7ebc08a3e01773"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler00 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3552f496460e5e1184852aee05babfe9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler01 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3f0184c3a93ddf35dad0110dc41f0cdb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler02 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3fff9bdd4e1eb2febad18b15eb6c7b07"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler03 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9e136a30f58eb2e4f56a98be5564a23e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler04 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6badfd24e196b00a3694cda27efafdc2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler05 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad205aeebd5234fe0974006668ef5d2eb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler06 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4d22cb267839f1c5377e1ed7c9cdcbc5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler07 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9d90e03c1fdd039ed716bc1c14a37027"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler08 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2f701dc0b09022e547da7b54a855048b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler09 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac0226715b5c10a16ef3ab3a6655ead14"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler0A </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5fa88b08ae32f45bfb7b962633c15b3a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler0B </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a376faed294ab2e30d0ae9b1f5e0ef4df"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler0C </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a32874a2ad48aaf06da47ba8d346ca339"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler0D </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a014ba1f7404242bc748622f5f1bfc3c5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler0E </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7599e42d93c8c9597588a1b520e4d4ea"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler0F </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a028d415e55926315262024c090c981d3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler10 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1cea3ce1946436f08fc6b849610059eb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler11 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="abbd4aaf373776c890b2940cd65a358f6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler12 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8d601dfe117784fd0dd14f4fe961f2e5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler13 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aca79a3f097d60a626f9fd4202b87178f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckExceptIntHandler14 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4ba258ca95d77b1f5d1b5cfa70075144"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckInterruptQueueInitialize </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>인터럽트 큐를 초기화합니다. </p>
+<dl class="section see"><dt>참고</dt><dd><a class="el" href="interrupt_8h.html#ac60cae5d7b8a7c634f07b5afc8b07ec1" title="인터럽트 큐입니다. ">g_InterruptQueue</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1f9fe3e1bc76e801ffb8415b38b2e151"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ckUnknownIntHandler </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">변수 문서화</h2>
+<a class="anchor" id="ac60cae5d7b8a7c634f07b5afc8b07ec1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="circular__queue_8h.html#a79ba4338fcb352d43b75dac39faacd9b">CircularQueue32</a> g_InterruptQueue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>인터럽트 큐입니다. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="interrupt_8h.html">interrupt.h</a></li>
+    <li class="footer">생성시간 : 일 7월 20 2014 17:00:26, 프로젝트명 : Clubcos, 생성자 : 
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
+  </ul>
+</div>
+</body>
+</html>

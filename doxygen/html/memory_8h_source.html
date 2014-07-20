@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>Clubcos: D:/EclipseWorkspace/Clubcos/src/memory.h 소스 파일</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Clubcos
+   &#160;<span id="projectnumber">0.0.0</span>
+   </div>
+   <div id="projectbrief">Clubcos - Clubc Operating System</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 다음에 의해 생성됨 :  Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'검색');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>메인&#160;페이지</span></a></li>
+      <li><a href="annotated.html"><span>데이타&#160;구조</span></a></li>
+      <li class="current"><a href="files.html"><span>파일들</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="검색" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>파일&#160;목록</span></a></li>
+      <li><a href="globals.html"><span>전역</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('memory_8h_source.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>모두</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>데이타 구조</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>파일들</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>함수</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>변수</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>타입정의</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>열거형 타입</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>열거형 멤버</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>매크로</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>페이지들</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">memory.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="memory_8h.html">이 파일의 문서화 페이지로 가기</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Copyright (c) 2014, 임경현 (dlarudgus20)</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// All rights reserved.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">// Redistribution and use in source and binary forms, with or without</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">// modification, are permitted provided that the following conditions are met:</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">// * Redistributions of source code must retain the above copyright notice, this</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">//   list of conditions and the following disclaimer.</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">// * Redistributions in binary form must reproduce the above copyright notice,</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">//   this list of conditions and the following disclaimer in the documentation</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">//   and/or other materials provided with the distribution.</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#ifndef MEMORY_H_</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#define MEMORY_H_</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="memory__map_8h.html">memory_map.h</a>&quot;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="memory_8h.html#a2b8672413df7d35da534648e0218ae1d">   43</a></span>&#160;<span class="preprocessor">#define DYN_MEM_BUDDY_UNIT_SIZE (4 * 1024u)</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structtag_buddy_bitmap.html">   46</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structtag_buddy_bitmap.html">tagBuddyBitmap</a></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="structtag_buddy_bitmap.html#aa3d5af16e9196fe86590957c26067f2f">   48</a></span>&#160;    uint8_t *<a class="code" href="structtag_buddy_bitmap.html#aa3d5af16e9196fe86590957c26067f2f">bits</a>;  </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="structtag_buddy_bitmap.html#a86988a65e0d3ece7990c032c159786d6">   49</a></span>&#160;    uint32_t <a class="code" href="structtag_buddy_bitmap.html#a86988a65e0d3ece7990c032c159786d6">count</a>; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;} <a class="code" href="memory_8h.html#a7098a12400070b3b20615417b7d74b75">BuddyBitmap</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="structtag_dyn_mem_struct.html">   53</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structtag_dyn_mem_struct.html">tagDynMemStruct</a></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;{</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="structtag_dyn_mem_struct.html#aaa7a9ca38a59fba423bf2141cdf2260a">   55</a></span>&#160;    uint32_t <a class="code" href="structtag_dyn_mem_struct.html#aaa7a9ca38a59fba423bf2141cdf2260a">DynMemSize</a>;        </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="structtag_dyn_mem_struct.html#a1abc377819fb41d03e879cf6880f01a5">   57</a></span>&#160;    uint32_t <a class="code" href="structtag_dyn_mem_struct.html#a1abc377819fb41d03e879cf6880f01a5">BeginAddr</a>;         </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="structtag_dyn_mem_struct.html#a2956653bc81854f48eb8a7bf96353d70">   58</a></span>&#160;    uint32_t <a class="code" href="structtag_dyn_mem_struct.html#a2956653bc81854f48eb8a7bf96353d70">UsedSize</a>;          </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="structtag_dyn_mem_struct.html#a85044704961c94e0cb6554d5386e4ae9">   60</a></span>&#160;    uint32_t <a class="code" href="structtag_dyn_mem_struct.html#a85044704961c94e0cb6554d5386e4ae9">CountOfUnitBlock</a>;  </div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structtag_dyn_mem_struct.html#ae13de6fd8ad4f232b28784b54ac41c92">   61</a></span>&#160;    uint32_t <a class="code" href="structtag_dyn_mem_struct.html#ae13de6fd8ad4f232b28784b54ac41c92">BitmapLevel</a>;       </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="structtag_dyn_mem_struct.html#a9eaf288f999f519eab6d65e2ec20e80c">   63</a></span>&#160;    <a class="code" href="structtag_buddy_bitmap.html">BuddyBitmap</a> *<a class="code" href="structtag_dyn_mem_struct.html#a9eaf288f999f519eab6d65e2ec20e80c">arBitmap</a>;      </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;} <a class="code" href="memory_8h.html#ad148d651a96a054aae0e3321ff1e6adc">DynMemStruct</a>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">extern</span> <a class="code" href="structtag_dyn_mem_struct.html">DynMemStruct</a> <a class="code" href="memory_8h.html#ac430c66975bff615af8b8ed7a1ac1c0c">g_DynMem</a>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keywordtype">void</span> <a class="code" href="memory_8h.html#a4d527c7b3c5364d4aa70329d706dea6d">ckDynMemInitialize</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keywordtype">void</span> *<a class="code" href="memory_8h.html#a04efcabca7e5a8428ba77c06c3e919b4">ckDynMemAllocate</a>(uint32_t size);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="memory_8h.html#a2c74392c483e53ea699dc244457bb22a">ckDynMemFree</a>(<span class="keywordtype">void</span> *addr, uint32_t size);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;uint32_t <a class="code" href="memory_8h.html#a0601ea98b083b7922b6cd2d8a6e804f7">ckDynMemCheckSize</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> uint32_t ckDynMemGetSize(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;{</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">return</span> g_DynMem.<a class="code" href="structtag_dyn_mem_struct.html#aaa7a9ca38a59fba423bf2141cdf2260a">DynMemSize</a>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> ckDynMemPhyIsDynMem(uint32_t phy)</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;{</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">return</span> (<a class="code" href="memory__map_8h.html#a26acf86c1c99d95e7221928f5986f2dd">DYN_MEMORY_PHYSICAL_ADDRESS</a> &lt; phy &amp;&amp; phy &lt; <a class="code" href="memory__map_8h.html#a66a4724f17cb83fbc1fe0d914374ddd0">IOMAP_MEMORY_START_ADDRESS</a>);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MEMORY_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="memory_8h_html_ad148d651a96a054aae0e3321ff1e6adc"><div class="ttname"><a href="memory_8h.html#ad148d651a96a054aae0e3321ff1e6adc">DynMemStruct</a></div><div class="ttdeci">struct tagDynMemStruct DynMemStruct</div><div class="ttdoc">동적 메모리를 관리하는 구조체입니다. </div></div>
+<div class="ttc" id="structtag_dyn_mem_struct_html"><div class="ttname"><a href="structtag_dyn_mem_struct.html">tagDynMemStruct</a></div><div class="ttdoc">동적 메모리를 관리하는 구조체입니다. </div><div class="ttdef"><b>Definition:</b> memory.h:53</div></div>
+<div class="ttc" id="structtag_dyn_mem_struct_html_a9eaf288f999f519eab6d65e2ec20e80c"><div class="ttname"><a href="structtag_dyn_mem_struct.html#a9eaf288f999f519eab6d65e2ec20e80c">tagDynMemStruct::arBitmap</a></div><div class="ttdeci">BuddyBitmap * arBitmap</div><div class="ttdoc">buddy block을 저장하는 비트맵들을 가리키는 포인터입니다. </div><div class="ttdef"><b>Definition:</b> memory.h:63</div></div>
+<div class="ttc" id="structtag_dyn_mem_struct_html_a85044704961c94e0cb6554d5386e4ae9"><div class="ttname"><a href="structtag_dyn_mem_struct.html#a85044704961c94e0cb6554d5386e4ae9">tagDynMemStruct::CountOfUnitBlock</a></div><div class="ttdeci">uint32_t CountOfUnitBlock</div><div class="ttdoc">최소 크기(DYN_MEM_BUDDY_UNIT_SIZE )의 buddy block의 갯수입니다. </div><div class="ttdef"><b>Definition:</b> memory.h:60</div></div>
+<div class="ttc" id="structtag_buddy_bitmap_html_a86988a65e0d3ece7990c032c159786d6"><div class="ttname"><a href="structtag_buddy_bitmap.html#a86988a65e0d3ece7990c032c159786d6">tagBuddyBitmap::count</a></div><div class="ttdeci">uint32_t count</div><div class="ttdoc">비트맵에서 1로 설정된 비트의 갯수입니다. </div><div class="ttdef"><b>Definition:</b> memory.h:49</div></div>
+<div class="ttc" id="structtag_buddy_bitmap_html_aa3d5af16e9196fe86590957c26067f2f"><div class="ttname"><a href="structtag_buddy_bitmap.html#aa3d5af16e9196fe86590957c26067f2f">tagBuddyBitmap::bits</a></div><div class="ttdeci">uint8_t * bits</div><div class="ttdoc">비트맵의 포인터입니다. </div><div class="ttdef"><b>Definition:</b> memory.h:48</div></div>
+<div class="ttc" id="structtag_dyn_mem_struct_html_a2956653bc81854f48eb8a7bf96353d70"><div class="ttname"><a href="structtag_dyn_mem_struct.html#a2956653bc81854f48eb8a7bf96353d70">tagDynMemStruct::UsedSize</a></div><div class="ttdeci">uint32_t UsedSize</div><div class="ttdoc">메타데이터를 제외한, 현재 할당되어 사용되고 있는 동적 메모리 영역의 크기입니다. </div><div class="ttdef"><b>Definition:</b> memory.h:58</div></div>
+<div class="ttc" id="memory__map_8h_html"><div class="ttname"><a href="memory__map_8h.html">memory_map.h</a></div></div>
+<div class="ttc" id="structtag_dyn_mem_struct_html_a1abc377819fb41d03e879cf6880f01a5"><div class="ttname"><a href="structtag_dyn_mem_struct.html#a1abc377819fb41d03e879cf6880f01a5">tagDynMemStruct::BeginAddr</a></div><div class="ttdeci">uint32_t BeginAddr</div><div class="ttdoc">buddy block 메타데이터를 제외한 동적 메모리 영역의 시작 주소입니다. </div><div class="ttdef"><b>Definition:</b> memory.h:57</div></div>
+<div class="ttc" id="memory_8h_html_a0601ea98b083b7922b6cd2d8a6e804f7"><div class="ttname"><a href="memory_8h.html#a0601ea98b083b7922b6cd2d8a6e804f7">ckDynMemCheckSize</a></div><div class="ttdeci">uint32_t ckDynMemCheckSize(void)</div><div class="ttdoc">돟적 메모리의 크기를 검사하고 g_Dynmem.DynMemSize에 저장합니다. </div><div class="ttdef"><b>Definition:</b> memory.c:267</div></div>
+<div class="ttc" id="memory_8h_html_a4d527c7b3c5364d4aa70329d706dea6d"><div class="ttname"><a href="memory_8h.html#a4d527c7b3c5364d4aa70329d706dea6d">ckDynMemInitialize</a></div><div class="ttdeci">void ckDynMemInitialize(void)</div><div class="ttdoc">buddy block 알고리즘을 사용하는 동적 메모리 관리자를 초기화합니다. </div><div class="ttdef"><b>Definition:</b> memory.c:71</div></div>
+<div class="ttc" id="structtag_dyn_mem_struct_html_aaa7a9ca38a59fba423bf2141cdf2260a"><div class="ttname"><a href="structtag_dyn_mem_struct.html#aaa7a9ca38a59fba423bf2141cdf2260a">tagDynMemStruct::DynMemSize</a></div><div class="ttdeci">uint32_t DynMemSize</div><div class="ttdoc">동적 메모리 영역의 크기입니다. </div><div class="ttdef"><b>Definition:</b> memory.h:55</div></div>
+<div class="ttc" id="memory_8h_html_a7098a12400070b3b20615417b7d74b75"><div class="ttname"><a href="memory_8h.html#a7098a12400070b3b20615417b7d74b75">BuddyBitmap</a></div><div class="ttdeci">struct tagBuddyBitmap BuddyBitmap</div><div class="ttdoc">동적 메모리를 관리하는 buddy block을 기록하는 비트맵 자료구조입니다. </div></div>
+<div class="ttc" id="memory__map_8h_html_a26acf86c1c99d95e7221928f5986f2dd"><div class="ttname"><a href="memory__map_8h.html#a26acf86c1c99d95e7221928f5986f2dd">DYN_MEMORY_PHYSICAL_ADDRESS</a></div><div class="ttdeci">#define DYN_MEMORY_PHYSICAL_ADDRESS</div><div class="ttdoc">동적 메모리 영역의 물리 시작 주소입니다. </div><div class="ttdef"><b>Definition:</b> memory_map.h:82</div></div>
+<div class="ttc" id="memory_8h_html_a04efcabca7e5a8428ba77c06c3e919b4"><div class="ttname"><a href="memory_8h.html#a04efcabca7e5a8428ba77c06c3e919b4">ckDynMemAllocate</a></div><div class="ttdeci">void * ckDynMemAllocate(uint32_t size)</div><div class="ttdoc">동적 메모리에서 메모리를 할당받습니다. </div><div class="ttdef"><b>Definition:</b> memory.c:123</div></div>
+<div class="ttc" id="structtag_buddy_bitmap_html"><div class="ttname"><a href="structtag_buddy_bitmap.html">tagBuddyBitmap</a></div><div class="ttdoc">동적 메모리를 관리하는 buddy block을 기록하는 비트맵 자료구조입니다. </div><div class="ttdef"><b>Definition:</b> memory.h:46</div></div>
+<div class="ttc" id="memory__map_8h_html_a66a4724f17cb83fbc1fe0d914374ddd0"><div class="ttname"><a href="memory__map_8h.html#a66a4724f17cb83fbc1fe0d914374ddd0">IOMAP_MEMORY_START_ADDRESS</a></div><div class="ttdeci">#define IOMAP_MEMORY_START_ADDRESS</div><div class="ttdoc">I/O 맵핑 메모리 영역의 선형 시작 주소입니다. </div><div class="ttdef"><b>Definition:</b> memory_map.h:79</div></div>
+<div class="ttc" id="memory_8h_html_a2c74392c483e53ea699dc244457bb22a"><div class="ttname"><a href="memory_8h.html#a2c74392c483e53ea699dc244457bb22a">ckDynMemFree</a></div><div class="ttdeci">bool ckDynMemFree(void *addr, uint32_t size)</div><div class="ttdoc">동적 메모리에서 할당한 메모리를 해제합니다. </div><div class="ttdef"><b>Definition:</b> memory.c:180</div></div>
+<div class="ttc" id="memory_8h_html_ac430c66975bff615af8b8ed7a1ac1c0c"><div class="ttname"><a href="memory_8h.html#ac430c66975bff615af8b8ed7a1ac1c0c">g_DynMem</a></div><div class="ttdeci">DynMemStruct g_DynMem</div><div class="ttdoc">DynMemStruct 입니다. </div><div class="ttdef"><b>Definition:</b> memory.c:38</div></div>
+<div class="ttc" id="structtag_dyn_mem_struct_html_ae13de6fd8ad4f232b28784b54ac41c92"><div class="ttname"><a href="structtag_dyn_mem_struct.html#ae13de6fd8ad4f232b28784b54ac41c92">tagDynMemStruct::BitmapLevel</a></div><div class="ttdeci">uint32_t BitmapLevel</div><div class="ttdoc">buddy block 계층의 갯수입니다. </div><div class="ttdef"><b>Definition:</b> memory.h:61</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="memory_8h.html">memory.h</a></li>
+    <li class="footer">생성시간 : 일 7월 20 2014 17:00:26, 프로젝트명 : Clubcos, 생성자 : 
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
+  </ul>
+</div>
+</body>
+</html>

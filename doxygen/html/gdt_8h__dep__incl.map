@@ -1,0 +1,8 @@
+<map id="D:/EclipseWorkspace/Clubcos/src/gdt.h" name="D:/EclipseWorkspace/Clubcos/src/gdt.h">
+<area shape="rect" id="node2" href="$ck_main_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/ckMain.c" alt="" coords="5,95,157,136"/>
+<area shape="rect" id="node3" href="$gdt_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/gdt.c" alt="" coords="182,95,330,136"/>
+<area shape="rect" id="node4" href="$idt_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/idt.c" alt="" coords="354,95,502,136"/>
+<area shape="rect" id="node5" href="$keyboard_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/keyboard.c" alt="" coords="527,95,689,136"/>
+<area shape="rect" id="node6" href="$task_8c.html" title="multi&#45;tasking &amp; floating&#45;point support " alt="" coords="714,95,862,136"/>
+<area shape="rect" id="node7" href="$timer_8c.html" title="D:/EclipseWorkspace\l/Clubcos/src/timer.c" alt="" coords="886,95,1034,136"/>
+</map>

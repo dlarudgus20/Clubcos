@@ -1,0 +1,5 @@
+<map id="tagTimerStruct" name="tagTimerStruct">
+<area shape="rect" id="node2" href="$structtag_time_out.html" title="타임아웃을 나타내는 구조체입니다. " alt="" coords="25,187,115,213"/>
+<area shape="rect" id="node3" href="$structtag_linked_list.html" title="이중 환형 연결 리스트 구조체입니다. " alt="" coords="119,97,218,124"/>
+<area shape="rect" id="node4" href="$structtag_linked_list_node.html" title="이중 환형 연결 리스트의 한 노드를 나타내는 구조체입니다. " alt="" coords="5,7,135,33"/>
+</map>

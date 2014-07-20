@@ -1,0 +1,5 @@
+<map id="tagProcess" name="tagProcess">
+<area shape="rect" id="node2" href="$structtag_process_data.html" title="프로세스 별로 가지는 데이터입니다. " alt="" coords="5,99,120,125"/>
+<area shape="rect" id="node3" href="$structtag_linked_list.html" title="이중 환형 연결 리스트 구조체입니다. " alt="" coords="256,99,355,125"/>
+<area shape="rect" id="node4" href="$structtag_linked_list_node.html" title="이중 환형 연결 리스트의 한 노드를 나타내는 구조체입니다. " alt="" coords="149,7,278,33"/>
+</map>

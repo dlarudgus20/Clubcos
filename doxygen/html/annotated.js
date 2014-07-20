@@ -1,0 +1,28 @@
+var annotated =
+[
+    [ "tagArray8", "structtag_array8.html", "structtag_array8" ],
+    [ "tagBiSem", "structtag_bi_sem.html", "structtag_bi_sem" ],
+    [ "tagBuddyBitmap", "structtag_buddy_bitmap.html", "structtag_buddy_bitmap" ],
+    [ "tagCircularQueue32", "structtag_circular_queue32.html", "structtag_circular_queue32" ],
+    [ "tagCircularQueue8", "structtag_circular_queue8.html", "structtag_circular_queue8" ],
+    [ "tagCpuidResult", "structtag_cpuid_result.html", "structtag_cpuid_result" ],
+    [ "tagDynMemStruct", "structtag_dyn_mem_struct.html", "structtag_dyn_mem_struct" ],
+    [ "tagFpuContext", "structtag_fpu_context.html", "structtag_fpu_context" ],
+    [ "tagGdt", "structtag_gdt.html", "structtag_gdt" ],
+    [ "tagIdt", "structtag_idt.html", "structtag_idt" ],
+    [ "tagInterruptContext", "structtag_interrupt_context.html", "structtag_interrupt_context" ],
+    [ "tagKeyboardStruct", "structtag_keyboard_struct.html", "structtag_keyboard_struct" ],
+    [ "tagKeyStruct", "structtag_key_struct.html", "structtag_key_struct" ],
+    [ "tagLinkedList", "structtag_linked_list.html", "structtag_linked_list" ],
+    [ "tagLinkedListNode", "structtag_linked_list_node.html", "structtag_linked_list_node" ],
+    [ "tagProcess", "structtag_process.html", "structtag_process" ],
+    [ "tagProcessData", "structtag_process_data.html", "structtag_process_data" ],
+    [ "tagRecursiveMutex", "structtag_recursive_mutex.html", "structtag_recursive_mutex" ],
+    [ "tagRTCDate", "structtag_r_t_c_date.html", "structtag_r_t_c_date" ],
+    [ "tagRTCTime", "structtag_r_t_c_time.html", "structtag_r_t_c_time" ],
+    [ "tagTask", "structtag_task.html", "structtag_task" ],
+    [ "tagTaskStruct", "structtag_task_struct.html", "structtag_task_struct" ],
+    [ "tagTimeOut", "structtag_time_out.html", "structtag_time_out" ],
+    [ "tagTimerStruct", "structtag_timer_struct.html", "structtag_timer_struct" ],
+    [ "tagTss", "structtag_tss.html", "structtag_tss" ]
+];

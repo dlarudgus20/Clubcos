@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>Clubcos: D:/EclipseWorkspace/Clubcos/src/timer.h 소스 파일</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Clubcos
+   &#160;<span id="projectnumber">0.0.0</span>
+   </div>
+   <div id="projectbrief">Clubcos - Clubc Operating System</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 다음에 의해 생성됨 :  Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'검색');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>메인&#160;페이지</span></a></li>
+      <li><a href="annotated.html"><span>데이타&#160;구조</span></a></li>
+      <li class="current"><a href="files.html"><span>파일들</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="검색" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>파일&#160;목록</span></a></li>
+      <li><a href="globals.html"><span>전역</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('timer_8h_source.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>모두</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>데이타 구조</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>파일들</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>함수</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>변수</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>타입정의</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>열거형 타입</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>열거형 멤버</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>매크로</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>페이지들</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">timer.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="timer_8h.html">이 파일의 문서화 페이지로 가기</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright (c) 2014, 임경현 (dlarudgus20)</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// All rights reserved.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">// Redistribution and use in source and binary forms, with or without</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">// modification, are permitted provided that the following conditions are met:</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">// * Redistributions of source code must retain the above copyright notice, this</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">//   list of conditions and the following disclaimer.</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">// * Redistributions in binary form must reproduce the above copyright notice,</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">//   this list of conditions and the following disclaimer in the documentation</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">//   and/or other materials provided with the distribution.</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#ifndef TIMER_H_</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#define TIMER_H_</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="linkedlist_8h.html">linkedlist.h</a>&quot;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">enum</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462a6f27d1125f7c995765269484ab733a5d">   42</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462a6f27d1125f7c995765269484ab733a5d">PIT_FREQUENCY</a> = 1193180,</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462ab5dab59a2cad8a2d13cbb8519106fa37">   43</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462ab5dab59a2cad8a2d13cbb8519106fa37">TIMER_FREQUENCY</a> = 1000,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462aed3734f683c5234f3663cb8fec7cb086">   45</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462aed3734f683c5234f3663cb8fec7cb086">PIT_CONTROL_PORT</a> = 0x43,</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462a99e9fcfa30e83541502a706643e3c13f">   46</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462a99e9fcfa30e83541502a706643e3c13f">PIT_COUNTER0_PORT</a> = 0x40,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462a9038fcde775627940d3230369c1b777b">   48</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462a9038fcde775627940d3230369c1b777b">PIT_CONTROL_COUNTER0</a> = 0x00,</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462ac4d14e72dc2ab610651590349b326ee6">   49</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462ac4d14e72dc2ab610651590349b326ee6">PIT_CONTROL_LSBMSBRW</a> = 0x30,</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462ad2eb580c737dc984e467d3942310530e">   50</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462ad2eb580c737dc984e467d3942310530e">PIT_CONTROL_LATCH</a> = 0x00,</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462ad721cd45122bc76340c9c62d77aa8722">   51</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462ad721cd45122bc76340c9c62d77aa8722">PIT_CONTROL_MODE0</a> = 0x00,   <span class="comment">// Interrupt during counting</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462a34eb551727b6042b715b24b0c227979b">   52</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462a34eb551727b6042b715b24b0c227979b">PIT_CONTROL_MODE2</a> = 0x04,   <span class="comment">// Clock rate generator</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462ab3d5714d9d57b85d5fc69c9f673da21f">   53</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462ab3d5714d9d57b85d5fc69c9f673da21f">PIT_CONTROL_BINARYCOUNTER</a> = 0x00,</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462a1eb7854a94b62043adfee3e57eab878f">   54</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462a1eb7854a94b62043adfee3e57eab878f">PIT_CONTROL_BCDCOUNTER</a> = 0x01,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462a5f0e989507b95c4c5bb9e61068dd764e">   56</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462a5f0e989507b95c4c5bb9e61068dd764e">PIT_CONTROL_COUNTER0_ONCE</a> =</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462a9038fcde775627940d3230369c1b777b">PIT_CONTROL_COUNTER0</a> | <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462ac4d14e72dc2ab610651590349b326ee6">PIT_CONTROL_LSBMSBRW</a> | <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462ad721cd45122bc76340c9c62d77aa8722">PIT_CONTROL_MODE0</a> | <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462ab3d5714d9d57b85d5fc69c9f673da21f">PIT_CONTROL_BINARYCOUNTER</a>,</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="timer_8h.html#a16685eea158879e41b101ca3634de462a57286c0cb4259f9d9237163d98ab354b">   58</a></span>&#160;    <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462a57286c0cb4259f9d9237163d98ab354b">PIT_CONTROL_COUNTER0_PERIODIC</a> =</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462a9038fcde775627940d3230369c1b777b">PIT_CONTROL_COUNTER0</a> | <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462ac4d14e72dc2ab610651590349b326ee6">PIT_CONTROL_LSBMSBRW</a> | <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462a34eb551727b6042b715b24b0c227979b">PIT_CONTROL_MODE2</a> | <a class="code" href="timer_8h.html#a16685eea158879e41b101ca3634de462ab3d5714d9d57b85d5fc69c9f673da21f">PIT_CONTROL_BINARYCOUNTER</a>,</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;};</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="structtag_time_out.html">   63</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structtag_time_out.html">tagTimeOut</a></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;{</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">union</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    {</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="structtag_time_out.html#ac0cb844ba93809d976a809fb6b2f60a2">   67</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="structtag_time_out.html">tagTimeOut</a> *<a class="code" href="structtag_time_out.html#ac0cb844ba93809d976a809fb6b2f60a2">pNextTimeOut</a>;    </div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="structtag_time_out.html#a5dcf26164b6f29a7f8bf06483bbda69f">   68</a></span>&#160;        <a class="code" href="structtag_linked_list_node.html">LinkedListNode</a> <a class="code" href="structtag_time_out.html#a5dcf26164b6f29a7f8bf06483bbda69f">NoticeNode</a>;          </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    };</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="structtag_time_out.html#ab5627d8d8b095c198e2523c44ca380ac">   71</a></span>&#160;    uint32_t <a class="code" href="structtag_time_out.html#ab5627d8d8b095c198e2523c44ca380ac">timeout</a>;                       </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="structtag_time_out.html#afe73fa7a655419b386e0a10c7beaace3">   72</a></span>&#160;    uint32_t <a class="code" href="structtag_time_out.html#afe73fa7a655419b386e0a10c7beaace3">code</a>;                          </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="structtag_time_out.html#ae7fb786ec3588c30652a4ff052a7b583">   78</a></span>&#160;    <a class="code" href="structtag_linked_list.html">LinkedList</a> *<a class="code" href="structtag_time_out.html#ae7fb786ec3588c30652a4ff052a7b583">NoticeQueue</a>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;} <a class="code" href="timer_8h.html#a651152bbd711cfcc0ed759bb3c7af53b">TimeOut</a>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="structtag_timer_struct.html">   82</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structtag_timer_struct.html">tagTimerStruct</a></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;{</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="structtag_timer_struct.html#ab6d362a3dd4d0f0ade622c813136bf29">   84</a></span>&#160;    <span class="keyword">volatile</span> uint32_t <a class="code" href="structtag_timer_struct.html#ab6d362a3dd4d0f0ade622c813136bf29">TickCountLow</a>;     </div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="structtag_timer_struct.html#ab283c8119f48288a424097d10dfd882a">   85</a></span>&#160;    <span class="keyword">volatile</span> uint32_t <a class="code" href="structtag_timer_struct.html#ab283c8119f48288a424097d10dfd882a">TickCountHigh</a>;    </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="structtag_timer_struct.html#a2ce626d72ac2d791041d0d4f161ae878">   87</a></span>&#160;    <a class="code" href="structtag_time_out.html">TimeOut</a> *<a class="code" href="structtag_timer_struct.html#a2ce626d72ac2d791041d0d4f161ae878">pTimeOutHead</a>;              </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;} <a class="code" href="timer_8h.html#ae9ebac2b530c303f1f599df9df93221f">TimerStruct</a>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">extern</span> <a class="code" href="structtag_timer_struct.html">TimerStruct</a> <a class="code" href="timer_8h.html#a0d4430c67879f9dc155a6b38e6eb3b95">g_TimerStruct</a>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keywordtype">void</span> <a class="code" href="timer_8h.html#ad16a43dd340e350a94e7da0ab882a66b">ckTimerInitialize</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="timer_8h.html#a2201b4d2b853681c0282c5f1c0daebce">ckTimerSet</a>(<a class="code" href="structtag_time_out.html">TimeOut</a> *pTimeOut);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment">//TimeOut *ckTimerAllocTimeOut(uint32_t timeout, uint32_t code, LinkedList *NoticeQueue);</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keywordtype">void</span> <a class="code" href="timer_8h.html#ab3a26f3d7ccfae5665f92d2f13581806">ckTimerIntHandler</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keywordtype">void</span> <a class="code" href="timer_8h.html#ae56d250df6bbb0046091d3f31b0103ac">ckTimerBusyDirectWait_ms</a>(uint32_t milli);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TIMER_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="structtag_timer_struct_html"><div class="ttname"><a href="structtag_timer_struct.html">tagTimerStruct</a></div><div class="ttdoc">타이머 관리 구조체입니다. </div><div class="ttdef"><b>Definition:</b> timer.h:82</div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462a57286c0cb4259f9d9237163d98ab354b"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462a57286c0cb4259f9d9237163d98ab354b">PIT_CONTROL_COUNTER0_PERIODIC</a></div><div class="ttdef"><b>Definition:</b> timer.h:58</div></div>
+<div class="ttc" id="structtag_time_out_html_ab5627d8d8b095c198e2523c44ca380ac"><div class="ttname"><a href="structtag_time_out.html#ab5627d8d8b095c198e2523c44ca380ac">tagTimeOut::timeout</a></div><div class="ttdeci">uint32_t timeout</div><div class="ttdoc">타임아웃이 발생할 tick count입니다. </div><div class="ttdef"><b>Definition:</b> timer.h:71</div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462a6f27d1125f7c995765269484ab733a5d"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462a6f27d1125f7c995765269484ab733a5d">PIT_FREQUENCY</a></div><div class="ttdef"><b>Definition:</b> timer.h:42</div></div>
+<div class="ttc" id="structtag_time_out_html_ac0cb844ba93809d976a809fb6b2f60a2"><div class="ttname"><a href="structtag_time_out.html#ac0cb844ba93809d976a809fb6b2f60a2">tagTimeOut::pNextTimeOut</a></div><div class="ttdeci">struct tagTimeOut * pNextTimeOut</div><div class="ttdoc">Timer 내부에서 사용하는 순방향 연결 리스트의 노드입니다. </div><div class="ttdef"><b>Definition:</b> timer.h:67</div></div>
+<div class="ttc" id="structtag_linked_list_node_html"><div class="ttname"><a href="structtag_linked_list_node.html">tagLinkedListNode</a></div><div class="ttdoc">이중 환형 연결 리스트의 한 노드를 나타내는 구조체입니다. </div><div class="ttdef"><b>Definition:</b> linkedlist.h:42</div></div>
+<div class="ttc" id="structtag_time_out_html_a5dcf26164b6f29a7f8bf06483bbda69f"><div class="ttname"><a href="structtag_time_out.html#a5dcf26164b6f29a7f8bf06483bbda69f">tagTimeOut::NoticeNode</a></div><div class="ttdeci">LinkedListNode NoticeNode</div><div class="ttdoc">NoticeQueue 에 push하는 데 사용되는 노드입니다. </div><div class="ttdef"><b>Definition:</b> timer.h:68</div></div>
+<div class="ttc" id="structtag_timer_struct_html_ab6d362a3dd4d0f0ade622c813136bf29"><div class="ttname"><a href="structtag_timer_struct.html#ab6d362a3dd4d0f0ade622c813136bf29">tagTimerStruct::TickCountLow</a></div><div class="ttdeci">volatile uint32_t TickCountLow</div><div class="ttdoc">틱 카운트의 하위 32비트입니다. </div><div class="ttdef"><b>Definition:</b> timer.h:84</div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462ad721cd45122bc76340c9c62d77aa8722"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462ad721cd45122bc76340c9c62d77aa8722">PIT_CONTROL_MODE0</a></div><div class="ttdef"><b>Definition:</b> timer.h:51</div></div>
+<div class="ttc" id="structtag_timer_struct_html_a2ce626d72ac2d791041d0d4f161ae878"><div class="ttname"><a href="structtag_timer_struct.html#a2ce626d72ac2d791041d0d4f161ae878">tagTimerStruct::pTimeOutHead</a></div><div class="ttdeci">TimeOut * pTimeOutHead</div><div class="ttdoc">TimeOut 구조체 리스트의 head입니다. </div><div class="ttdef"><b>Definition:</b> timer.h:87</div></div>
+<div class="ttc" id="timer_8h_html_a0d4430c67879f9dc155a6b38e6eb3b95"><div class="ttname"><a href="timer_8h.html#a0d4430c67879f9dc155a6b38e6eb3b95">g_TimerStruct</a></div><div class="ttdeci">TimerStruct g_TimerStruct</div><div class="ttdoc">TimerStruct 입니다. </div><div class="ttdef"><b>Definition:</b> timer.c:44</div></div>
+<div class="ttc" id="timer_8h_html_ae9ebac2b530c303f1f599df9df93221f"><div class="ttname"><a href="timer_8h.html#ae9ebac2b530c303f1f599df9df93221f">TimerStruct</a></div><div class="ttdeci">struct tagTimerStruct TimerStruct</div><div class="ttdoc">타이머 관리 구조체입니다. </div></div>
+<div class="ttc" id="timer_8h_html_ab3a26f3d7ccfae5665f92d2f13581806"><div class="ttname"><a href="timer_8h.html#ab3a26f3d7ccfae5665f92d2f13581806">ckTimerIntHandler</a></div><div class="ttdeci">void ckTimerIntHandler(void)</div><div class="ttdoc">타이머 인터럽트 ISR입니다. </div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462ab5dab59a2cad8a2d13cbb8519106fa37"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462ab5dab59a2cad8a2d13cbb8519106fa37">TIMER_FREQUENCY</a></div><div class="ttdef"><b>Definition:</b> timer.h:43</div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462ac4d14e72dc2ab610651590349b326ee6"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462ac4d14e72dc2ab610651590349b326ee6">PIT_CONTROL_LSBMSBRW</a></div><div class="ttdef"><b>Definition:</b> timer.h:49</div></div>
+<div class="ttc" id="linkedlist_8h_html"><div class="ttname"><a href="linkedlist_8h.html">linkedlist.h</a></div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462a1eb7854a94b62043adfee3e57eab878f"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462a1eb7854a94b62043adfee3e57eab878f">PIT_CONTROL_BCDCOUNTER</a></div><div class="ttdef"><b>Definition:</b> timer.h:54</div></div>
+<div class="ttc" id="structtag_time_out_html_ae7fb786ec3588c30652a4ff052a7b583"><div class="ttname"><a href="structtag_time_out.html#ae7fb786ec3588c30652a4ff052a7b583">tagTimeOut::NoticeQueue</a></div><div class="ttdeci">LinkedList * NoticeQueue</div><div class="ttdoc">타임아웃이 발생한 후에 이 구조체가 push될 연결 리스트입니다. </div><div class="ttdef"><b>Definition:</b> timer.h:78</div></div>
+<div class="ttc" id="timer_8h_html_ae56d250df6bbb0046091d3f31b0103ac"><div class="ttname"><a href="timer_8h.html#ae56d250df6bbb0046091d3f31b0103ac">ckTimerBusyDirectWait_ms</a></div><div class="ttdeci">void ckTimerBusyDirectWait_ms(uint32_t milli)</div><div class="ttdoc">인터럽트를 금지한 후 PIT 카운터를 읽어 지정된 시간동안 바쁜 대기를 수행합니다. </div><div class="ttdef"><b>Definition:</b> timer.c:157</div></div>
+<div class="ttc" id="timer_8h_html_a2201b4d2b853681c0282c5f1c0daebce"><div class="ttname"><a href="timer_8h.html#a2201b4d2b853681c0282c5f1c0daebce">ckTimerSet</a></div><div class="ttdeci">bool ckTimerSet(TimeOut *pTimeOut)</div><div class="ttdoc">타임아웃을 설정합니다. </div><div class="ttdef"><b>Definition:</b> timer.c:80</div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462a5f0e989507b95c4c5bb9e61068dd764e"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462a5f0e989507b95c4c5bb9e61068dd764e">PIT_CONTROL_COUNTER0_ONCE</a></div><div class="ttdef"><b>Definition:</b> timer.h:56</div></div>
+<div class="ttc" id="structtag_time_out_html"><div class="ttname"><a href="structtag_time_out.html">tagTimeOut</a></div><div class="ttdoc">타임아웃을 나타내는 구조체입니다. </div><div class="ttdef"><b>Definition:</b> timer.h:63</div></div>
+<div class="ttc" id="structtag_timer_struct_html_ab283c8119f48288a424097d10dfd882a"><div class="ttname"><a href="structtag_timer_struct.html#ab283c8119f48288a424097d10dfd882a">tagTimerStruct::TickCountHigh</a></div><div class="ttdeci">volatile uint32_t TickCountHigh</div><div class="ttdoc">틱 카운트의 상위 32비트입니다. </div><div class="ttdef"><b>Definition:</b> timer.h:85</div></div>
+<div class="ttc" id="structtag_linked_list_html"><div class="ttname"><a href="structtag_linked_list.html">tagLinkedList</a></div><div class="ttdoc">이중 환형 연결 리스트 구조체입니다. </div><div class="ttdef"><b>Definition:</b> linkedlist.h:51</div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462a9038fcde775627940d3230369c1b777b"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462a9038fcde775627940d3230369c1b777b">PIT_CONTROL_COUNTER0</a></div><div class="ttdef"><b>Definition:</b> timer.h:48</div></div>
+<div class="ttc" id="structtag_time_out_html_afe73fa7a655419b386e0a10c7beaace3"><div class="ttname"><a href="structtag_time_out.html#afe73fa7a655419b386e0a10c7beaace3">tagTimeOut::code</a></div><div class="ttdeci">uint32_t code</div><div class="ttdoc">사용자가 마음대로 사용할 수 있는 추가 정보입니다. </div><div class="ttdef"><b>Definition:</b> timer.h:72</div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462aed3734f683c5234f3663cb8fec7cb086"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462aed3734f683c5234f3663cb8fec7cb086">PIT_CONTROL_PORT</a></div><div class="ttdef"><b>Definition:</b> timer.h:45</div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462ab3d5714d9d57b85d5fc69c9f673da21f"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462ab3d5714d9d57b85d5fc69c9f673da21f">PIT_CONTROL_BINARYCOUNTER</a></div><div class="ttdef"><b>Definition:</b> timer.h:53</div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462ad2eb580c737dc984e467d3942310530e"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462ad2eb580c737dc984e467d3942310530e">PIT_CONTROL_LATCH</a></div><div class="ttdef"><b>Definition:</b> timer.h:50</div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462a99e9fcfa30e83541502a706643e3c13f"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462a99e9fcfa30e83541502a706643e3c13f">PIT_COUNTER0_PORT</a></div><div class="ttdef"><b>Definition:</b> timer.h:46</div></div>
+<div class="ttc" id="timer_8h_html_a16685eea158879e41b101ca3634de462a34eb551727b6042b715b24b0c227979b"><div class="ttname"><a href="timer_8h.html#a16685eea158879e41b101ca3634de462a34eb551727b6042b715b24b0c227979b">PIT_CONTROL_MODE2</a></div><div class="ttdef"><b>Definition:</b> timer.h:52</div></div>
+<div class="ttc" id="timer_8h_html_ad16a43dd340e350a94e7da0ab882a66b"><div class="ttname"><a href="timer_8h.html#ad16a43dd340e350a94e7da0ab882a66b">ckTimerInitialize</a></div><div class="ttdeci">void ckTimerInitialize(void)</div><div class="ttdoc">타이머를 초기화합니다. </div><div class="ttdef"><b>Definition:</b> timer.c:58</div></div>
+<div class="ttc" id="timer_8h_html_a651152bbd711cfcc0ed759bb3c7af53b"><div class="ttname"><a href="timer_8h.html#a651152bbd711cfcc0ed759bb3c7af53b">TimeOut</a></div><div class="ttdeci">struct tagTimeOut TimeOut</div><div class="ttdoc">타임아웃을 나타내는 구조체입니다. </div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="timer_8h.html">timer.h</a></li>
+    <li class="footer">생성시간 : 일 7월 20 2014 17:00:26, 프로젝트명 : Clubcos, 생성자 : 
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
+  </ul>
+</div>
+</body>
+</html>
