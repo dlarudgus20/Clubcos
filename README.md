@@ -1,9 +1,19 @@
-Clubcos
-=======
+### Clubcos - Clubc Operating System
 
-Clubcos - Clubc Operating System
+Clubcos is my hand-made operating system, which will be used for my os-dev lecture.
 
-#### Table of Contents
+You can clone Clubcos like this:
+
+```
+$ cd your_repo_root/repo_name
+$ git fetch origin
+$ git checkout gh-pages
+```
+
+[GitHub Page](http://dlarudgus20.github.io/Clubcos/) is available.
+Also [doxygen documentation for Clubcos source](http://dlarudgus20.github.io/Clubcos/doxygen/html/) is available.
+
+### Table of Contents
 
 [License](#license)
 
@@ -15,20 +25,13 @@ Clubcos - Clubc Operating System
 
 [Troubleshooting](#troubleshooting)
 
-
-=======
-
 <a name="license" />
-License
-=======
+### License
 
 Clubcos is under The BSD (2-Clause) License.
 
-=======
-
 <a name="prerequisites" />
-Prerequisites
-=======
+### Prerequisites
 
 make
 
@@ -46,11 +49,8 @@ qemu (for `make run`)
 
 bochsdbg (for `make run_bochs`)
 
-=======
-
 <a name="build" />
-How to build
-=======
+### How to build
 
 **Notice:** Before you try to build, you must build [cross-compiler](#cross-compiler)
 
@@ -75,11 +75,8 @@ If the cross-compiler is not in PATH environmental variable, you should specify 
     # Notice that it MUST contain target triplet prefix (e.g. i686-pc-elf)
     make TARGET_PREFIX="/usr/local/cross/bin/i686-pc-elf"
 
-=======
-
 <a name="cross-compiler" />
-How to build cross compiler
-=======
+### How to build cross compiler
 
 Before building, you need **cross compiler** for i686-pc-elf to build Clubcos.
 
@@ -128,13 +125,9 @@ make install-gcc
 make install-target-libgcc
 ```
 
-=======
-
 <a name="troubleshooting" />
-Troubleshooting
-=======
+### Troubleshooting
 
 > **can't input arrow keys**
 
   qemu has an bug of transform arrow keys to 2/4/6/8 keys of keypad. Turn off NumLock, and use 2/4/6/8 of keypad.
-
