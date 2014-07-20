@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Clubcos by dlarudgus20</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Clubcos</h1>
+        <h2>Clubcos - Clubc Operating System</h2>
+        <a href="https://github.com/dlarudgus20/Clubcos" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h3>
+<a name="clubcos---clubc-operating-system" class="anchor" href="#clubcos---clubc-operating-system"><span class="octicon octicon-link"></span></a>Clubcos - Clubc Operating System</h3>
+
+<p>Clubcos is my hand-made operating system, which will be used for my os-dev lecture.</p>
+
+<p>You can clone Clubcos like this:</p>
+
+<pre><code>$ git clone https://github.com/dlarudgus20/Clubcos
+</code></pre>
+
+<h3>
+<a name="table-of-contents" class="anchor" href="#table-of-contents"><span class="octicon octicon-link"></span></a>Table of Contents</h3>
+
+<p><a href="#license">License</a></p>
+
+<p><a href="##prerequisites">Prerequisites</a></p>
+
+<p><a href="#build">How to build</a></p>
+
+<p><a href="#cross-compiler">How to build cross-compiler</a></p>
+
+<p><a href="#troubleshooting">Troubleshooting</a></p>
+
+<p><a name="license"></a></p>
+
+<h3>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
+
+<p>Clubcos is under The BSD (2-Clause) License.</p>
+
+<p><a name="prerequisites"></a></p>
+
+<h3>
+<a name="prerequisites" class="anchor" href="#prerequisites"><span class="octicon octicon-link"></span></a>Prerequisites</h3>
+
+<p>make</p>
+
+<p>binutils, <strong>which is cross-compiled for i686-pc-elf</strong></p>
+
+<p>gcc upper 4.8.x, <strong>which is cross-compiled for i686-pc-elf</strong></p>
+
+<p>nasm upper 2.11</p>
+
+<p>python</p>
+
+<hr><p>qemu (for <code>make run</code>)</p>
+
+<p>bochsdbg (for <code>make run_bochs</code>)</p>
+
+<p><a name="build"></a></p>
+
+<h3>
+<a name="how-to-build" class="anchor" href="#how-to-build"><span class="octicon octicon-link"></span></a>How to build</h3>
+
+<p><strong>Notice:</strong> Before you try to build, you must build <a href="#cross-compiler">cross-compiler</a></p>
+
+<p>And you also need qemu for <code>make run</code>, and bochsdbg for <code>make run_bochs</code></p>
+
+<hr><p>First, clone this repository:</p>
+
+<pre><code>git clone https://github.com/dlarudgus20/Clubcos.git
+</code></pre>
+
+<p>Second, just make it!</p>
+
+<pre><code>make
+</code></pre>
+
+<p>Notice that default configuration is Debug mode, so you should specify configuration if you want to build Release mode.</p>
+
+<pre><code>make CONFIG=Release
+</code></pre>
+
+<p>If the cross-compiler is not in PATH environmental variable, you should specify its path.</p>
+
+<pre><code># Notice that it MUST contain target triplet prefix (e.g. i686-pc-elf)
+make TARGET_PREFIX="/usr/local/cross/bin/i686-pc-elf"
+</code></pre>
+
+<p><a name="cross-compiler"></a></p>
+
+<h3>
+<a name="how-to-build-cross-compiler" class="anchor" href="#how-to-build-cross-compiler"><span class="octicon octicon-link"></span></a>How to build cross compiler</h3>
+
+<p>Before building, you need <strong>cross compiler</strong> for i686-pc-elf to build Clubcos.</p>
+
+<p>First, install prerequisites for gcc and binutils. <a href="https://gcc.gnu.org/install/prerequisites.html">links</a></p>
+
+<p>Especially, you need these:</p>
+
+<pre><code>bison
+flex
+libgmp-dev
+libmpfr-dev
+libmpc-dev
+
+# optional
+isl
+cloog
+</code></pre>
+
+<p>Download source of <a href="https://gcc.gnu.org/">gcc</a> and <a href="http://www.gnu.org/software/binutils/">binutils</a>.
+And, follow this script to build.</p>
+
+<p>(In my example script, I assume that both gcc and binutils are in <code>/usr/src</code>.)</p>
+
+<pre><code>export TARGET=i686-pc-elf
+export PREFIX=&lt;where-to-install-cross-compiler&gt;
+export PATH="$PREFIX/bin:$PATH"
+
+cd /usr/src
+mkdir build-binutils
+cd build-binutikls
+
+../binutils-x.y.z/configure --prefix="$PREFIX" --target=$TARGET --disable-nls --disable-shared
+make
+make install
+
+cd ..
+mkdir build-gcc
+cd build-gcc
+
+../gcc-x.y.z/configure --prefix="$PREFIX" --target=$TARGET --disable-nls --enable-language=c --without-headers --disable-shared
+make all-gcc
+make all-target-libgcc
+make install-gcc
+make install-target-libgcc
+</code></pre>
+
+<p><a name="troubleshooting"></a></p>
+
+<h3>
+<a name="troubleshooting" class="anchor" href="#troubleshooting"><span class="octicon octicon-link"></span></a>Troubleshooting</h3>
+
+<blockquote>
+<p><strong>can't input arrow keys</strong></p>
+</blockquote>
+
+<p>qemu has an bug of transform arrow keys to 2/4/6/8 keys of keypad. Turn off NumLock, and use 2/4/6/8 of keypad.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/dlarudgus20/Clubcos/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/dlarudgus20/Clubcos/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/dlarudgus20/Clubcos"></a> is maintained by <a href="https://github.com/dlarudgus20">dlarudgus20</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
