@@ -481,7 +481,7 @@ void ckCoshellCmdTestProcess(const char *param)
 		0xb9, 0x00, 0x00, 0x00, 0x00,	// mov ecx, ckTerminalPutChar
 		0xff, 0xd1,						// call ecx
 		0x83, 0xc4, 0x04,				// add esp, 4
-		0xeb, 0xfe,						// jmp $ ; required user-mode and virtual memory swapping
+		0x90, 0x90,						// nop / nop
 		0xb9, 0x00, 0x00, 0x00, 0x00,	// mov ecx, ckTaskExit
 		0xff, 0xd1,						// call ecx
 	};
@@ -491,16 +491,18 @@ void ckCoshellCmdTestProcess(const char *param)
 	c[5] = (uint8_t)((uint32_t)ckTerminalPutChar >> 16);
 	c[6] = (uint8_t)((uint32_t)ckTerminalPutChar >> 24);
 
-	c[14] = (uint8_t)((uint32_t)ckTaskExit >> 0);
-	c[15] = (uint8_t)((uint32_t)ckTaskExit >> 8);
-	c[16] = (uint8_t)((uint32_t)ckTaskExit >> 16);
-	c[17] = (uint8_t)((uint32_t)ckTaskExit >> 24);
+	c[15] = (uint8_t)((uint32_t)ckTaskExit >> 0);
+	c[16] = (uint8_t)((uint32_t)ckTaskExit >> 8);
+	c[17] = (uint8_t)((uint32_t)ckTaskExit >> 16);
+	c[18] = (uint8_t)((uint32_t)ckTaskExit >> 24);
 
 	memcpy(code, c, sizeof(c));
 
-	uint32_t id = ckProcessCreate(0x00100000, 0x00102000,
+	uint32_t id = ckProcessCreate(
+		0x00100000, 0x00102000,
 		NULL, 0, TASK_PRIORITY_NORMAL,
-		PageDirectory, ckDynMemLogicalToPhysical((uint32_t)PageDirectory),
+		PageDirectory, 4 * 1024,
+		ckDynMemLogicalToPhysical((uint32_t)PageDirectory),
 		(ProcessData) { .TermBuffer = (uint16_t *)0x00102000 }, ckProcessGetCurrentId());
 
 	ckTerminalPrintStringF("process id : %u", id);

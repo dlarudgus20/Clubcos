@@ -15,6 +15,9 @@ page Dir/Tbl                  logical address              physical address     
 [D#0x3f8 ~ D#0x3fa)				[0xfe000000 ~ 0xfe800000)	[0x00100000 ~ 0x00900000)	[32MB -]	kernel area
 	[T#0xfe000 ~ T#0xfe800)
 
-[D#0x3fa ~ D#0x3ff]				[0xfe800000 ~ 0xffffffff]	-------------------------	[32MB -]	kernel area (reserved)
-	[T#0xfe800 ~ T#0xfffff]
+[D#0x3fa ~ D#0x3ff)
+	[T#0xfe800 ~ T#0xfffcf)		[0xfe800000 ~ 0xfffcf000)	-------------------------	[32MB -]	kernel area (reserved)
+[D#0x3ff]
+	[T#0xffc00 ~ T#0xfffcf) kernel area (reserved)
 
+	[T#0xfffcf ~ T#0xfffff]		[0xfffcf000 ~ 0xffffffff]	[0x00900000 ~ 0x00931000)	[32KB]		dynamic memory metadata

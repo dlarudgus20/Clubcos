@@ -177,6 +177,7 @@ void ckTaskStructInitialize(void)
 	ckLinkedListInit(&pProc->ChildProcessList);
 
 	pProc->PageDirectory = (uint32_t **)(cr3 - KERNEL_BASE_ADDRESS + KERNEL_PHY_BASE_ADDR);
+	pProc->PageDirSize = 0;
 	pProc->cr3 = cr3;
 	pProc->UsedCpuTime = 0;
 	pProc->id = KERNEL_PROCESS_ID;
@@ -255,7 +256,8 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
 
 uint32_t ckProcessCreate(uint32_t eip, uint32_t esp,
 	void *stack, uint32_t stacksize, TaskPriority priority,
-	uint32_t **PageDirectory, uint32_t cr3, ProcessData ProcData, uint32_t ParentProcessId)
+	uint32_t **PageDirectory, uint32_t PageDirSize,
+	uint32_t cr3, ProcessData ProcData, uint32_t ParentProcessId)
 {
 	uint32_t ret_id = PROCESS_INVALID_ID;
 	Process *ret;
@@ -276,6 +278,8 @@ uint32_t ckProcessCreate(uint32_t eip, uint32_t esp,
 				ckLinkedListInit(&ret->ChildProcessList);
 
 				ret->PageDirectory = PageDirectory;
+				ret->PageDirSize = PageDirSize;
+
 				ret->cr3 = cr3;
 				ret->UsedCpuTime = 0;
 
@@ -403,34 +407,37 @@ static void csCleanupProcess(Process *pProc)
 {
 	ckLinkedListErase(&pProc->pParentProcess->ChildProcessList, &pProc->ChildNode);
 
-	// TODO: how buggy..
-	/*uint32_t **PageDirectory = pProc->PageDirectory;
-	if (PageDirectory != NULL)
+	uint32_t **pdir = pProc->PageDirectory;
+	if (pdir != NULL)
 	{
-		uint32_t **dirend = PageDirectory + KERNEL_PAGE_DIR_NUM;
-		for (uint32_t **dirptr = PageDirectory; dirptr < dirend; dirptr++)
+		uint32_t **dirend = pdir + KERNEL_PAGE_DIR_NUM;
+		for (uint32_t **dirptr = pdir; dirptr < dirend; dirptr++)
 		{
 			if (*dirptr != NULL)
 			{
-				uint32_t *dir = (uint32_t *)ckDynMemPhysicalToLogical((uint32_t)*dirptr & ~0x3ff);
+				uint32_t *ptbl = (uint32_t *)ckDynMemPhysicalToLogical((uint32_t)*dirptr & ~0x3ff);
 
-				uint32_t *tblend = dir + 1024;
-				for (uint32_t *tblptr = dir; tblptr < tblend; tblptr++)
+				uint32_t *tblend = ptbl + 1024;
+				for (uint32_t *tblptr = ptbl; tblptr < tblend; tblptr++)
 				{
-					if (*tblptr != NULL && ckMemoryPhyIsDynMem((uint32_t)*tblptr & ~0x3ff))
+					if (*tblptr != 0 && ckDynMemPhyIsDynMem(*tblptr & ~0x3ff))
 					{
-						uint32_t tbl = ckDynMemPhysicalToLogical(*tblptr & ~0x3ff);
-						ckMemoryFreeBuddy(ckDynMemPhysicalToLogical(tbl));
+						uint32_t addr = ckDynMemPhysicalToLogical(*tblptr & ~0x3ff);
+						ckDynMemFree((void *)addr, DYN_MEM_BUDDY_UNIT_SIZE);
+						// 중복 해제를 방지하기 위해
+						*tblptr = 0;
 					}
 				}
 
-				ckMemoryFreeBuddy(dir);
+				ckDynMemFree(ptbl, DYN_MEM_BUDDY_UNIT_SIZE);
+				// 중복 해제를 방지하기 위해
+				*dirptr = 0;
 			}
 		}
 
-		ckMemoryFreeBuddy(PageDirectory);
-		pProc->PageDirectory = NULL;
-	}*/
+		if (pProc->PageDirSize != 0)
+			ckDynMemFree(pProc->PageDirectory, pProc->PageDirSize);
+	}
 }
 
 bool ckTaskChangePriority(uint32_t TaskId, TaskPriority priority)

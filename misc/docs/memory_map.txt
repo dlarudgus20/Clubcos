@@ -7,8 +7,8 @@
 [0x00301000 ~ 0x00701000)		page table
 [0x00701000 ~ 0x00711000)		gdt table
 [0x00711000 ~ 0x00711800)		idt table
-[0x00711800 ~ 0x008720c8)		TaskStruct
-[0x008720c8 ~ 0x00880000)		Coshell Task stack
+[0x00711800 ~ 0x008728c8)		TaskStruct
+[0x008728c8 ~ 0x00880000)		Coshell Task stack
 [0x00880000 ~ 0x00900000)		Idle Task stack
 [0x00900000 ~ 0xc0000000)		dynamic memory
 [0xc0000000 ~ 0xffffffff]		unused & hardware
@@ -27,10 +27,11 @@ logical address            physical address            description
 	[0xfe201000 ~ 0xfe601000)	[0x00301000 ~ 0x00701000)	page table
 	[0xfe601000 ~ 0xfe611000)	[0x00701000 ~ 0x00711000)	gdt table
 	[0xfe611000 ~ 0xfe611800)	[0x00711000 ~ 0x00711800)	idt table
-	[0xfe611800 ~ 0xfe7720c8)	[0x00711800 ~ 0x008720c8)	TaskStruct
-	[0xfe7720c8 ~ 0xfe780000)	[0x008720c8 ~ 0x00880000)	Coshell Task stack
+	[0xfe611800 ~ 0xfe7728c8)	[0x00711800 ~ 0x008728c8)	TaskStruct
+	[0xfe7728c8 ~ 0xfe780000)	[0x008728c8 ~ 0x00880000)	Coshell Task stack
 	[0xfe780000 ~ 0xfe800000)	[0x00880000 ~ 0x00900000)	Idle Task stack
-	[0xfe800000 ~ 0xffffffff]	-------------------------	kernel area (reserved)
+	[0xfe800000 ~ 0xfffcf000)	-------------------------	kernel area (reserved)
+	[0xfffcf000 ~ 0xffffffff]	[0x00900000 ~ 0x00931000)	dynamic memory metadata
 
 가상 메모리 (응용프로그램)
 

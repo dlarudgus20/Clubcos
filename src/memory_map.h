@@ -78,6 +78,9 @@
 /** @brief I/O 맵핑 메모리 영역의 선형 시작 주소입니다. */
 #define IOMAP_MEMORY_START_ADDRESS 0xbf800000
 
+/** @brief 동적 메모리의 메타데이터 영역의 논리 주소입니다. */
+#define DYN_MEMORY_METADATA_ADDR 0xfffcf000
+
 /** @brief 동적 메모리 영역의 물리 시작 주소입니다. */
 #define DYN_MEMORY_PHYSICAL_ADDRESS 0x00900000
 

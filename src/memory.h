@@ -103,7 +103,16 @@ static inline uint32_t ckDynMemGetSize(void)
  */
 static inline bool ckDynMemPhyIsDynMem(uint32_t phy)
 {
-	return (DYN_MEMORY_PHYSICAL_ADDRESS < phy && phy < IOMAP_MEMORY_START_ADDRESS);
+	return (DYN_MEMORY_PHYSICAL_ADDRESS < phy && phy < 0xc0000000);
+}
+/**
+ * @brief 특정 논리 주소가 동적 메모리 영역의 주소인지 검사합니다.
+ * @param[in] loc 검사할 논리 주소입니다.
+ * @return <c>loc</c>가 동적 메모리 영역 안에 있다면 <c>true</c>이고, 그렇지 않다면 <c>false</c>입니다.
+ */
+static inline bool ckDynMemLocIsDynMem(uint32_t loc)
+{
+	return (DYN_MEMORY_START_ADDRESS < loc && loc < IOMAP_MEMORY_START_ADDRESS);
 }
 
 #endif /* MEMORY_H_ */

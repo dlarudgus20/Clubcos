@@ -114,7 +114,7 @@ QEMU_FLAGS := -L . -m 64 -fda $(OUTPUT_IMG) -boot a -localtime -M pc
 QEMU_DEBUG_FLAGS := $(QEMU_FLAGS) -gdb tcp:127.0.0.1:1234 -S
 
 # bochs
-ifeq ($(QEMU), )
+ifeq ($(BOCHSDBG), )
 BOCHSDBG := bochsdbg
 endif
 BOCHSRC := bochsrc_$(CONFIG).bxrc

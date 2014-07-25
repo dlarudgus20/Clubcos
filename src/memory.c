@@ -71,7 +71,7 @@ static inline uint8_t BITMAP_GET_BIT(BuddyBitmap *bitmap, uint32_t idx)
 void ckDynMemInitialize(void)
 {
 	// 메타데이터의 크기를 계산
-	uint8_t *pb = (uint8_t *)DYN_MEMORY_START_ADDRESS;
+	uint8_t *pb = (uint8_t *)DYN_MEMORY_METADATA_ADDR;
 	g_DynMem.BeginAddr = DYN_MEMORY_START_ADDRESS;
 	uint32_t DynSize = g_DynMem.DynMemSize;
 	for (uint32_t sz = (DynSize - 1) / DYN_MEM_BUDDY_UNIT_SIZE + 1; ; sz >>= 1)
@@ -86,9 +86,8 @@ void ckDynMemInitialize(void)
 	g_DynMem.BeginAddr = _ceil_uint32(g_DynMem.BeginAddr, DYN_MEM_BUDDY_UNIT_SIZE);
 
 	// 버디블록 초기화
-
 	DynSize -= g_DynMem.BeginAddr - DYN_MEMORY_START_ADDRESS; // 메타데이터의 크기만큼 제외
-	g_DynMem.arBitmap = (BuddyBitmap *)DYN_MEMORY_START_ADDRESS;
+	g_DynMem.arBitmap = (BuddyBitmap *)DYN_MEMORY_METADATA_ADDR;
 	g_DynMem.CountOfUnitBlock = (DynSize - 1) / DYN_MEM_BUDDY_UNIT_SIZE + 1;
 
 	BuddyBitmap *pBitmap = g_DynMem.arBitmap;

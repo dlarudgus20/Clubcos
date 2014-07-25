@@ -78,7 +78,12 @@ section .setup
 		mov edx, KERNEL_BASE_ADDRESS | PageFlag
 		mov ecx, 0xfe800 - 0xfe000
 		call PageTableInit
-		;mov edi, eax		; 초기화 완료
+		;mov edi, eax
+		; dynamic memory metadata [T#0xfffcf ~ T#0xfffff]
+		mov edi, PAGE_TABLE_DYNMEM_METADATA
+		mov ecx, 0x100000 - 0xfffcf
+		mov eax, DYN_MEMORY_START_ADDRESS
+		call PageTableInit
 
 		;; page directory 초기화
 		; [D#0x000 ~ D#0x3fa]
@@ -87,11 +92,12 @@ section .setup
 		mov ecx, 0x3fa
 		call PageTableInit
 		mov edi, eax
-		; [D#0x3fa ~ D#0x3ff]
-		mov ecx, 0x400 - 0x3fa
+		; [D#0x3fa ~ D#0x3ff)
+		mov ecx, 0x3ff - 0x3fa
 		xor eax, eax
 		rep stosd
-		;mov edi, eax		; 초기화 완료
+		; [D#0x3ff]
+		mov dword [edi], PAGE_TABLE_DYNMEM_METADATA | PageFlag
 
 		;; paging enable
 		; identity paging in [0x00100000 - 0x00101000) [T#0x00100]

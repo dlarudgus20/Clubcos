@@ -5,9 +5,7 @@ Clubcos is my hand-made operating system, which will be used for my os-dev lectu
 You can clone Clubcos like this:
 
 ```
-$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+$ git clone http://github.com/dlarudgus20/Clubcos
 ```
 
 [GitHub Page](http://dlarudgus20.github.io/Clubcos/) is available.
