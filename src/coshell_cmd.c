@@ -473,8 +473,6 @@ void ckCoshellCmdTestProcess(const char *param)
 	// [0x00102000 ~ 0x00103000) D#0x000, T#0x00102
 	PageTable[0x00102] = 0xb8000 | PAGE_DIRENT_R | PAGE_DIRENT_P;
 
-	// TODO: User-mode process
-
 	// write code
 	static uint8_t c[] = {
 		0x6a, (uint8_t)'p',				// push 'p'

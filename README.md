@@ -5,7 +5,7 @@ Clubcos is my hand-made operating system, which will be used for my os-dev lectu
 You can clone Clubcos like this:
 
 ```
-$ git clone http://github.com/dlarudgus20/Clubcos
+$ git clone http://github.com/dlarudgus20/Clubcos.git
 ```
 
 [GitHub Page](http://dlarudgus20.github.io/Clubcos/) is available.
@@ -15,7 +15,7 @@ Also [doxygen documentation for Clubcos source](http://dlarudgus20.github.io/Clu
 
 [License](#license)
 
-[Prerequisites](##prerequisites)
+[Prerequisites](#prerequisites)
 
 [How to build](#build)
 
