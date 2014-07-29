@@ -309,75 +309,75 @@ $(document).ready(function(){initNavTree('task_8h_source.html','');});
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#aa191a219faca280eabbfae4cc65ff4e2">ckTaskTerminate</a>(uint32_t TaskId);</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckTaskExit(<span class="keywordtype">void</span>) { <a class="code" href="task_8h.html#aa191a219faca280eabbfae4cc65ff4e2">ckTaskTerminate</a>(g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a9573dbc5d9f0237d72f1af553b93afa8">pNow</a>-&gt;id); }</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;uint32_t <a class="code" href="task_8h.html#a5976f981a8b3b97b469c86251f4639bd">ckProcessCreate</a>(uint32_t eip, uint32_t esp,</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="keywordtype">void</span> *<a class="code" href="task_8h.html#afc0da95553742561773d762fa905fdab">stack</a>, uint32_t <a class="code" href="task_8h.html#a950b7f81ad4711959517296e63bc79d1">stacksize</a>, <a class="code" href="task_8h.html#afb3147c57e7bb7180b8f22b9c24c62bc">TaskPriority</a> <a class="code" href="task_8h.html#afcd2119c9507046c8cf994e864b29e46">priority</a>,</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    uint32_t **PageDirectory, uint32_t PageDirSize,</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    uint32_t cr3, <a class="code" href="structtag_process_data.html">ProcessData</a> ProcData, uint32_t ParentProcessId);</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#aa0d77869a3423fe34dfdeb3f8f132c64">ckProcessTerminate</a>(uint32_t ProcessId);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckProcessExit(<span class="keywordtype">void</span>) { <a class="code" href="task_8h.html#aa0d77869a3423fe34dfdeb3f8f132c64">ckProcessTerminate</a>(g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a9573dbc5d9f0237d72f1af553b93afa8">pNow</a>-&gt;pProcess-&gt;id); }</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#aec19c20b7f7748e2eb11cb3d06b24134">ckTaskChangePriority</a>(uint32_t TaskId, <a class="code" href="task_8h.html#afb3147c57e7bb7180b8f22b9c24c62bc">TaskPriority</a> <a class="code" href="task_8h.html#afcd2119c9507046c8cf994e864b29e46">priority</a>);</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#af42a16e30c94dcb156c70d039a561a6f">ckTaskSuspend</a>(uint32_t TaskId);</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#a2bcd595dea4136d119f49470b0569f81">ckTaskResume</a>(uint32_t TaskId);</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#ad6ab74ec1c6bf9d572d0c7a0b0acfcb3">ckTaskSuspend_byptr</a>(Task *pTask);</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#ab13604db8f7d68cc22ce6e8939090add">ckTaskResume_byptr</a>(Task *pTask);</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="keywordtype">void</span> <a class="code" href="task_8h.html#a12efe10d11676a020e7ae1aa6e4570df">ckTaskJoin</a>(uint32_t TaskId);</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="keywordtype">void</span> <a class="code" href="task_8h.html#a46379b0158498ce67e1cc5b6c0bb4480">ckProcessJoin</a>(uint32_t ProcId);</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="keywordtype">void</span> <a class="code" href="task_8h.html#a6b1be14f069b4b0f3674109dab930a8e">ckTaskSchedule</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="keywordtype">void</span> <a class="code" href="task_8h.html#a1b61c8792305d0a9ce45493a8d339c76">ckTaskScheduleOnTimerInt</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> Task *ckTaskGetCurrent(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a9573dbc5d9f0237d72f1af553b93afa8">pNow</a>; }</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> uint32_t ckTaskGetCurrentId(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a9573dbc5d9f0237d72f1af553b93afa8">pNow</a>-&gt;id; }</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="structtag_process.html">Process</a> *ckProcessGetCurrent(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a9573dbc5d9f0237d72f1af553b93afa8">pNow</a>-&gt;pProcess; }</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> uint32_t ckProcessGetCurrentId(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a9573dbc5d9f0237d72f1af553b93afa8">pNow</a>-&gt;pProcess-&gt;id; }</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="structtag_process_data.html">ProcessData</a> *ckProcessGetData(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a44e937e072fad80e7e9e83721e939c47">pProcData</a>; }</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> Task *ckTaskGetKernel(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a7e33109ee043aaf5e6e515bbdd704a3a">tasks</a> + 0; }</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> Task *ckTaskGetIdle(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a7e33109ee043aaf5e6e515bbdd704a3a">tasks</a> + 1; }</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="structtag_process.html">Process</a> *ckProcessGetKernel(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#ad85e8a0253f62a3e9a8a22cc3c8054c5">processes</a> + 0; }</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckTaskSetInitParam(<span class="keywordtype">void</span> **pStackTop, <span class="keywordtype">void</span> *param)</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;{</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    *pStackTop -= <span class="keyword">sizeof</span>(<span class="keywordtype">void</span> *);</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    *(<span class="keywordtype">void</span> **)(*pStackTop) = param;</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    *pStackTop -= <span class="keyword">sizeof</span>(<span class="keywordtype">void</span> *);</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    *(<span class="keywordtype">void</span> **)(*pStackTop) = ckTaskExit;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;}</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckLoadTr(uint32_t tr)</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;{</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    __asm__ __volatile__ ( <span class="stringliteral">&quot;ltr (%0)&quot;</span> : : <span class="stringliteral">&quot;r&quot;</span>(&amp;tr) );</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;}</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;uint32_t <a class="code" href="task_8h.html#a5976f981a8b3b97b469c86251f4639bd">ckProcessCreate</a>(uint32_t eip, uint32_t esp,</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keywordtype">void</span> *<a class="code" href="task_8h.html#afc0da95553742561773d762fa905fdab">stack</a>, uint32_t <a class="code" href="task_8h.html#a950b7f81ad4711959517296e63bc79d1">stacksize</a>, <a class="code" href="task_8h.html#afb3147c57e7bb7180b8f22b9c24c62bc">TaskPriority</a> <a class="code" href="task_8h.html#afcd2119c9507046c8cf994e864b29e46">priority</a>,</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    uint32_t **PageDirectory, uint32_t PageDirSize,</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    uint32_t cr3, <a class="code" href="structtag_process_data.html">ProcessData</a> ProcData, uint32_t ParentProcessId);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#aa0d77869a3423fe34dfdeb3f8f132c64">ckProcessTerminate</a>(uint32_t ProcessId);</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckProcessExit(<span class="keywordtype">void</span>) { <a class="code" href="task_8h.html#aa0d77869a3423fe34dfdeb3f8f132c64">ckProcessTerminate</a>(g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a9573dbc5d9f0237d72f1af553b93afa8">pNow</a>-&gt;pProcess-&gt;id); }</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#aec19c20b7f7748e2eb11cb3d06b24134">ckTaskChangePriority</a>(uint32_t TaskId, <a class="code" href="task_8h.html#afb3147c57e7bb7180b8f22b9c24c62bc">TaskPriority</a> <a class="code" href="task_8h.html#afcd2119c9507046c8cf994e864b29e46">priority</a>);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#af42a16e30c94dcb156c70d039a561a6f">ckTaskSuspend</a>(uint32_t TaskId);</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#a2bcd595dea4136d119f49470b0569f81">ckTaskResume</a>(uint32_t TaskId);</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#ad6ab74ec1c6bf9d572d0c7a0b0acfcb3">ckTaskSuspend_byptr</a>(Task *pTask);</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="task_8h.html#ab13604db8f7d68cc22ce6e8939090add">ckTaskResume_byptr</a>(Task *pTask);</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="keywordtype">void</span> <a class="code" href="task_8h.html#a12efe10d11676a020e7ae1aa6e4570df">ckTaskJoin</a>(uint32_t TaskId);</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="keywordtype">void</span> <a class="code" href="task_8h.html#a46379b0158498ce67e1cc5b6c0bb4480">ckProcessJoin</a>(uint32_t ProcId);</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="keywordtype">void</span> <a class="code" href="task_8h.html#a6b1be14f069b4b0f3674109dab930a8e">ckTaskSchedule</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="keywordtype">void</span> <a class="code" href="task_8h.html#a1b61c8792305d0a9ce45493a8d339c76">ckTaskScheduleOnTimerInt</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> Task *ckTaskGetCurrent(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a9573dbc5d9f0237d72f1af553b93afa8">pNow</a>; }</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> uint32_t ckTaskGetCurrentId(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a9573dbc5d9f0237d72f1af553b93afa8">pNow</a>-&gt;id; }</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="structtag_process.html">Process</a> *ckProcessGetCurrent(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a9573dbc5d9f0237d72f1af553b93afa8">pNow</a>-&gt;pProcess; }</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> uint32_t ckProcessGetCurrentId(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a9573dbc5d9f0237d72f1af553b93afa8">pNow</a>-&gt;pProcess-&gt;id; }</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="structtag_process_data.html">ProcessData</a> *ckProcessGetData(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a44e937e072fad80e7e9e83721e939c47">pProcData</a>; }</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> Task *ckTaskGetKernel(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a7e33109ee043aaf5e6e515bbdd704a3a">tasks</a> + 0; }</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> Task *ckTaskGetIdle(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#a7e33109ee043aaf5e6e515bbdd704a3a">tasks</a> + 1; }</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="structtag_process.html">Process</a> *ckProcessGetKernel(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> g_pTaskStruct-&gt;<a class="code" href="structtag_task_struct.html#ad85e8a0253f62a3e9a8a22cc3c8054c5">processes</a> + 0; }</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckTaskSetInitParam(<span class="keywordtype">void</span> **pStackTop, <span class="keywordtype">void</span> *param)</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;{</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    *pStackTop -= <span class="keyword">sizeof</span>(<span class="keywordtype">void</span> *);</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    *(<span class="keywordtype">void</span> **)(*pStackTop) = param;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    *pStackTop -= <span class="keyword">sizeof</span>(<span class="keywordtype">void</span> *);</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    *(<span class="keywordtype">void</span> **)(*pStackTop) = ckTaskExit;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;}</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckLoadTr(uint32_t tr)</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;{</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    __asm__ __volatile__ ( <span class="stringliteral">&quot;ltr (%0)&quot;</span> : : <span class="stringliteral">&quot;r&quot;</span>(&amp;tr) );</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;}</div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;<span class="comment">// fpu assembly function</span></div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckFpuFinit()</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;{</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    __asm__ __volatile__ ( <span class="stringliteral">&quot;finit&quot;</span> );</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;}</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckFpuFxsave(FpuContext *pFpuContext)</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;{</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    __asm__ __volatile__ ( <span class="stringliteral">&quot;fxsave %0&quot;</span> : <span class="stringliteral">&quot;=m&quot;</span>(*pFpuContext) );</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;}</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckFpuFxrstor(<span class="keyword">const</span> FpuContext *pFpuContext)</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;{</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    __asm__ __volatile__ ( <span class="stringliteral">&quot;fxrstor %0&quot;</span> : : <span class="stringliteral">&quot;m&quot;</span>(*pFpuContext) );</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;}</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TASK_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="comment">// fpu assembly function</span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckFpuFinit()</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;{</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    __asm__ __volatile__ ( <span class="stringliteral">&quot;finit&quot;</span> );</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;}</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckFpuFxsave(FpuContext *pFpuContext)</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;{</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    __asm__ __volatile__ ( <span class="stringliteral">&quot;fxsave %0&quot;</span> : <span class="stringliteral">&quot;=m&quot;</span>(*pFpuContext) );</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;}</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> ckFpuFxrstor(<span class="keyword">const</span> FpuContext *pFpuContext)</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;{</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    __asm__ __volatile__ ( <span class="stringliteral">&quot;fxrstor %0&quot;</span> : : <span class="stringliteral">&quot;m&quot;</span>(*pFpuContext) );</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;}</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TASK_H_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="structtag_process_html_a3b47bebfd93ba141ee00127e6e85c18c"><div class="ttname"><a href="structtag_process.html#a3b47bebfd93ba141ee00127e6e85c18c">tagProcess::ChildNode</a></div><div class="ttdeci">LinkedListNode ChildNode</div><div class="ttdoc">부모 프로세스가 이 프로세스를 관리하기 위해 사용하는 노드입니다. </div><div class="ttdef"><b>Definition:</b> task.h:164</div></div>
 <div class="ttc" id="structtag_task_struct_html_a87b2ba5347ce01f3bf6d271c4d5e33af"><div class="ttname"><a href="structtag_task_struct.html#a87b2ba5347ce01f3bf6d271c4d5e33af">tagTaskStruct::bSSEIsExist</a></div><div class="ttdeci">bool bSSEIsExist</div><div class="ttdoc">SSE의 사용 가능 여부입니다. </div><div class="ttdef"><b>Definition:</b> task.h:212</div></div>
 <div class="ttc" id="structtag_task_struct_html_a44e937e072fad80e7e9e83721e939c47"><div class="ttname"><a href="structtag_task_struct.html#a44e937e072fad80e7e9e83721e939c47">tagTaskStruct::pProcData</a></div><div class="ttdeci">ProcessData * pProcData</div><div class="ttdoc">현재 실행중인 프로세스의 data입니다. pNow->pProcess->ProcData와 동일합니다. </div><div class="ttdef"><b>Definition:</b> task.h:204</div></div>
-<div class="ttc" id="structtag_process_html_a67ad324aaa1d638679e052b3e94ebfce"><div class="ttname"><a href="structtag_process.html#a67ad324aaa1d638679e052b3e94ebfce">tagProcess::PageDirSize</a></div><div class="ttdeci">uint32_t PageDirSize</div><div class="ttdoc">PageDirectory의 크기입니다. </div><div class="ttdef"><b>Definition:</b> task.h:174</div></div>
+<div class="ttc" id="structtag_process_html_a67ad324aaa1d638679e052b3e94ebfce"><div class="ttname"><a href="structtag_process.html#a67ad324aaa1d638679e052b3e94ebfce">tagProcess::PageDirSize</a></div><div class="ttdeci">uint32_t PageDirSize</div><div class="ttdoc">PageDirectory 의 크기입니다. </div><div class="ttdef"><b>Definition:</b> task.h:174</div></div>
 <div class="ttc" id="structtag_process_html"><div class="ttname"><a href="structtag_process.html">tagProcess</a></div><div class="ttdoc">프로세스를 나타내는 구조체입니다. </div><div class="ttdef"><b>Definition:</b> task.h:156</div></div>
 <div class="ttc" id="structtag_tss_html_ae7c1e3339e4dead200cab41010e9127c"><div class="ttname"><a href="structtag_tss.html#ae7c1e3339e4dead200cab41010e9127c">tagTss::ebx</a></div><div class="ttdeci">uint32_t ebx</div><div class="ttdef"><b>Definition:</b> task.h:92</div></div>
 <div class="ttc" id="task_8h_html_afb3147c57e7bb7180b8f22b9c24c62bc"><div class="ttname"><a href="task_8h.html#afb3147c57e7bb7180b8f22b9c24c62bc">TaskPriority</a></div><div class="ttdeci">enum tagTaskPriority TaskPriority</div><div class="ttdoc">태스크의 스케쥴 우선순위를 나타내는 열거형입니다. </div></div>
@@ -517,7 +517,7 @@ $(document).ready(function(){initNavTree('task_8h_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="task_8h.html">task.h</a></li>
-    <li class="footer">생성시간 : 화 7월 29 2014 17:24:39, 프로젝트명 : Clubcos, 생성자 : 
+    <li class="footer">생성시간 : 화 7월 29 2014 17:32:19, 프로젝트명 : Clubcos, 생성자 : 
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>
