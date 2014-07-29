@@ -11,6 +11,7 @@ var searchData=
   ['ds',['ds',['../structtag_interrupt_context.html#a6fe20edd854a1a653ae71ccf541a6b8b',1,'tagInterruptContext::ds()'],['../structtag_tss.html#a6fe20edd854a1a653ae71ccf541a6b8b',1,'tagTss::ds()']]],
   ['dummy',['dummy',['../structtag_linked_list.html#ab6fc0ebd52b7d7d4a611ec49c35701e0',1,'tagLinkedList']]],
   ['dyn_5fmem_5fbuddy_5funit_5fsize',['DYN_MEM_BUDDY_UNIT_SIZE',['../memory_8h.html#a2b8672413df7d35da534648e0218ae1d',1,'memory.h']]],
+  ['dyn_5fmemory_5fmetadata_5faddr',['DYN_MEMORY_METADATA_ADDR',['../memory__map_8h.html#a057a9bc9e5a66d170fd28c5672ee8462',1,'memory_map.h']]],
   ['dyn_5fmemory_5fphysical_5faddress',['DYN_MEMORY_PHYSICAL_ADDRESS',['../memory__map_8h.html#a26acf86c1c99d95e7221928f5986f2dd',1,'memory_map.h']]],
   ['dyn_5fmemory_5fstart_5faddress',['DYN_MEMORY_START_ADDRESS',['../memory__map_8h.html#ac374b0b933a7d17bfc6d52bad579eb1b',1,'memory_map.h']]],
   ['dynmemsize',['DynMemSize',['../structtag_dyn_mem_struct.html#aaa7a9ca38a59fba423bf2141cdf2260a',1,'tagDynMemStruct']]],

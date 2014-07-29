@@ -20,6 +20,7 @@ var searchData=
   ['page_5ftblent_5fu',['PAGE_TBLENT_U',['../page_8h.html#a5d76b81b0ad4c19007a781d4edb8181fa1d94ac6b1f2efc348428f6a177ba1d72',1,'page.h']]],
   ['page_5ftblent_5fw',['PAGE_TBLENT_W',['../page_8h.html#a5d76b81b0ad4c19007a781d4edb8181fa7d43716c5f3450c39e1cf21f25f3d503',1,'page.h']]],
   ['pagedirectory',['PageDirectory',['../structtag_process.html#a11f9b5381675de028526e864c48fa4cb',1,'tagProcess']]],
+  ['pagedirsize',['PageDirSize',['../structtag_process.html#a67ad324aaa1d638679e052b3e94ebfce',1,'tagProcess']]],
   ['pfirst',['pFirst',['../structtag_circular_queue32.html#accacbe226673de01cc12ce5acbef6c31',1,'tagCircularQueue32::pFirst()'],['../structtag_circular_queue8.html#a83bf8dda7b8f82d8345e668d0d12d92f',1,'tagCircularQueue8::pFirst()']]],
   ['pic_2ec',['pic.c',['../pic_8c.html',1,'']]],
   ['pic_2eh',['pic.h',['../pic_8h.html',1,'']]],

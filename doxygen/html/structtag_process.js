@@ -6,6 +6,7 @@ var structtag_process =
     [ "cr3", "structtag_process.html#aa9166a91c5e8b2b51b0a9677f9ba56a0", null ],
     [ "id", "structtag_process.html#abaabdc509cdaba7df9f56c6c76f3ae19", null ],
     [ "PageDirectory", "structtag_process.html#a11f9b5381675de028526e864c48fa4cb", null ],
+    [ "PageDirSize", "structtag_process.html#a67ad324aaa1d638679e052b3e94ebfce", null ],
     [ "pMainThread", "structtag_process.html#ae4325976c6e78b24a195d691ce7456bd", null ],
     [ "pParentProcess", "structtag_process.html#a002cd989c79db89e252cf22a707add7d", null ],
     [ "ProcData", "structtag_process.html#a8d17e83bdd4b6274cb413ffa4f03af71", null ],

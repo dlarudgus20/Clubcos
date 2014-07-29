@@ -242,9 +242,9 @@ task.h에 대한 include 의존 그래프</div>
 <tr class="memitem:aa191a219faca280eabbfae4cc65ff4e2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task_8h.html#aa191a219faca280eabbfae4cc65ff4e2">ckTaskTerminate</a> (uint32_t TaskId)</td></tr>
 <tr class="memdesc:aa191a219faca280eabbfae4cc65ff4e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">태스크를 종료시킵니다.  <a href="#aa191a219faca280eabbfae4cc65ff4e2">더 자세히 ...</a><br /></td></tr>
 <tr class="separator:aa191a219faca280eabbfae4cc65ff4e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0cf96e16a1a7ba21992bae4a3f52825"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task_8h.html#af0cf96e16a1a7ba21992bae4a3f52825">ckProcessCreate</a> (uint32_t eip, uint32_t esp, void *<a class="el" href="task_8h.html#afc0da95553742561773d762fa905fdab">stack</a>, uint32_t <a class="el" href="task_8h.html#a950b7f81ad4711959517296e63bc79d1">stacksize</a>, <a class="el" href="task_8h.html#afb3147c57e7bb7180b8f22b9c24c62bc">TaskPriority</a> <a class="el" href="task_8h.html#afcd2119c9507046c8cf994e864b29e46">priority</a>, uint32_t **PageDirectory, uint32_t cr3, <a class="el" href="task_8h.html#a18856870fcd91ece4bb18b9a310f0e21">ProcessData</a> ProcData, uint32_t ParentProcessId)</td></tr>
-<tr class="memdesc:af0cf96e16a1a7ba21992bae4a3f52825"><td class="mdescLeft">&#160;</td><td class="mdescRight">프로세스를 생성합니다.  <a href="#af0cf96e16a1a7ba21992bae4a3f52825">더 자세히 ...</a><br /></td></tr>
-<tr class="separator:af0cf96e16a1a7ba21992bae4a3f52825"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5976f981a8b3b97b469c86251f4639bd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task_8h.html#a5976f981a8b3b97b469c86251f4639bd">ckProcessCreate</a> (uint32_t eip, uint32_t esp, void *<a class="el" href="task_8h.html#afc0da95553742561773d762fa905fdab">stack</a>, uint32_t <a class="el" href="task_8h.html#a950b7f81ad4711959517296e63bc79d1">stacksize</a>, <a class="el" href="task_8h.html#afb3147c57e7bb7180b8f22b9c24c62bc">TaskPriority</a> <a class="el" href="task_8h.html#afcd2119c9507046c8cf994e864b29e46">priority</a>, uint32_t **PageDirectory, uint32_t PageDirSize, uint32_t cr3, <a class="el" href="task_8h.html#a18856870fcd91ece4bb18b9a310f0e21">ProcessData</a> ProcData, uint32_t ParentProcessId)</td></tr>
+<tr class="memdesc:a5976f981a8b3b97b469c86251f4639bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">프로세스를 생성합니다.  <a href="#a5976f981a8b3b97b469c86251f4639bd">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a5976f981a8b3b97b469c86251f4639bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0d77869a3423fe34dfdeb3f8f132c64"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task_8h.html#aa0d77869a3423fe34dfdeb3f8f132c64">ckProcessTerminate</a> (uint32_t ProcessId)</td></tr>
 <tr class="memdesc:aa0d77869a3423fe34dfdeb3f8f132c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">프로세스를 종료시킵니다.  <a href="#aa0d77869a3423fe34dfdeb3f8f132c64">더 자세히 ...</a><br /></td></tr>
 <tr class="separator:aa0d77869a3423fe34dfdeb3f8f132c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -560,7 +560,7 @@ task.h에 대한 include 의존 그래프</div>
 
 </div>
 </div>
-<a class="anchor" id="af0cf96e16a1a7ba21992bae4a3f52825"></a>
+<a class="anchor" id="a5976f981a8b3b97b469c86251f4639bd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -599,6 +599,12 @@ task.h에 대한 include 의존 그래프</div>
           <td></td>
           <td class="paramtype">uint32_t **&#160;</td>
           <td class="paramname"><em>PageDirectory</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>PageDirSize</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1226,7 +1232,7 @@ task.h에 대한 include 의존 그래프</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="task_8h.html">task.h</a></li>
-    <li class="footer">생성시간 : 일 7월 20 2014 17:00:27, 프로젝트명 : Clubcos, 생성자 : 
+    <li class="footer">생성시간 : 화 7월 29 2014 17:24:43, 프로젝트명 : Clubcos, 생성자 : 
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

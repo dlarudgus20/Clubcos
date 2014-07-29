@@ -1,6 +1,7 @@
 var memory__map_8h =
 [
     [ "COSHELL_TASK_STACK_TOP", "memory__map_8h.html#aa53e7af93067538e0635a887b8c05cc8", null ],
+    [ "DYN_MEMORY_METADATA_ADDR", "memory__map_8h.html#a057a9bc9e5a66d170fd28c5672ee8462", null ],
     [ "DYN_MEMORY_PHYSICAL_ADDRESS", "memory__map_8h.html#a26acf86c1c99d95e7221928f5986f2dd", null ],
     [ "DYN_MEMORY_START_ADDRESS", "memory__map_8h.html#ac374b0b933a7d17bfc6d52bad579eb1b", null ],
     [ "GDT_TABLE_ADDRESS", "memory__map_8h.html#a7e0e2182efd64fc6b5c6fab2d56c5d93", null ],

@@ -2,6 +2,7 @@ var searchData=
 [
   ['p',['P',['../structtag_gdt.html#a805106850ead18446c151e2c6b76f992',1,'tagGdt::P()'],['../structtag_idt.html#a805106850ead18446c151e2c6b76f992',1,'tagIdt::P()']]],
   ['pagedirectory',['PageDirectory',['../structtag_process.html#a11f9b5381675de028526e864c48fa4cb',1,'tagProcess']]],
+  ['pagedirsize',['PageDirSize',['../structtag_process.html#a67ad324aaa1d638679e052b3e94ebfce',1,'tagProcess']]],
   ['pfirst',['pFirst',['../structtag_circular_queue32.html#accacbe226673de01cc12ce5acbef6c31',1,'tagCircularQueue32::pFirst()'],['../structtag_circular_queue8.html#a83bf8dda7b8f82d8345e668d0d12d92f',1,'tagCircularQueue8::pFirst()']]],
   ['plast',['pLast',['../structtag_circular_queue32.html#a115021b202d455bd7ece6163b377c3f6',1,'tagCircularQueue32::pLast()'],['../structtag_circular_queue8.html#ab0ba84635c91664f0ca401d6ed745e0e',1,'tagCircularQueue8::pLast()']]],
   ['plasttaskusedfpu',['pLastTaskUsedFPU',['../structtag_task_struct.html#ac20397b9c0aca0d98409d91f8a94fb12',1,'tagTaskStruct']]],

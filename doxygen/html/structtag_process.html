@@ -144,6 +144,9 @@ tagProcess에 대한 협력 다이어그램:</div>
 <tr class="memitem:a11f9b5381675de028526e864c48fa4cb"><td class="memItemLeft" align="right" valign="top">uint32_t **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_process.html#a11f9b5381675de028526e864c48fa4cb">PageDirectory</a></td></tr>
 <tr class="memdesc:a11f9b5381675de028526e864c48fa4cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">이 프로세스의 페이지 디렉토리의 커널 프로세스의 선형 주소입니다.  <a href="#a11f9b5381675de028526e864c48fa4cb">더 자세히 ...</a><br /></td></tr>
 <tr class="separator:a11f9b5381675de028526e864c48fa4cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67ad324aaa1d638679e052b3e94ebfce"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_process.html#a67ad324aaa1d638679e052b3e94ebfce">PageDirSize</a></td></tr>
+<tr class="memdesc:a67ad324aaa1d638679e052b3e94ebfce"><td class="mdescLeft">&#160;</td><td class="mdescRight">PageDirectory의 크기입니다.  <a href="#a67ad324aaa1d638679e052b3e94ebfce">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a67ad324aaa1d638679e052b3e94ebfce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9166a91c5e8b2b51b0a9677f9ba56a0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtag_process.html#aa9166a91c5e8b2b51b0a9677f9ba56a0">cr3</a></td></tr>
 <tr class="memdesc:aa9166a91c5e8b2b51b0a9677f9ba56a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">페이지 디렉토리의 물리 주소입니다.  <a href="#aa9166a91c5e8b2b51b0a9677f9ba56a0">더 자세히 ...</a><br /></td></tr>
 <tr class="separator:aa9166a91c5e8b2b51b0a9677f9ba56a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -243,6 +246,21 @@ tagProcess에 대한 협력 다이어그램:</div>
 
 </div>
 </div>
+<a class="anchor" id="a67ad324aaa1d638679e052b3e94ebfce"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t PageDirSize</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>PageDirectory의 크기입니다. </p>
+<p>이 값은 동적으로 할당된 <a class="el" href="structtag_process.html#a11f9b5381675de028526e864c48fa4cb">PageDirectory</a> 를 해제할 떄 사용됩니다. 0이면 할당 해제를 수행하지 않습니다. </p>
+
+</div>
+</div>
 <a class="anchor" id="ae4325976c6e78b24a195d691ce7456bd"></a>
 <div class="memitem">
 <div class="memproto">
@@ -322,7 +340,7 @@ tagProcess에 대한 협력 다이어그램:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structtag_process.html">tagProcess</a></li>
-    <li class="footer">생성시간 : 일 7월 20 2014 17:00:27, 프로젝트명 : Clubcos, 생성자 : 
+    <li class="footer">생성시간 : 화 7월 29 2014 17:24:44, 프로젝트명 : Clubcos, 생성자 : 
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

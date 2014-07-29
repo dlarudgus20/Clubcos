@@ -169,28 +169,30 @@ $(document).ready(function(){initNavTree('memory__map_8h_source.html','');});
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
 <div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="memory__map_8h.html#a66a4724f17cb83fbc1fe0d914374ddd0">   79</a></span>&#160;<span class="preprocessor">#define IOMAP_MEMORY_START_ADDRESS 0xbf800000</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="memory__map_8h.html#a26acf86c1c99d95e7221928f5986f2dd">   82</a></span>&#160;<span class="preprocessor">#define DYN_MEMORY_PHYSICAL_ADDRESS 0x00900000</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="memory__map_8h.html#a057a9bc9e5a66d170fd28c5672ee8462">   82</a></span>&#160;<span class="preprocessor">#define DYN_MEMORY_METADATA_ADDR 0xfffcf000</span></div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> uint32_t ckDynMemLogicalToPhysical(uint32_t address)</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">return</span> address - <a class="code" href="memory__map_8h.html#ac374b0b933a7d17bfc6d52bad579eb1b">DYN_MEMORY_START_ADDRESS</a> + <a class="code" href="memory__map_8h.html#a26acf86c1c99d95e7221928f5986f2dd">DYN_MEMORY_PHYSICAL_ADDRESS</a>;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> uint32_t ckDynMemPhysicalToLogical(uint32_t address)</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;{</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">return</span> address + <a class="code" href="memory__map_8h.html#ac374b0b933a7d17bfc6d52bad579eb1b">DYN_MEMORY_START_ADDRESS</a> - <a class="code" href="memory__map_8h.html#a26acf86c1c99d95e7221928f5986f2dd">DYN_MEMORY_PHYSICAL_ADDRESS</a>;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MEMORY_MAP_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="memory__map_8h.html#a26acf86c1c99d95e7221928f5986f2dd">   85</a></span>&#160;<span class="preprocessor">#define DYN_MEMORY_PHYSICAL_ADDRESS 0x00900000</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> uint32_t ckDynMemLogicalToPhysical(uint32_t address)</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;{</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">return</span> address - <a class="code" href="memory__map_8h.html#ac374b0b933a7d17bfc6d52bad579eb1b">DYN_MEMORY_START_ADDRESS</a> + <a class="code" href="memory__map_8h.html#a26acf86c1c99d95e7221928f5986f2dd">DYN_MEMORY_PHYSICAL_ADDRESS</a>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> uint32_t ckDynMemPhysicalToLogical(uint32_t address)</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;{</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">return</span> address + <a class="code" href="memory__map_8h.html#ac374b0b933a7d17bfc6d52bad579eb1b">DYN_MEMORY_START_ADDRESS</a> - <a class="code" href="memory__map_8h.html#a26acf86c1c99d95e7221928f5986f2dd">DYN_MEMORY_PHYSICAL_ADDRESS</a>;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MEMORY_MAP_H_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="memory__map_8h_html_ac374b0b933a7d17bfc6d52bad579eb1b"><div class="ttname"><a href="memory__map_8h.html#ac374b0b933a7d17bfc6d52bad579eb1b">DYN_MEMORY_START_ADDRESS</a></div><div class="ttdeci">#define DYN_MEMORY_START_ADDRESS</div><div class="ttdoc">동적 메모리 영역의 선형 시작 주소입니다. </div><div class="ttdef"><b>Definition:</b> memory_map.h:77</div></div>
-<div class="ttc" id="memory__map_8h_html_a26acf86c1c99d95e7221928f5986f2dd"><div class="ttname"><a href="memory__map_8h.html#a26acf86c1c99d95e7221928f5986f2dd">DYN_MEMORY_PHYSICAL_ADDRESS</a></div><div class="ttdeci">#define DYN_MEMORY_PHYSICAL_ADDRESS</div><div class="ttdoc">동적 메모리 영역의 물리 시작 주소입니다. </div><div class="ttdef"><b>Definition:</b> memory_map.h:82</div></div>
+<div class="ttc" id="memory__map_8h_html_a26acf86c1c99d95e7221928f5986f2dd"><div class="ttname"><a href="memory__map_8h.html#a26acf86c1c99d95e7221928f5986f2dd">DYN_MEMORY_PHYSICAL_ADDRESS</a></div><div class="ttdeci">#define DYN_MEMORY_PHYSICAL_ADDRESS</div><div class="ttdoc">동적 메모리 영역의 물리 시작 주소입니다. </div><div class="ttdef"><b>Definition:</b> memory_map.h:85</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="memory__map_8h.html">memory_map.h</a></li>
-    <li class="footer">생성시간 : 일 7월 20 2014 17:00:26, 프로젝트명 : Clubcos, 생성자 : 
+    <li class="footer">생성시간 : 화 7월 29 2014 17:24:38, 프로젝트명 : Clubcos, 생성자 : 
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>
