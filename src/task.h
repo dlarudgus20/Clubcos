@@ -168,7 +168,7 @@ typedef struct tagProcess
 	uint32_t **PageDirectory;			//!< 이 프로세스의 페이지 디렉토리의 커널 프로세스의 선형 주소입니다.
 										//!< <c>NULL</c> 이면 아직 사용되지 않은 <c>Process</c> 구조체입니다.
 	/**
-	 * @brief @ref PageDirectory의 크기입니다. 이 값은 동적으로 할당된 @ref PageDirectory 를 해제할 떄 사용됩니다.
+	 * @brief @ref PageDirectory 의 크기입니다. 이 값은 동적으로 할당된 @ref PageDirectory 를 해제할 떄 사용됩니다.
 	 *        0이면 할당 해제를 수행하지 않습니다.
 	 */
 	uint32_t PageDirSize;
@@ -252,6 +252,7 @@ static inline void ckTaskExit(void) { ckTaskTerminate(g_pTaskStruct->pNow->id); 
  * @param[in] stacksize <c>stack</c>의 크기입니다. 참고:@ref Task::stacksize
  * @param[in] priority 태스크의 스케쥴 우선순위입니다.
  * @param[in] PageDirectory 페이지 디렉토리입니다. 참고:@ref Process::PageDirectory
+ * @param[in] PageDirSize <c>PageDirectory</c>의 크기입니다. 참고:@ref Process::PageDirSize
  * @param[in] cr3 페이지 디렉토리의 물리 주소입니다. 참고:@ref Process::cr3
  * @param[in] ProcData 이 프로세스의 data입니다.
  * @param[in] ParentProcessId 부모 프로세스의 ID입니다.

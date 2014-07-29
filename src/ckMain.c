@@ -46,9 +46,11 @@
 /**
  * @mainpage Clubcos 소스 레퍼런스
  * @author dlarudgus20 (임경현)
- * @version 0.0.0
+ * @version v0.1.0
  * @section intro_sec 소개
- * the source reference of Clubcos - Clubc Operating System
+ * the source reference of Clubcos - Clubc Operating System<br/>
+ * visit <a href="http://dlarudgus20.github.io/Clubcos/">github site</a> or
+ * <a href="https://github.com/dlarudgus20/Clubcos">github project</a> for more information.
  */
 
 /**
