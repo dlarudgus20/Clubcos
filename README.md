@@ -21,8 +21,6 @@ Also [doxygen documentation for Clubcos source](http://dlarudgus20.github.io/Clu
 
 [How to build cross-compiler](#cross-compiler)
 
-[Troubleshooting](#troubleshooting)
-
 <a name="license" />
 ### License
 
@@ -122,10 +120,3 @@ make all-target-libgcc
 make install-gcc
 make install-target-libgcc
 ```
-
-<a name="troubleshooting" />
-### Troubleshooting
-
-> **can't input arrow keys**
-
-  qemu has an bug of transform arrow keys to 2/4/6/8 keys of keypad. Turn off NumLock, and use 2/4/6/8 of keypad.
