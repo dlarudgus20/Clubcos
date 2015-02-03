@@ -1,4 +1,3 @@
-
 // Copyright (c) 2014, 임경현 (dlarudgus20)
 // All rights reserved.
 //
@@ -26,8 +25,7 @@
 /**
  * @file memory.h
  * @date 2014. 5. 5.
- * @author MINT64OS, by kkamagui (http://kkamagui.tistory.com/)
- *         modified by dlarudgus20
+ * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
