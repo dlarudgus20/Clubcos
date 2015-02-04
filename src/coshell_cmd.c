@@ -50,7 +50,7 @@ void ckCoshellCmdReset(const char *param)
 	}
 	else
 	{
-		ckTerminalPrintString("Reset canceled.\n");
+		ckTerminalPrintString("Reset cancelled.\n");
 	}
 }
 
@@ -501,7 +501,8 @@ void ckCoshellCmdTestProcess(const char *param)
 		NULL, 0, TASK_PRIORITY_NORMAL,
 		PageDirectory, 4 * 1024,
 		ckDynMemLogicalToPhysical((uint32_t)PageDirectory),
-		(ProcessData) { .TermBuffer = (uint16_t *)0x00102000 }, ckProcessGetCurrentId());
+		(ProcessData) { .TermBuffer = (uint16_t *)0x00102000 },
+		ckProcessGetCurrentId());
 
 	ckTerminalPrintStringF("process id : %u", id);
 }
