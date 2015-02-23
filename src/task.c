@@ -594,6 +594,17 @@ void ckProcessJoin(uint32_t ProcId)
 	INTERRUPT_UNLOCK();
 }
 
+void ckTaskSleep(uint32_t milisecond)
+{
+	uint32_t start = g_TimerStruct.TickCountLow;
+
+	// milisecond가 0이여도 최소 한번은 스케쥴링을 발생시킴.
+	do
+	{
+		ckTaskSchedule();
+	} while (g_TimerStruct.TickCountLow - start < milisecond);
+}
+
 void ckTaskSchedule(void)
 {
 	INTERRUPT_LOCK();

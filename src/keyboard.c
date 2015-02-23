@@ -145,9 +145,7 @@ void ckKeyboardResetPC(void)
 	while (1) { } /* no return */
 }
 
-/**
- * @brief C로 짜여진 키보드 인터럽트 ISR입니다.
- */
+/** @brief C로 짜여진 키보드 인터럽트 ISR입니다. */
 void ck_KeyboardIntHandler(InterruptContext *pContext)
 {
 	ckPicSendEOI(PIC_IRQ_KEYBOARD);
@@ -156,4 +154,3 @@ void ck_KeyboardIntHandler(InterruptContext *pContext)
 	if (likely(code != KEYBOARD_ACK))
 		ckCircularQueue32Put(&g_InterruptQueue, code | INTERRUPT_QUEUE_FLAG_KEYBOARD);
 }
-

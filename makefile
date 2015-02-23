@@ -70,7 +70,7 @@ EXCPP := python $(EXCPP_SCRIPT)
 
 # flags
 TARGET_CFLAGS := $(TARGET_CFLAGS) -std=c99 -m32 -ffreestanding -I$(DIR_SRC) \
-	-Wall -Wextra -Werror -Wno-unused-parameter -fpack-struct
+	-Wall -Wextra -Wno-unused-parameter -fpack-struct
 #	-mno-mmx -mno-sse -mno-sse2 -mno-sse3 -mno-3dnow
 TARGET_LDFLAGS := $(TARGET_LDFLAGS) -nostdlib -Xlinker -melf_i386
 TARGET_OBJDUMP_FLAGS := $(TARGET_OBJDUMP_FLAGS) -M intel
@@ -110,7 +110,8 @@ LINK_SCRIPT := $(DIR_SRC)/link_script.ld
 ifeq ($(QEMU), )
 QEMU := qemu-system-i386
 endif
-QEMU_FLAGS := -L . -m 64 -fda $(OUTPUT_IMG) -boot a -localtime -M pc
+QEMU_FLAGS := -L . -m 64 -fda $(OUTPUT_IMG) -boot a -localtime -M pc \
+	-hda hda.qed -hdb hdb.qed -hdc hdc.qed -hdd hdd.qed
 QEMU_DEBUG_FLAGS := $(QEMU_FLAGS) -gdb tcp:127.0.0.1:1234 -S
 
 # bochs

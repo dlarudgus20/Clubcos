@@ -37,10 +37,25 @@ static inline uint8_t ckPortInByte(uint16_t port)
 	__asm__ __volatile__ ( "in %1, %0" : "=a"(ret) : "d"(port) );
 	return ret;
 }
-
 static inline void ckPortOutByte(uint16_t port, uint8_t data)
 {
 	__asm__ __volatile__ ( "out %0, %1" : : "a"(data), "d"(port) );
+}
+
+static inline uint16_t ckPortInWord(uint16_t port)
+{
+	uint16_t ret;
+	__asm__ __volatile__ ( "in %1, %0" : "=a"(ret) : "d"(port) );
+	return ret;
+}
+static inline void ckPortOutWord(uint16_t port, uint16_t data)
+{
+	__asm__ __volatile__ ( "out %0, %1" : : "a"(data), "d"(port) );
+}
+
+static inline void ckPortInWordList(uint16_t port, uint16_t *buf, size_t count)
+{
+	__asm__ __volatile__ ( "cld \n rep insw" : : "d"(port), "D"(buf), "c"(count) : "edi", "ecx", "cc" );
 }
 
 static inline void ckAsmGetTimeStamp(uint32_t *high, uint32_t *low)

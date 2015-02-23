@@ -122,3 +122,6 @@ segment .text
 
 	MakeIntHandler TimerIntHandler
 	MakeIntHandler KeyboardIntHandler
+	MakeIntHandler PATAPrimaryIntHandler
+	MakeIntHandler PATASecondaryIntHandler
+

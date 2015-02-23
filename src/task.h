@@ -310,6 +310,13 @@ void ckTaskJoin(uint32_t TaskId);
  */
 void ckProcessJoin(uint32_t ProcId);
 
+/**
+ * @brief 지정된 시간동안 cpu 시간을 양보합니다.
+ * @param[in] milisecond 양보할 cpu 시간입니다. 단위는 ms입니다.
+ * @remark <c>milisecond</c>가 <c>0</c>이면 태스크 스케쥴링을 한번 발생시킵니다.
+ */
+void ckTaskSleep(uint32_t milisecond);
+
 /** @brief CPU 시간을 양보하고 다른 태스크로 스위칭합니다. */
 void ckTaskSchedule(void);
 /**

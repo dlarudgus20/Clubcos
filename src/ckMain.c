@@ -40,6 +40,7 @@
 #include "timer.h"
 #include "rtc.h"
 #include "task.h"
+#include "pata.h"
 #include "likely.h"
 #include "string.h"
 
@@ -77,43 +78,59 @@ void ckMain(void)
 	}
 
 	// 메모리 최소사양 점검
+	ckTerminalPrintString_unsafe("Checking memory size...");
 	ckDynMemCheckSize();
 	if (unlikely(g_DynMem.DynMemSize + 0x900000 < MINIMAL_REQUIRE_MEMORY))
 		ckTerminalPanic("Clubcos requires 32MB RAM at least.");
+	ckTerminalPrintString_unsafe(" [OK]\n");
 
 	// GDT & IDT 초기화
+	ckTerminalPrintString_unsafe("Initializing GDT Table...");
 	ckGdtTableInitialize();
-	ckTerminalPrintString_unsafe("GDT table is initialized\n");
+	ckTerminalPrintString_unsafe(" [OK]\n");
+	ckTerminalPrintString_unsafe("Initializing IDT Table...");
 	ckIdtTableInitialize();
-	ckTerminalPrintString_unsafe("IDT table is initialized\n");
+	ckTerminalPrintString_unsafe(" [OK]\n");
 
 	// 동적 메모리 초기화
+	ckTerminalPrintString_unsafe("Initializing Dynamic Memory Manager...");
 	ckDynMemInitialize();
-	ckTerminalPrintString_unsafe("Dynamic Memory Manager is initialized\n");
+	ckTerminalPrintString_unsafe(" [OK]\n");
 
 	// 인터럽트 큐 초기화
 	ckInterruptQueueInitialize();
 
 	// PIC 초기화
+	ckTerminalPrintString_unsafe("Initializing PIC...");
 	ckPicInitialize();
-	ckTerminalPrintString_unsafe("PIC is initialized\n");
+	ckTerminalPrintString_unsafe(" [OK]\n");
 
 	// 타이머 & RTC 초기화
+	ckTerminalPrintString_unsafe("Initializing Timer & RTC...");
 	ckTimerInitialize();
 	ckRTCInitialize();
-	ckTerminalPrintString_unsafe("Timer & RTC are initialized\n");
 
 	// 멀티태스킹 초기화 (타이머 이후)
+	ckTerminalPrintString_unsafe("Initializing Tasking...");
 	ckTaskStructInitialize();
-	ckTerminalPrintString_unsafe("Tasking is initialized\n");
+	ckTerminalPrintString_unsafe(" [OK]\n");
 
 	// 키보드 초기화
+	ckTerminalPrintString_unsafe("Initializing Keyboard...");
 	if (unlikely(!ckKeyboardInitialize()))
-		ckTerminalPanic("Keyboard initializing is failed\n");
-	ckTerminalPrintString_unsafe("Keyboard is initialized\n");
+		ckTerminalPanic("Keyboard initializing is failed.");
+	ckTerminalPrintString_unsafe(" [OK]\n");
+
+	// PATA 초기화
+	//ckTerminalPrintString_unsafe("Initializeing PATA...");
+	//ckPATAInitialize();
+	//ckTerminalPrintString_unsafe(" [OK]\n");
 
 	// PIC의 마스크를 해제하고 인터럽트를 허용
-	ckPicMaskInterrupt(~(PIC_MASKBIT_SLAVE | PIC_MASKBIT_TIMER | PIC_MASKBIT_KEYBOARD));
+	ckPicMaskInterrupt(
+		~(PIC_MASKBIT_SLAVE | PIC_MASKBIT_TIMER | PIC_MASKBIT_KEYBOARD
+			| PIC_MASKBIT_HARDDISK1 | PIC_MASKBIT_HARDDISK2)
+		);
 	ckAsmSti();
 
 	// Coshell 초기화

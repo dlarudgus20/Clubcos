@@ -56,6 +56,19 @@ static inline uint8_t ckPortInByte(uint16_t port);
 /** @brief 특정 포트에 1바이트를 쓰는 어셈블리 함수 */
 static inline void ckPortOutByte(uint16_t port, uint8_t data);
 
+/** @brief 특정 포트에서 2바이트를 읽어오는 어셈블리 함수 */
+static inline uint16_t ckPortInWord(uint16_t port);
+/** @brief 특정 포트에 2바이트를 쓰는 어셈블리 함수 */
+static inline void ckPortOutWord(uint16_t port, uint16_t data);
+
+/**
+ * @brief <c>insw</c> 어셈블리 명령어로 특정 포트에서 지정된 수만큼의 word를 읽습니다.
+ * @param[in] port 읽을 포트입니다.
+ * @param[out] buf 읽은 결과가 저장될 버퍼입니다.
+ * @param[in] count 읽을 word의 갯수입니다.
+ */
+static inline void ckPortInWordList(uint16_t port, uint16_t *buf, size_t count);
+
 /**
  * @brief CPU의 타임스탬프 카운터를 읽어옵니다.
  * @param[out] high 타임스탬프 카운터의 상위 32비트입니다.
