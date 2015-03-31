@@ -160,16 +160,16 @@ void ckTaskStructInitialize(void)
 		(uint32_t)csIdleTask, KERNEL_DATA_SEGMENT, IDLE_TASK_STACK_TOP);
 	csTssDescriptorInit(g_pGdtTable + TASK_GDT_0 + 1, &pTask->tss, 0);
 
-	ckLinkedListPushBack_lockfree(
+	ckLinkedListPushBack_nosync(
 		&g_pTaskStruct->ReadyList[TASK_PRIORITY_IDLE],
 		&pTask->_node);
 
 	// Kernel Process Init
 	Process *pProc = &g_pTaskStruct->processes[0];
 	ckLinkedListInit(&pProc->ThreadList);
-	ckLinkedListPushBack_lockfree(&pProc->ThreadList, &g_pTaskStruct->tasks[0].ThreadNode);
+	ckLinkedListPushBack_nosync(&pProc->ThreadList, &g_pTaskStruct->tasks[0].ThreadNode);
 	g_pTaskStruct->tasks[0].pProcess = pProc;
-	ckLinkedListPushBack_lockfree(&pProc->ThreadList, &g_pTaskStruct->tasks[1].ThreadNode);
+	ckLinkedListPushBack_nosync(&pProc->ThreadList, &g_pTaskStruct->tasks[1].ThreadNode);
 	g_pTaskStruct->tasks[1].pProcess = pProc;
 	pProc->pMainThread = &g_pTaskStruct->tasks[0];
 
@@ -231,7 +231,7 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
 			ret->priority = priority;
 
 			ret->pProcess = pProcess;
-			ckLinkedListPushBack_lockfree(&pProcess->ThreadList, &ret->ThreadNode);
+			ckLinkedListPushBack_nosync(&pProcess->ThreadList, &ret->ThreadNode);
 
 			ret->stack = stack;
 			ret->stacksize = stacksize;
@@ -245,7 +245,7 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
 
 			csTssDescriptorInit(g_pGdtTable + TASK_GDT_0 + i, &ret->tss, 0);
 
-			ckLinkedListPushBack_lockfree(&g_pTaskStruct->ReadyList[priority], &ret->_node);
+			ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[priority], &ret->_node);
 
 			break;
 		}
@@ -286,7 +286,7 @@ uint32_t ckProcessCreate(uint32_t eip, uint32_t esp,
 				ret_id = ret->id = g_pTaskStruct->ProcessIdMask | i;
 				g_pTaskStruct->ProcessIdMask += PROCESS_IDMASK_UNIT;
 
-				ckLinkedListPushBack_lockfree(&pParentProcess->ChildProcessList, &ret->ChildNode);
+				ckLinkedListPushBack_nosync(&pParentProcess->ChildProcessList, &ret->ChildNode);
 
 				ret->ProcData = ProcData;
 
@@ -353,7 +353,7 @@ static void ckTaskTerminate_internal(Task *pTask)
 		assert(pTask->WaitObj == NULL);
 
 		pTask->flag = TASK_FLAG_WAITFOREXIT;
-		ckLinkedListPushBack_lockfree(&g_pTaskStruct->WaitForExitList, &pTask->_node);
+		ckLinkedListPushBack_mpsc(&g_pTaskStruct->WaitForExitList, &pTask->_node);
 
 		ckTaskSchedule_internal();
 		while (1) { } /* 이 코드는 실행되지 않음 */
@@ -456,7 +456,7 @@ bool ckTaskChangePriority(uint32_t TaskId, TaskPriority priority)
 		else if (pTask->priority != priority)
 		{
 			ckLinkedListErase(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
-			ckLinkedListPushBack_lockfree(&g_pTaskStruct->ReadyList[priority], &pTask->_node);
+			ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[priority], &pTask->_node);
 			pTask->priority = priority;
 		}
 		bRet = true;
@@ -498,7 +498,7 @@ bool ckTaskSuspend_byptr(Task *pTask)
 			ckLinkedListErase(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
 		}
 
-		ckLinkedListPushBack_lockfree(&g_pTaskStruct->WaitList, &g_pTaskStruct->pNow->_node);
+		ckLinkedListPushBack_nosync(&g_pTaskStruct->WaitList, &g_pTaskStruct->pNow->_node);
 
 		pTask->flag = TASK_FLAG_WAIT;
 		if (flag == TASK_FLAG_RUNNING)
@@ -542,7 +542,7 @@ bool ckTaskResume_byptr(Task *pTask)
 		ckLinkedListErase(&g_pTaskStruct->WaitList, &pTask->_node);
 
 		pTask->flag = TASK_FLAG_READY;
-		ckLinkedListPushBack_lockfree(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
+		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
 		bRet = true;
 	}
 
@@ -565,7 +565,7 @@ void ckTaskJoin(uint32_t TaskId)
 		if (pTask->flag != TASK_FLAG_WAITFOREXIT)
 		{
 			pNow->WaitObj = pTask;
-			ckLinkedListPushBack_lockfree(&pTask->WaitMeList, &pNow->WaitNode);
+			ckLinkedListPushBack_nosync(&pTask->WaitMeList, &pNow->WaitNode);
 
 			ckTaskSuspend_byptr(pNow);
 		}
@@ -586,7 +586,7 @@ void ckProcessJoin(uint32_t ProcId)
 	if (pProc != NULL)
 	{
 		pNow->WaitObj = pProc->pMainThread;
-		ckLinkedListPushBack_lockfree(&pProc->pMainThread->WaitMeList, &pNow->WaitNode);
+		ckLinkedListPushBack_nosync(&pProc->pMainThread->WaitMeList, &pNow->WaitNode);
 
 		ckTaskSuspend_byptr(pNow);
 	}
@@ -630,7 +630,7 @@ static void ckTaskSchedule_internal(void)
 		{
 			if (g_pTaskStruct->ExecuteCount[i] < g_pTaskStruct->ReadyList[i].size)
 			{
-				pNow = (Task *)ckLinkedListPopFront_lockfree(&g_pTaskStruct->ReadyList[i]);
+				pNow = (Task *)ckLinkedListPopFront_nosync(&g_pTaskStruct->ReadyList[i]);
 				g_pTaskStruct->ExecuteCount[i]++;
 				break;
 			}
@@ -650,7 +650,7 @@ static void ckTaskSchedule_internal(void)
 
 		if (pPrev->flag == TASK_FLAG_RUNNING)
 		{
-			ckLinkedListPushBack_lockfree(&g_pTaskStruct->ReadyList[pPrev->priority], &pPrev->_node);
+			ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pPrev->priority], &pPrev->_node);
 			pPrev->flag = TASK_FLAG_READY;
 		}
 
@@ -772,7 +772,7 @@ static void csIdleTask(void)
 
 		while (1)
 		{
-			pTask = (Task *)ckLinkedListPopFront_lockfree(&g_pTaskStruct->WaitForExitList);
+			pTask = (Task *)ckLinkedListPopFront_mpsc(&g_pTaskStruct->WaitForExitList);
 			if (pTask == NULL)
 				break;
 
@@ -789,7 +789,7 @@ static void csIdleTask(void)
 
 		/* 0.5초마다 processor load 출력 */
 
-		if (ckLinkedListPopFront_lockfree(&NoticeQueue) != NULL)
+		if (ckLinkedListPopFront_mpsc(&NoticeQueue) != NULL)
 		{
 			ckTerminalPrintStatusBarF("ProcessorLoad : %03u%%", ProcessorLoad);
 

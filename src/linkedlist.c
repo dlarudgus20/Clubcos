@@ -31,7 +31,7 @@
 
 #include "linkedlist.h"
 
-void ckLinkedListPushBack_lockfree(LinkedList *pList, LinkedListNode *pNode)
+void ckLinkedListPushBack_mpsc(LinkedList *pList, LinkedListNode *pNode)
 {
 	__sync_add_and_fetch(&pList->size, 1);
 
@@ -52,11 +52,11 @@ void ckLinkedListPushBack_lockfree(LinkedList *pList, LinkedListNode *pNode)
 	}
 }
 
-LinkedListNode *ckLinkedListPopFront_lockfree(LinkedList *pList)
+LinkedListNode *ckLinkedListPopFront_mpsc(LinkedList *pList)
 {
 	LinkedListNode *dummy = &pList->dummy;
 
-	LinkedListNode *ptr, *next, *dnext;
+	LinkedListNode *ptr, *next;
 
 	ptr = dummy->pNext;
 	if (ptr == dummy)
@@ -67,8 +67,7 @@ LinkedListNode *ckLinkedListPopFront_lockfree(LinkedList *pList)
 		next = ptr->pNext;
 		if (__sync_bool_compare_and_swap(&next->pPrev, ptr, dummy))
 		{
-			dnext = dummy->pNext;
-			__sync_bool_compare_and_swap(&dummy->pNext, dnext, next);
+			dummy->pNext = next;
 			break;
 		}
 	}

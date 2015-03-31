@@ -70,8 +70,7 @@ EXCPP := python $(EXCPP_SCRIPT)
 
 # flags
 TARGET_CFLAGS := $(TARGET_CFLAGS) -std=c99 -m32 -ffreestanding -I$(DIR_SRC) \
-	-Wall -Wextra -Wno-unused-parameter -fpack-struct
-#	-mno-mmx -mno-sse -mno-sse2 -mno-sse3 -mno-3dnow
+	-Wall -Wextra -Werror -Wno-error=overflow -Wno-error=unused-parameter -fpack-struct
 TARGET_LDFLAGS := $(TARGET_LDFLAGS) -nostdlib -Xlinker -melf_i386
 TARGET_OBJDUMP_FLAGS := $(TARGET_OBJDUMP_FLAGS) -M intel
 TARGET_NM_FLAGS := $(TARGET_NM_FLAGS) --line-numbers --print-size --print-armap --numeric-sort

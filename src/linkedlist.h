@@ -86,7 +86,7 @@ static inline LinkedListNode *ckLinkedListHead(LinkedList *pList) { return pList
 static inline LinkedListNode *ckLinkedListTail(LinkedList *pList) { return pList->dummy.pPrev; }
 
 /**
- * @brief 단일 소비자/생산자 환경에서 lock-free하게 요소를 @ref LinkedList 맨 뒤에 삽입합니다.
+ * @brief 다중 생산자/단일 소비자(multi producer/single consumer) 환경에서 lock-free하게 요소를 @ref LinkedList 맨 뒤에 삽입합니다.
  * @param[in] pList @ref LinkedList 구조체입니다.
  * @param[in] pNode 삽입할 요소의 노드입니다.
  * @remark 이 함수는 단일 소비자/생산자 환경에서 lock-free하게 연산을 수행할 수 있습니다.
@@ -94,23 +94,23 @@ static inline LinkedListNode *ckLinkedListTail(LinkedList *pList) { return pList
  * @sa ckLinkedListPopFront_lockfree
  * @sa ckLinkedListPushBack
  */
-void ckLinkedListPushBack_lockfree(LinkedList *pList, LinkedListNode *pNode);
+void ckLinkedListPushBack_mpsc(LinkedList *pList, LinkedListNode *pNode);
 /**
- * @brief 단일 소비자/생산자 환경에서 lock-free하게 @ref LinkedList 의 맨 앞 요소를 빼옵니다.
+ * @brief 다중 생산자/단일 소비자(multi producer/single consumer) 환경에서 lock-free하게 @ref LinkedList 의 맨 앞 요소를 빼옵니다.
  * @param[in] pList @ref LinkedList 구조체입니다.
  * @return 빼온 요소입니다. 리스트가 비어 있을 경우 <c>NULL입니다.</c>
  * @remark 이 함수에 대한 설명은 @ref ckLinkedListPushBack_lockfree 함수의 설명을 참조하십시오.
  * @sa ckLinkedListPushBack_lockfree
  * @sa ckLinkedListPopFront
  */
-LinkedListNode *ckLinkedListPopFront_lockfree(LinkedList *pList);
+LinkedListNode *ckLinkedListPopFront_mpsc(LinkedList *pList);
 
 /**
  * @brief 요소를 @ref LinkedList 맨 뒤에 삽입합니다.
  * @param[in] pList @ref LinkedList 구조체입니다.
  * @param[in] pNode 삽입할 요소의 노드입니다.
  */
-static inline void ckLinkedListPushBack(LinkedList *pList, LinkedListNode *pNode)
+static inline void ckLinkedListPushBack_nosync(LinkedList *pList, LinkedListNode *pNode)
 {
 	pList->size++;
 
@@ -128,7 +128,7 @@ static inline void ckLinkedListPushBack(LinkedList *pList, LinkedListNode *pNode
  * @param[in] pList @ref LinkedList 구조체입니다.
  * @return 빼온 요소입니다. 리스트가 비어 있을 경우 <c>NULL입니다.</c>
  */
-static inline LinkedListNode *ckLinkedListPopFront(LinkedList *pList)
+static inline LinkedListNode *ckLinkedListPopFront_nosync(LinkedList *pList)
 {
 	LinkedListNode *dummy = &pList->dummy;
 	LinkedListNode *ptr = dummy->pNext;

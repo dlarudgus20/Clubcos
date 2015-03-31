@@ -129,7 +129,7 @@ void ck_TimerIntHandler(InterruptContext *pContext)
 
 			if (pTimeOut->NoticeQueue != NULL)
 			{
-				ckLinkedListPushBack_lockfree(pTimeOut->NoticeQueue, &pTimeOut->NoticeNode);
+				ckLinkedListPushBack_mpsc(pTimeOut->NoticeQueue, &pTimeOut->NoticeNode);
 			}
 			else // sentinal
 			{

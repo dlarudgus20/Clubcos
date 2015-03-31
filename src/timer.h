@@ -73,7 +73,8 @@ typedef struct tagTimeOut
 
 	/**
 	 * @brief 타임아웃이 발생한 후에 이 구조체가 push될 연결 리스트입니다.
-	 * @remark Push/Pop 연산 시에 lockfree 함수를 사용해야 합니다.
+	 * @remark 타임아웃이 발생하면 지정했던 NoticeQueue에 @sa ckLinkedListPushBack_mpsc 함수를 통해 push됩니다.
+	 * 사용하는 쪽에서는 @sa ckLinkedListPopFront_mpsc 함수를 통해 pop해야 합니다.
 	 */
 	LinkedList *NoticeQueue;
 } TimeOut;
