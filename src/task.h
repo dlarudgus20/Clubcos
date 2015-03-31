@@ -196,7 +196,7 @@ typedef struct tagTaskStruct
 	LinkedList ReadyList[COUNT_TASK_PRIORITY];	//!< @ref TASK_FLAG_RUNNING 상태의 태스크의 우선순위 큐입니다.
 
 	LinkedList WaitList;						//!< @ref TASK_FLAG_WAIT 상태의 태스크의 목록입니다.
-	LinkedList WaitForExitList;					//!< @ref TASK_FLAG_WAITFOREXIT 상태의 태스크의 목록입니다.
+	LinkedList WaitForExitList;					//!< @ref TASK_FLAG_WAITFOREXIT 상태의 태스크의 목록입니다. idle에서의 처리를 위해 mpcs로 동기화가 필요합니다.
 
 	uint32_t ExecuteCount[COUNT_TASK_PRIORITY];	//!< 각 우선순위별로 실행된 횟수를 기록하는 배열입니다.
 
