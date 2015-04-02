@@ -23,58 +23,31 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file spinlock.h
- * @date 2015. 4. 1.
+ * @file waitobj.h
+ * @date 2015. 4. 2.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#ifndef SPINLOCK_H_
-#define SPINLOCK_H_
+#ifndef WAITOBJ_H_
+#define WAITOBJ_H_
 
 #include <stddef.h>
 #include <stdint.h>
+#include "linkedlist.h"
 
-typedef volatile uint32_t Spinlock;
+struct tagWaitObj;
 
-static inline void ckSpinlockInit(Spinlock *pSpinlock)
+typedef struct tagWaitObj_vtable_t
 {
-	*pSpinlock = 0;
-}
+	void (*f)(struct tagWaitObj *thiz);
+} WaitObj_vtable_t;
 
-static inline void ckSpinlockLock(Spinlock *pSpinlock)
+typedef struct tagWaitObj
 {
-	__asm__ __volatile__
-	(
-		"	lock btsl $0, (%%eax)	\n\t"
-		"	jnc .spin_locked		\n\t"
-		".spin_loop:				\n\t"
-		"	pause					\n\t"
-		"	testl $1, (%%eax)		\n\t"
-		"	jnz .spin_loop			\n\t"
-		"	lock btsl $0, (%%eax)	\n\t"
-		"	jc .spin_loop			\n\t"
-		".spin_locked:				\n\t"
-		:
-		: "a"(pSpinlock)
-		: "memory"
-	);
-}
+	const WaitObj_vtable_t *vptr;
 
-static inline void ckSpinlockUnlock(Spinlock *pSpinlock)
-{
-	__asm__ __volatile__
-	(
-		"	movl $0, (%%eax)		\n\t"
-		:
-		: "a"(pSpinlock)
-		: "memory"
-	);
-}
+	LinkedList WaitMeList;
+} WaitObj;
 
-static inline bool ckSpinlockTryLock(Spinlock *pSpinlock)
-{
-	return __sync_bool_compare_and_swap(pSpinlock, 0, 1);
-}
-
-#endif /* SPINLOCK_H_ */
+#endif /* WAITOBJ_H_ */

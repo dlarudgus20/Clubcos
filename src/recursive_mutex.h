@@ -36,17 +36,18 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "task.h"
+#include "linkedlist.h"
+#include "spinlock.h"
 
 /**
  * @brief recursive mutex 구조체입니다.
  */
 typedef struct tagRecursiveMutex
 {
-	volatile uint32_t TaskId;
-	volatile uint32_t LockCount;
-
-	// 32비트 단위로 메모리를 mov하는 건 원자성이 있음.
-	volatile uint32_t bLocked;
+	volatile uint32_t TaskId;		//!< 뮤텍스를 소유한 태스크입니다. 없을 경우 @sa TASK_INVALID_ID 입니다.
+	uint32_t Recursion;				//!< 이 뮤텍스가 재귀적으로 잠긴 횟수입니다.
+	Spinlock WaitLock;				//!< 대기에 사용되는 spinlock입니다.
+	LinkedList WaiterList;			//!< 뮤텍스를 대기하는 태스크의 목록입니다.
 } RecursiveMutex;
 
 /**
@@ -56,8 +57,9 @@ typedef struct tagRecursiveMutex
 static inline void ckRecursiveMutexInit(RecursiveMutex *pMutex)
 {
 	pMutex->TaskId = TASK_INVALID_ID;
-	pMutex->LockCount = 0;
-	pMutex->bLocked = false;
+	pMutex->Recursion = 0;
+	ckSpinlockInit(&pMutex->WaitLock);
+	ckLinkedListInit(&pMutex->WaiterList);
 }
 
 /**

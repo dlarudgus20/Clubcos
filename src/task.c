@@ -320,13 +320,15 @@ bool ckTaskTerminate(uint32_t TaskId)
 }
 static void ckTaskTerminate_internal(Task *pTask)
 {
+	// pTask를 join하던 태스크를 깨워줌.
 	LinkedList *pList = &pTask->WaitMeList;
 	for (LinkedListNode *node = ckLinkedListHead(pList);
 		node != (LinkedListNode *)pList;
 		node = node->pNext)
 	{
-		Task *pNodeTask = (Task *)((uint32_t)node - offsetof(Task, WaitNode));
+		Task *pNodeTask = (Task *)((uintptr_t)node - offsetof(Task, WaitNode));
 		pNodeTask->WaitObj = NULL;
+		// ckTaskResume_byptr()함수에서 TASK_FLAG_WAIT 상태의 태스크만 resume함.
 		ckTaskResume_byptr(pNodeTask);
 	}
 
@@ -348,41 +350,24 @@ static void ckTaskTerminate_internal(Task *pTask)
 		pProc->pMainThread = NULL;
 	}
 
-	if (pTask == g_pTaskStruct->pNow)
+	// RUNNING 태스크가 아니라면 태스크 목록에서 제거
+	if (pTask != g_pTaskStruct->pNow)
 	{
-		assert(pTask->WaitObj == NULL);
-
-		pTask->flag = TASK_FLAG_WAITFOREXIT;
-		ckLinkedListPushBack_mpsc(&g_pTaskStruct->WaitForExitList, &pTask->_node);
-
-		ckTaskSchedule_internal();
-		while (1) { } /* 이 코드는 실행되지 않음 */
-	}
-	else
-	{
-		if (pTask->WaitObj != NULL)
+		if (pTask->flag == TASK_FLAG_WAIT)
 		{
-			ckLinkedListErase(&pTask->WaitObj->WaitMeList, &pTask->WaitNode);
-			pTask->WaitObj = NULL;
-
-			assert(pTask->flag == TASK_FLAG_WAIT);
 			ckLinkedListErase(&g_pTaskStruct->WaitList, &pTask->_node);
 		}
 		else
 		{
-			assert(pTask->flag == TASK_FLAG_READY);
 			ckLinkedListErase(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
 		}
-
-		if (pProc != NULL)
-			csCleanupProcess(pProc);
-
-		if (pTask->stack != NULL)
-			ckDynMemFree(pTask->stack, pTask->stacksize);
-
-		ckGdtInitNull(g_pGdtTable + pTask->selector);
-		pTask->selector = 0;
 	}
+
+	pTask->flag = TASK_FLAG_WAITFOREXIT;
+	ckLinkedListPushBack_mpsc(&g_pTaskStruct->WaitForExitList, &pTask->_node);
+
+	ckTaskSchedule_internal();
+	while (1) { } /* 이 코드는 실행되지 않음 */
 }
 
 bool ckProcessTerminate(uint32_t ProcessId)
@@ -776,7 +761,16 @@ static void csIdleTask(void)
 			if (pTask == NULL)
 				break;
 
+			// 기다리고 있던 WaitObj와의 연결 해제
+			if (pTask->WaitObj != NULL)
+			{
+				ckLinkedListErase(&pTask->WaitObj->WaitMeList, &pTask->WaitNode);
+				pTask->WaitObj = NULL;
+			}
+
 			Process *pProc = pTask->pProcess;
+			// 메인 스레드가 아니라면 ckTaskTermiate()에서 pTask->pProcess를 NULL로 만듦.
+			// 따라서 NULL이 아니라면 프로세스까지 없앰.
 			if (pProc != NULL)
 				csCleanupProcess(pProc);
 

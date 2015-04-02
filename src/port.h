@@ -94,7 +94,7 @@ static inline void ckAsmHlt(void);
  */
 #define INTERRUPT_LOCK() \
 	uint32_t _eflag = ckAsmGetEFlag(); \
-	ckAsmCli()
+	ckAsmCli(); __asm__ __volatile__ ( "" : : : "memory" )
 
 /**
  * @brief 인터럽트 금지 lock을 해제합니다.

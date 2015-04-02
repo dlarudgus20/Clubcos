@@ -32,35 +32,63 @@
 #include "recursive_mutex.h"
 #include "port.h"
 #include "task.h"
+#include "assert.h"
 
 uint32_t ckRecursiveMutexLock(RecursiveMutex *pMutex)
 {
-	if (!__sync_bool_compare_and_swap(&pMutex->bLocked, false, true))
-	{
-		Task *pCur = ckTaskGetCurrent();
+	Task *pCur = ckTaskGetCurrent();
+	uint32_t CurId = pCur->id;
 
-		if (pMutex->TaskId == pCur->id)
+	assert(pCur->WaitObj == NULL);
+	pCur->WaitObj = pMutex;
+
+	if (!__sync_bool_compare_and_swap(&pMutex->TaskId, TASK_INVALID_ID, CurId))
+	{
+		if (__sync_bool_compare_and_swap(&pMutex->TaskId, CurId, CurId))
 		{
-			return ++pMutex->LockCount;
+			pCur->WaitObj = NULL;
+			return ++pMutex->Recursion;
 		}
 		else
 		{
-			while (!__sync_bool_compare_and_swap(&pMutex->bLocked, false, true))
-			{
-				ckTaskSchedule();
-			}
+			ckSpinlockLock(&pMutex->WaitLock);
+			INTERRUPT_LOCK();
+			ckSpinlockUnlock(&pMutex->WaitLock);
+
+			ckLinkedListPushBack_nosync(&pMutex->WaiterList, pCur->WaitNode);
+			ckTaskSuspend_byptr(pCur);
+
+			INTERRUPT_UNLOCK();
 		}
 	}
 
-	pMutex->LockCount = 1;
-	pMutex->TaskId = ckTaskGetCurrentId();
 	return 1;
 }
 
 bool ckRecursiveMutexUnlock(RecursiveMutex *pMutex)
 {
-	if (pMutex->bLocked && pMutex->TaskId == ckTaskGetCurrentId())
+	if (__atomic_load_n(&pMutex->TaskId, __ATOMIC_SEQ_CST) == ckTaskGetCurrentId())
 	{
+		if (pMutex->Recursion != 0)
+		{
+			pMutex->Recursion--;
+		}
+		else
+		{
+			ckSpinlockLock(&pMutex->WaitLock);
+
+			Task *pNodeTask;
+			do
+			{
+				LinkedListNode node = ckLinkedListPopFront_nosync(&pMutex->WaiterList);
+				pNodeTask = (Task *)((uintptr_t)node - offsetof(Task, WaitNode));
+			} while (pNodeTask->flag == TASK_FLAG_WAITFOREXIT);
+
+			ckTaskResume_byptr(pNodeTask);
+
+			ckSpinlockUnlock(&pMutex->WaitLock);
+		}
+
 		uint32_t LockCount = pMutex->LockCount;
 		if (LockCount > 1)
 		{
