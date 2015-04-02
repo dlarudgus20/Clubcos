@@ -31,15 +31,15 @@
 
 #include "rtc.h"
 #include "port.h"
-#include "binary_semaphore.h"
+#include "benaphore.h"
 
-static BiSem s_RtcMutex;
+static Benaphore s_RtcMutex;
 static bool s_IsBCD;
 static bool s_Is12Hour;
 
 void ckRTCInitialize(void)
 {
-	ckBiSemInit(&s_RtcMutex, 0);
+	ckBenaphoreInit(&s_RtcMutex, 0);
 
 	ckPortOutByte(RTC_CMOSADDRESS, RTC_ADDRESS_STATUS_B);
 	uint8_t StatusB = ckPortInByte(RTC_CMOSDATA);
@@ -51,7 +51,7 @@ void ckRTCReadTime(RTCTime *pTime)
 {
 	bool Is12HourPM;
 
-	ckBiSemEnter(&s_RtcMutex);
+	ckBenaphoreEnter(&s_RtcMutex);
 
 	ckPortOutByte(RTC_CMOSADDRESS, RTC_ADDRESS_HOUR);
 	pTime->hour = ckPortInByte(RTC_CMOSDATA);
@@ -75,12 +75,12 @@ void ckRTCReadTime(RTCTime *pTime)
 	if (s_IsBCD)
 		pTime->second = ckBCD8toBinary(pTime->second);
 
-	ckBiSemPost(&s_RtcMutex);
+	ckBenaphorePost(&s_RtcMutex);
 }
 
 void ckRTCReadDate(RTCDate *pDate)
 {
-	ckBiSemEnter(&s_RtcMutex);
+	ckBenaphoreEnter(&s_RtcMutex);
 
 	ckPortOutByte(RTC_CMOSADDRESS, RTC_ADDRESS_YEAR);
 	pDate->year = ckPortInByte(RTC_CMOSDATA);
@@ -105,7 +105,7 @@ void ckRTCReadDate(RTCDate *pDate)
 //		pDate->dayofweek = ckBCD8toBinary(pDate->dayofweek);
 	/* CMOS의 day of week은 믿을 수 없음 - 직접 계산 */
 
-	ckBiSemPost(&s_RtcMutex);
+	ckBenaphorePost(&s_RtcMutex);
 
 	// http://en.wikipedia.org/wiki/Weekday_determination#A_tabular_method_to_calculate_the_day_of_the_week
 	static uint8_t MonthsTable[] = {

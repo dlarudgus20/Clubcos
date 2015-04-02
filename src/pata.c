@@ -64,7 +64,7 @@ static WaitResult csWaitForReady(bool bPrimary);
 
 void ckPATAInitialize(void)
 {
-	ckBiSemInit(&g_PATAStruct.sem, 0);
+	ckBenaphoreInit(&g_PATAStruct.sem, 0);
 	g_PATAStruct.IsSlaveSelected[0] = g_PATAStruct.IsSlaveSelected[1] = -1;
 
 	ckIdtInit(g_pIdtTable + PIC_INTERRUPT_HARDDISK1, ckPATAPrimaryIntHandler, KERNEL_CODE_SEGMENT, 0);

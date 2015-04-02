@@ -23,39 +23,61 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file binary_semaphore.c
+ * @file benaphore.h
  * @date 2014. 6. 1.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#include "binary_semaphore.h"
-#include "task.h"
-#include "likely.h"
+#ifndef BENAPHORE_H_
+#define BENAPHORE_H_
 
-void ckBiSemEnter(BiSem *bisem)
+#include <stddef.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+/**
+ * @brief 바이너리 세마포어 구조체입니다.
+ */
+typedef struct tagBenaphore
 {
-	while (!__sync_bool_compare_and_swap(&bisem->flag, 0, 1))
-	{
-		ckTaskSchedule();
-	}
+	volatile uint32_t flag;		//!< benaphore의 flag입니다.
+} Benaphore;
+
+/**
+ * @brief 바이너리 세마포어를 초기화합니다.
+ * @param[in] bisem 초기화할 @ref Benaphore 구조체입니다.
+ * @param[in] 바이너리 세마포어의 초기값입니다.
+ */
+static inline bool ckBenaphoreInit(Benaphore *bisem, uint32_t InitVal)
+{
+	if (InitVal > 1)
+		return false;
+
+	bisem->flag = InitVal;
+
+	return true;
 }
 
-bool ckBiSemPost(BiSem *bisem)
-{
-	return __sync_bool_compare_and_swap(&bisem->flag, 1, 0);
-}
+/**
+ * @brief 바이너리 세마포어의 임계 영역에 진입하고, 카운터를 증가시킵니다.
+ * @param[in] bisem @ref Benaphore 구조체입니다.
+ */
+void ckBenaphoreEnter(Benaphore *bisem);
+/**
+ * @brief 바이너리 세마포어의 카운터를 감소시킵니다.
+ * @param[in] bisem @ref Benaphore 구조체입니다.
+ */
+bool ckBenaphorePost(Benaphore *bisem);
+/**
+ * @brief 바이너리 세마포어의 카운터를 증가시킵니다.
+ * @param[in] bisem @ref Benaphore 구조체입니다.
+ */
+bool ckBenaphoreUnpost(Benaphore *bisem);
+/**
+ * @brief 바이너리 세마포어의 임계 영역에 진입하되, 카운터를 증가시키지 않습니다.
+ * @param[in] bisem @ref Benaphore 구조체입니다.
+ */
+void ckBenaphoreWait(Benaphore *bisem);
 
-bool ckBiSemUnpost(BiSem *bisem)
-{
-	return __sync_bool_compare_and_swap(&bisem->flag, 0, 1);
-}
-
-void ckBiSemWait(BiSem *bisem)
-{
-	while (bisem->flag != 0)
-	{
-		ckTaskSchedule();
-	}
-}
-
+#endif /* BENAPHORE_H_ */

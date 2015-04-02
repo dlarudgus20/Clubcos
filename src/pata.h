@@ -40,7 +40,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "binary_semaphore.h"
+#include "benaphore.h"
 
 enum
 {
@@ -134,7 +134,7 @@ typedef struct tagPATADeviceInfo
 /** @brief PATA 하드디스크 자료구조입니다. */
 typedef struct tagPATAStruct
 {
-	BiSem sem;
+	Benaphore sem;
 
 	PATADeviceInfo DeviceInfo[4];	//!< 순서대로 P.M - P.S - S.M - S.S의 @ref PATADeviceInfo
 	int IsSlaveSelected[2];			//!< 0이면 Master, 1이면 Slave, -1이면 선택되지 않음. [0]:Primary, [1]:Secondary
