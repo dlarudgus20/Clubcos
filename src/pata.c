@@ -56,11 +56,11 @@ static inline PATADeviceInfo *csGetDeviceInfo(bool bPrimary, bool bMaster)
 	return &g_PATAStruct.DeviceInfo[(bPrimary ? 0 : 2) + (bMaster ? 0 : 1)];
 }
 
-static void csPATAInit(bool bPrimary, bool bMaster);
+static void csPATAInit(bool bPrimary);
 static void csSelectDevice(bool bPrimary, bool bMaster);
 
 typedef enum tagWaitResult { WAIT_OK, WAIT_ERROR, WAIT_TIMEOUT } WaitResult;
-static WaitResult csWaitForReady(bool bPrimary);
+static WaitResult csWaitForNoBusy(bool bPrimary);
 
 void ckPATAInitialize(void)
 {
@@ -70,44 +70,45 @@ void ckPATAInitialize(void)
 	ckIdtInit(g_pIdtTable + PIC_INTERRUPT_HARDDISK1, ckPATAPrimaryIntHandler, KERNEL_CODE_SEGMENT, 0);
 	ckIdtInit(g_pIdtTable + PIC_INTERRUPT_HARDDISK2, ckPATASecondaryIntHandler, KERNEL_CODE_SEGMENT, 0);
 
-	// 인터럽트 활성화
-	//ckPortOutByte(PATA_PORTBASE_PRIMARY + PATA_PORTIDX_CONTROL, PATA_CTRL_INT_ENABLE);
-	//ckPortOutByte(PATA_PORTBASE_SECONDARY + PATA_PORTIDX_CONTROL, PATA_CTRL_INT_ENABLE);
-
-	csPATAInit(true, true);
-	csPATAInit(true, false);
-	csPATAInit(false, true);
-	csPATAInit(false, false);
+	csPATAInit(false);
+	csPATAInit(true);
 
 	// 테스트용 코드
 	while (1) ckAsmHlt();
 }
 
-static void csPATAInit(bool bPrimary, bool bMaster)
+static void csPATAInit(bool bPrimary)
 {
 	uint16_t portbase = csPortBase(bPrimary);
-	PATADeviceInfo *pInfo = csGetDeviceInfo(bPrimary, bMaster);
 
 	//PATAIdentifyResult idrs;
 
 	// regular status register가 0xff면 아예 존재하지 않음
 	if (ckPortInByte(portbase + PATA_PORTIDX_STATUS) == 0xff)
 	{
-		pInfo->bExist = false;
+		csGetDeviceInfo(bPrimary, true)->bExist = false;
+		csGetDeviceInfo(bPrimary, false)->bExist = false;
 		return;
 	}
 
-	csSelectDevice(bPrimary, bMaster);
+	// 인터럽트 비활성화
+	ckPortOutByte(portbase + PATA_PORTIDX_CONTROL, PATA_CTRL_INT_DISABLE);
 
-	ckPortOutByte(portbase + PATA_PORTIDX_SEC_COUNT, 0);
-	ckPortOutByte(portbase + PATA_PORTIDX_SEC_NUM, 0);
-	ckPortOutByte(portbase + PATA_PORTIDX_CYL_LSB, 0);
-	ckPortOutByte(portbase + PATA_PORTIDX_CYL_MSB, 0);
+	for (int i = 0; i < 2; i++)
+	{
+		bool bMaster = (i == 1);
 
-	ckPortOutByte(portbase + PATA_PORTIDX_COMMAND, PATA_CMD_IDENTIFY);
-	//csWaitForReady();
+		PATADeviceInfo *pInfo = csGetDeviceInfo(bPrimary, bMaster);
+		csSelectDevice(bPrimary, bMaster, true);
 
+		ckPortOutByte(portbase + PATA_PORTIDX_SEC_COUNT, 0);
+		ckPortOutByte(portbase + PATA_PORTIDX_SEC_NUM, 0);
+		ckPortOutByte(portbase + PATA_PORTIDX_CYL_LSB, 0);
+		ckPortOutByte(portbase + PATA_PORTIDX_CYL_MSB, 0);
 
+		ckPortOutByte(portbase + PATA_PORTIDX_COMMAND, PATA_CMD_IDENTIFY);
+		//csWaitForReady();
+	}
 }
 
 static void csSelectDevice(bool bPrimary, bool bMaster)
@@ -125,10 +126,12 @@ static void csSelectDevice(bool bPrimary, bool bMaster)
 		(bMaster ? 0 : PATA_DRVHEAD_SLAVE) | PATA_DRVHEAD_LBA | PATA_DRVHEAD_MASK);
 	g_PATAStruct.IsSlaveSelected[pri] = mas;
 
-	csWaitForReady(bPrimary);
+	// 400ns delay
+	for (int i = 0; i < 4; i++)
+		ckPortInByte(portbase + PATA_PORTIDX_ALT_STATUS);
 }
 
-static WaitResult csWaitForReady(bool bPrimary)
+static WaitResult csWaitForNoBusy(bool bPrimary)
 {
 	uint16_t portbase = csPortBase(bPrimary);
 
@@ -136,7 +139,7 @@ static WaitResult csWaitForReady(bool bPrimary)
 	while (g_TimerStruct.TickCountLow - start <= WAITTIME_FOR_PATA)
 	{
 		uint8_t status = ckPortInByte(portbase + PATA_PORTIDX_STATUS);
-		if (!(status & PATA_STATUS_BUSY) && (status & PATA_STATUS_DRV_READY))
+		if (!(status & PATA_STATUS_BUSY))
 		{
 			return WAIT_OK;
 		}

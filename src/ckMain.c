@@ -121,17 +121,18 @@ void ckMain(void)
 		ckTerminalPanic("Keyboard initializing is failed.");
 	ckTerminalPrintString_unsafe(" [OK]\n");
 
-	// PATA 초기화
-	//ckTerminalPrintString_unsafe("Initializeing PATA...");
-	//ckPATAInitialize();
-	//ckTerminalPrintString_unsafe(" [OK]\n");
-
 	// PIC의 마스크를 해제하고 인터럽트를 허용
 	ckPicMaskInterrupt(
 		~(PIC_MASKBIT_SLAVE | PIC_MASKBIT_TIMER | PIC_MASKBIT_KEYBOARD
 			| PIC_MASKBIT_HARDDISK1 | PIC_MASKBIT_HARDDISK2)
 		);
 	ckAsmSti();
+
+	// PATA 초기화
+	// PATA는 초기화 과정에서 인터럽트를 사용함.
+	//ckTerminalPrintString("Initializeing PATA...");
+	//ckPATAInitialize();
+	//ckTerminalPrintString(" [OK]\n");
 
 	// Coshell 초기화
 	ckCoshellInitialize();
