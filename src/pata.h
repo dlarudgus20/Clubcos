@@ -84,7 +84,7 @@ enum
 enum
 {
 	PATA_CTRL_RESET			= 0x04,		//!< PATA Control software reset
-	PATA_CTRL_INT_ENABLE	= 0x02,		//!< PATA Control interrupt enable
+	PATA_CTRL_INT_DISABLE	= 0x02,		//!< PATA Control interrupt disable
 	/* 0x01이 없는 건 오타가 아닙니다 - 원래 미사용이에요. */
 };
 enum
