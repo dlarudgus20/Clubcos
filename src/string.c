@@ -170,3 +170,8 @@ int rand(void)
 	return (((holdrand = holdrand * 214013L + 2531011L) >> 16) & 0x7fff);
 }
 
+void swap_endian_of_shorts(uint16_t *ar, size_t count)
+{
+	for (uint16_t *p = ar; p < ar + count; p++)
+		*p = ((*p & 0xff00) >> 8) | ((*p & 0x00ff) << 8);
+}

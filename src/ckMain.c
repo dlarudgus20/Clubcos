@@ -109,6 +109,7 @@ void ckMain(void)
 	ckTerminalPrintString_unsafe("Initializing Timer & RTC...");
 	ckTimerInitialize();
 	ckRTCInitialize();
+	ckTerminalPrintString_unsafe(" [OK]\n");
 
 	// 멀티태스킹 초기화 (타이머 이후)
 	ckTerminalPrintString_unsafe("Initializing Tasking...");
@@ -128,11 +129,14 @@ void ckMain(void)
 		);
 	ckAsmSti();
 
+	ckTerminalPrintString("Now interrupt is enabled.\n");
+
 	// PATA 초기화
-	// PATA는 초기화 과정에서 인터럽트를 사용함.
-	//ckTerminalPrintString("Initializeing PATA...");
-	//ckPATAInitialize();
-	//ckTerminalPrintString(" [OK]\n");
+	// PATA는 초기화 과정에서 인터럽트를 사용하며, 멀티태스킹을 고려함
+	// 따라서 ckAsmSti() 이후에 초기화.
+	ckTerminalPrintString("Initializing PATA...");
+	ckPATAInitialize();
+	ckTerminalPrintString(" [OK]\n");
 
 	// Coshell 초기화
 	ckCoshellInitialize();

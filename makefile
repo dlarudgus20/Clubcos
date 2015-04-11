@@ -106,9 +106,7 @@ DEPENDENCIES := $(patsubst $(DIR_SRC)/%.c, $(DIR_DEP)/%.c.d, $(C_SOURCES)) \
 LINK_SCRIPT := $(DIR_SRC)/link_script.ld
 
 # qemu
-ifeq ($(QEMU), )
 QEMU := qemu-system-i386
-endif
 QEMU_FLAGS := -L . -m 64 -fda $(OUTPUT_IMG) -boot a -localtime -M pc \
 	-hda hda.qed -hdb hdb.qed -hdc hdc.qed -hdd hdd.qed
 QEMU_DEBUG_FLAGS := $(QEMU_FLAGS) -gdb tcp:127.0.0.1:1234 -S

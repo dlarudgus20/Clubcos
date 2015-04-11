@@ -110,4 +110,24 @@ void ckTimerIntHandler(void);
  */
 void ckTimerBusyDirectWait_ms(uint32_t milli);
 
+/**
+ * @brief 32비트 tick count를 가져옵니다. @ref g_TimerStruct.TickCountLow 와 동일합니다.
+ * @return 32비트 크기의 tick count입니다.
+ */
+static inline uint32_t ckTimerGetTickCount()
+{
+	return g_TimerStruct.TickCountLow;
+}
+
+/**
+ * @brief 64비트 tick count를 가져옵니다. @ref g_TimerStruct.TickCountLow 와 동일합니다.
+ * @param[out] pHigh 64비트 tick count의 하위 32비트입니다.
+ * @param[out] pLow 64비트 tick count의 하위 32비트입니다.
+ */
+static inline void ckTimerGetTickCount64(uint32_t *pHigh, uint32_t *pLow)
+{
+	*pHigh = g_TimerStruct.TickCountHigh;
+	*pLow = g_TimerStruct.TickCountLow;
+}
+
 #endif /* TIMER_H_ */

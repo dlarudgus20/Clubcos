@@ -136,8 +136,10 @@ typedef struct tagPATAStruct
 {
 	Benaphore sem;
 
-	PATADeviceInfo DeviceInfo[4];	//!< 순서대로 P.M - P.S - S.M - S.S의 @ref PATADeviceInfo
-	int IsSlaveSelected[2];			//!< 0이면 Master, 1이면 Slave, -1이면 선택되지 않음. [0]:Primary, [1]:Secondary
+	PATADeviceInfo DeviceInfo[4];			//!< 순서대로 P.M - P.S - S.M - S.S의 @ref PATADeviceInfo
+	int IsSlaveSelected[2];					//!< 0이면 Master, 1이면 Slave, -1이면 선택되지 않음. [0]:Primary, [1]:Secondary
+
+	volatile bool bInterruptOccurred[2];	//!< [0]:Primary, [1]:Secondary
 } PATAStruct;
 
 extern PATAStruct g_PATAStruct;

@@ -37,6 +37,7 @@
 #include "pic.h"
 #include "task.h"
 #include "timer.h"
+#include "string.h"
 
 #include "terminal.h"
 
@@ -55,108 +56,181 @@ static inline PATADeviceInfo *csGetDeviceInfo(bool bPrimary, bool bMaster)
 {
 	return &g_PATAStruct.DeviceInfo[(bPrimary ? 0 : 2) + (bMaster ? 0 : 1)];
 }
+static inline bool csIsMasterSelected(bool bPrimary)
+{
+	return (g_PATAStruct.IsSlaveSelected[bPrimary ? 0 : 1] == 0);
+}
 
 static void csPATAInit(bool bPrimary);
-static void csSelectDevice(bool bPrimary, bool bMaster);
+static bool csSelectDevice(bool bPrimary, bool bMaster);
 
-typedef enum tagWaitResult { WAIT_OK, WAIT_ERROR, WAIT_TIMEOUT } WaitResult;
-static WaitResult csWaitForNoBusy(bool bPrimary);
+static bool csWaitForNoBusy(bool bPrimary);
+static bool csWaitForDriveReady(bool bPrimary);
+static bool csWaitForInterrupt(bool bPrimary);
 
 void ckPATAInitialize(void)
 {
 	ckBenaphoreInit(&g_PATAStruct.sem, 0);
+
+	g_PATAStruct.DeviceInfo[0].bExist = g_PATAStruct.DeviceInfo[1].bExist = false;
+	g_PATAStruct.DeviceInfo[2].bExist = g_PATAStruct.DeviceInfo[3].bExist = false;
 	g_PATAStruct.IsSlaveSelected[0] = g_PATAStruct.IsSlaveSelected[1] = -1;
+	g_PATAStruct.bInterruptOccurred[0] = g_PATAStruct.bInterruptOccurred[1] = false;
 
 	ckIdtInit(g_pIdtTable + PIC_INTERRUPT_HARDDISK1, ckPATAPrimaryIntHandler, KERNEL_CODE_SEGMENT, 0);
 	ckIdtInit(g_pIdtTable + PIC_INTERRUPT_HARDDISK2, ckPATASecondaryIntHandler, KERNEL_CODE_SEGMENT, 0);
 
 	csPATAInit(false);
 	csPATAInit(true);
-
-	// 테스트용 코드
-	while (1) ckAsmHlt();
 }
-
+#include"terminal.h"
 static void csPATAInit(bool bPrimary)
 {
 	uint16_t portbase = csPortBase(bPrimary);
 
-	//PATAIdentifyResult idrs;
+	PATADeviceInfo *pInfoAr[2] = {
+		csGetDeviceInfo(bPrimary, true),
+		csGetDeviceInfo(bPrimary, false)
+	};
+
+	PATAIdentifyResult idrs;
 
 	// regular status register가 0xff면 아예 존재하지 않음
 	if (ckPortInByte(portbase + PATA_PORTIDX_STATUS) == 0xff)
-	{
-		csGetDeviceInfo(bPrimary, true)->bExist = false;
-		csGetDeviceInfo(bPrimary, false)->bExist = false;
 		return;
-	}
 
-	// 인터럽트 비활성화
-	ckPortOutByte(portbase + PATA_PORTIDX_CONTROL, PATA_CTRL_INT_DISABLE);
+	// 인터럽트 활성화
+	ckPortOutByte(portbase + PATA_PORTIDX_CONTROL, 0);
 
-	for (int i = 0; i < 2; i++)
+	// slave부터 초기화
+	// 자주 쓰이는 master가 selected 상태가 되도록
+	for (int mas = 1; mas >= 0; mas--)
 	{
-		bool bMaster = (i == 1);
+		bool bMaster = (mas == 0);
 
-		PATADeviceInfo *pInfo = csGetDeviceInfo(bPrimary, bMaster);
-		csSelectDevice(bPrimary, bMaster, true);
+		csSelectDevice(bPrimary, bMaster);
 
+		g_PATAStruct.bInterruptOccurred[bPrimary ? 0 : 1] = false;
 		ckPortOutByte(portbase + PATA_PORTIDX_SEC_COUNT, 0);
 		ckPortOutByte(portbase + PATA_PORTIDX_SEC_NUM, 0);
 		ckPortOutByte(portbase + PATA_PORTIDX_CYL_LSB, 0);
 		ckPortOutByte(portbase + PATA_PORTIDX_CYL_MSB, 0);
-
 		ckPortOutByte(portbase + PATA_PORTIDX_COMMAND, PATA_CMD_IDENTIFY);
-		//csWaitForReady();
+		if (!csWaitForInterrupt(bPrimary))
+			continue;
+
+		uint8_t status = ckPortInByte(portbase + PATA_PORTIDX_STATUS);
+		if (status & PATA_STATUS_ERROR)
+			continue;
+
+		for (int i = 0; i < 512 / 2; i++)
+		{
+			((uint16_t *)&idrs)[i] = ckPortInWord(portbase + PATA_PORTIDX_DATA);
+		}
+
+		swap_endian_of_shorts(idrs.vwModelNumber,
+				sizeof(idrs.vwModelNumber) / sizeof(idrs.vwModelNumber[0]));
+		swap_endian_of_shorts(idrs.vwSerialNumber,
+				sizeof(idrs.vwSerialNumber) / sizeof(idrs.vwSerialNumber[0]));
+
+		pInfoAr[mas]->bExist = true;
+		pInfoAr[mas]->dwCountOfTotalSector = idrs.dwCountOfTotalSector;
+
+		ckTerminalSetColor(TERMINAL_COLOR_PANIC);
+		idrs.wControllerType = idrs._reserved2[0] = 0;
+		ckTerminalPrintStringF("\n [%s]: config[%#x], serial[%s], model[%s], sectors[%#x]",
+				(const char *[]){ "hda", "hdb", "hdc", "hdd" }[(bPrimary ? 0 : 2) + mas],
+				idrs.wConfiguration, (const char *)idrs.vwModelNumber, (const char *)idrs.vwSerialNumber,
+				idrs.dwCountOfTotalSector);
+		ckTerminalSetColor(TERMINAL_COLOR_LOG);
 	}
 }
 
-static void csSelectDevice(bool bPrimary, bool bMaster)
+static bool csSelectDevice(bool bPrimary, bool bMaster)
 {
 	uint16_t portbase = csPortBase(bPrimary);
 
-	int pri = bPrimary ? 0 : 1;
-	int mas = bMaster ? 0 : 1;
-
 	// 이미 select 되있다면 그냥 return
-	if (g_PATAStruct.IsSlaveSelected[pri] == mas)
-		return;
+	if (csIsMasterSelected(bPrimary) == bMaster)
+		return true;
+
+	if (!csWaitForNoBusy(bPrimary))
+		return false;
 
 	ckPortOutByte(portbase + PATA_PORTIDX_DRV_HEAD,
 		(bMaster ? 0 : PATA_DRVHEAD_SLAVE) | PATA_DRVHEAD_LBA | PATA_DRVHEAD_MASK);
-	g_PATAStruct.IsSlaveSelected[pri] = mas;
+	g_PATAStruct.IsSlaveSelected[bPrimary ? 0 : 1] = (bMaster ? 0 : 1);
 
 	// 400ns delay
+	// http://wiki.osdev.org/ATA_PIO_Mode#400ns_delays
 	for (int i = 0; i < 4; i++)
 		ckPortInByte(portbase + PATA_PORTIDX_ALT_STATUS);
+
+	if (!csWaitForDriveReady(bPrimary))
+		return false;
+
+	return true;
 }
 
-static WaitResult csWaitForNoBusy(bool bPrimary)
+static bool csWaitForNoBusy(bool bPrimary)
 {
 	uint16_t portbase = csPortBase(bPrimary);
 
-	uint32_t start = g_TimerStruct.TickCountLow;
+	uint32_t start = ckTimerGetTickCount();
 	while (g_TimerStruct.TickCountLow - start <= WAITTIME_FOR_PATA)
 	{
 		uint8_t status = ckPortInByte(portbase + PATA_PORTIDX_STATUS);
 		if (!(status & PATA_STATUS_BUSY))
 		{
-			return WAIT_OK;
+			return true;
 		}
 
 		ckTaskSleep(1);
 	}
-	return WAIT_TIMEOUT;
+	return false;
+}
+static bool csWaitForDriveReady(bool bPrimary)
+{
+	uint16_t portbase = csPortBase(bPrimary);
+
+	uint32_t start = ckTimerGetTickCount();
+	while (g_TimerStruct.TickCountLow - start <= WAITTIME_FOR_PATA)
+	{
+		uint8_t status = ckPortInByte(portbase + PATA_PORTIDX_STATUS);
+		if (status & PATA_STATUS_DRV_READY)
+		{
+			return true;
+		}
+
+		ckTaskSleep(1);
+	}
+	return false;
+}
+static bool csWaitForInterrupt(bool bPrimary)
+{
+	uint32_t start = ckTimerGetTickCount();
+	while (g_TimerStruct.TickCountLow - start <= WAITTIME_FOR_PATA)
+	{
+		if (g_PATAStruct.bInterruptOccurred[bPrimary ? 0 : 1])
+		{
+			return true;
+		}
+
+		ckTaskSleep(1);
+	}
+	return false;
 }
 
 /** @brief C로 짜여진 PATA Primary ISR입니다. */
 void ck_PATAPrimaryIntHandler(InterruptContext *pContext)
 {
 	ckPicSendEOI(PIC_IRQ_HARDDISK1);
+	g_PATAStruct.bInterruptOccurred[0] = true;
 }
 
 /** @brief C로 짜여진 PATA Secondary ISR입니다. */
 void ck_PATASecondaryIntHandler(InterruptContext *pContext)
 {
 	ckPicSendEOI(PIC_IRQ_HARDDISK2);
+	g_PATAStruct.bInterruptOccurred[1] = true;
 }

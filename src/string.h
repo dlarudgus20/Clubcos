@@ -24,7 +24,7 @@
 
 /**
  * @file string.h
- * @brief some os-independent functions of standard C
+ * @brief some os-independent functions
  * @date 2014. 4. 26.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
@@ -84,5 +84,7 @@ static inline int isspace(int c) { return strchr(" \t\n\v\f\r", c) != NULL; }
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 #define range(a, x, b) (((x) < (a)) ? (a) : (min(x, b)))
+
+void swap_endian_of_shorts(uint16_t *ar, size_t count);
 
 #endif /* STRING_H_ */
