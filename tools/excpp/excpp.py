@@ -3,10 +3,10 @@
 import sys
 
 if len(sys.argv) != 3:
-	print 'Usage: python %s [input file] [output file]' % ( sys.argv[0] )
+	print('Usage: python %s [input file] [output file]' % sys.argv[0])
 	quit()
 
-with open(sys.argv[1], 'r') as input:
+with open(sys.argv[1], 'r', encoding='utf-8') as input:
 	sort_list = []
 	output_list = []
 	if_sorting = 0
@@ -29,6 +29,6 @@ with open(sys.argv[1], 'r') as input:
 			else:
 				output_list.append(line)
 
-	with open(sys.argv[2], 'w') as output:
+	with open(sys.argv[2], 'w', encoding='utf-8') as output:
 		for item in output_list:
 			output.write('%s\n' % item)

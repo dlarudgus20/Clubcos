@@ -32,6 +32,10 @@
 #ifndef CPUID_H_
 #define CPUID_H_
 
+#include <stddef.h>
+#include <stdint.h>
+#include <stdbool.h>
+
 enum
 {
 	CPUID_CODE_FEATURES
