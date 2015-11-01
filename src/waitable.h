@@ -23,33 +23,22 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file lock_system.h
+ * @file waitable.h
  * @date 2015. 11. 1.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#ifndef LOCK_SYSTEM_H_
-#define LOCK_SYSTEM_H_
+#ifndef WAITABLE_H_
+#define WAITABLE_H_
 
-#include <stdbool.h>
-#include "port.h"
+#include "linkedlist.h"
 
-typedef struct tagLockSystemObject
+typedef struct tagWaitable
 {
-	bool prev_IF;
-} LockSystemObject;
+	LinkedListNode nodeOfOwner;
+	LinkedList listOfWaiters;
+	void (*pf)();
+} Waitable;
 
-static inline void ckLockSystem(LockSystemObject *pObj)
-{
-	pObj->prev_IF = ((ckAsmGetEFlag() & EFLAG_IF) != 0);
-	ckAsmCli();
-}
-
-static inline void ckUnlockSystem(LockSystemObject *pObj)
-{
-	if (pObj->prev_IF)
-		ckAsmSti();
-}
-
-#endif /* LOCK_SYSTEM_H_ */
+#endif /* WAITABLE_H_ */

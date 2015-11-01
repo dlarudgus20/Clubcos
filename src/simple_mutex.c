@@ -23,33 +23,59 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file lock_system.h
+ * @file simple_mutex.c
  * @date 2015. 11. 1.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#ifndef LOCK_SYSTEM_H_
-#define LOCK_SYSTEM_H_
+#include "simple_mutex.h"
+#include "task.h"
+#include "lock_system.h"
 
-#include <stdbool.h>
-#include "port.h"
-
-typedef struct tagLockSystemObject
+void ckSimpleMutexInit(SimpleMutex *pMutex)
 {
-	bool prev_IF;
-} LockSystemObject;
-
-static inline void ckLockSystem(LockSystemObject *pObj)
-{
-	pObj->prev_IF = ((ckAsmGetEFlag() & EFLAG_IF) != 0);
-	ckAsmCli();
+	pMutex->owner = ckTaskGetCurrentId();
+	pMutex->locker = TASK_INVALID_ID;
 }
 
-static inline void ckUnlockSystem(LockSystemObject *pObj)
+void ckSimpleMutexLock(SimpleMutex *pMutex)
 {
-	if (pObj->prev_IF)
-		ckAsmSti();
+	Task *pTask = ckTaskGetCurrent();
+
+	// fastpath
+	if (__sync_bool_compare_and_swap(&pMutex->locker, TASK_INVALID_ID, pTask->id))
+		return;
+
+	LockSystemObject lso;
+	ckLockSystem(&lso);
+
+	if (pMutex->locker == TASK_INVALID_ID)
+	{
+		pMutex->locker = pTask->id;
+	}
+	else
+	{
+		;
+	}
+
+	ckUnlockSystem(&lso);
 }
 
-#endif /* LOCK_SYSTEM_H_ */
+bool ckSimpleMutexUnlock(SimpleMutex *pMutex)
+{
+	Task *pTask = ckTaskGetCurrent();
+
+	LockSystemObject lso;
+	ckLockSystem(&lso);
+
+	if (pMutex->locker != pTask->id)
+		return false;
+	pMutex->locker = TASK_INVALID_ID;
+
+	;
+
+	ckUnlockSystem(&lso);
+
+	return true;
+}

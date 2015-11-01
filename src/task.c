@@ -78,7 +78,7 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
 	void *stack, uint32_t stacksize,
 	Process *pProcess, TaskPriority priority);
 
-// 프로세스가 종료된 후 정리 처리
+static void csCleanupTask(Task *pTask);
 static void csCleanupProcess(Process *pProc);
 
 static void ckTaskTerminate_internal(Task *pTask);
@@ -126,8 +126,8 @@ void ckTaskStructInitialize(void)
 
 	// Kernel Task Init
 	Task *pTask = &g_pTaskStruct->tasks[0];
-	ckLinkedListInit(&pTask->WaitMeList);
-	pTask->WaitObj = NULL;
+	ckLinkedListInit(&pTask->waitable.listOfWaiters);
+	pTask->WaitedObj = NULL;
 	pTask->selector = TASK_GDT_0;
 	pTask->flag = TASK_FLAG_RUNNING;
 	pTask->priority = KERNEL_TASK_PRIORITY;
@@ -146,8 +146,8 @@ void ckTaskStructInitialize(void)
 
 	// Idle Task Init
 	pTask = &g_pTaskStruct->tasks[1];
-	ckLinkedListInit(&pTask->WaitMeList);
-	pTask->WaitObj = NULL;
+	ckLinkedListInit(&pTask->waitable.listOfWaiters);
+	pTask->WaitedObj = NULL;
 	pTask->selector = TASK_GDT_0 + 1;
 	pTask->flag = TASK_FLAG_READY;
 	pTask->priority = TASK_PRIORITY_IDLE;
@@ -224,8 +224,8 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
 		ret = &g_pTaskStruct->tasks[i];
 		if (ret->selector == 0)
 		{
-			ret->WaitObj = NULL;
-			ckLinkedListInit(&ret->WaitMeList);
+			ret->WaitedObj = NULL;
+			ckLinkedListInit(&ret->waitable.listOfWaiters);
 
 			ret->bFpuUsed = false;
 			ret->UsedCpuTime = 0;
@@ -328,14 +328,21 @@ bool ckTaskTerminate(uint32_t TaskId)
 }
 static void ckTaskTerminate_internal(Task *pTask)
 {
-	LinkedList *pList = &pTask->WaitMeList;
+	LinkedList *pList = &pTask->waitable.listOfWaiters;
 	for (LinkedListNode *node = ckLinkedListHead(pList);
 		node != (LinkedListNode *)pList;
 		node = node->pNext)
 	{
-		Task *pNodeTask = (Task *)((uint32_t)node - offsetof(Task, WaitNode));
-		pNodeTask->WaitObj = NULL;
-		ckTaskResume_byptr(pNodeTask);
+		Task *pNodeTask = (Task *)((uint32_t)node - offsetof(Task, nodeOfWaitedObj));
+		if (pNodeTask->flag == TASK_FLAG_ZOMBIE)
+		{
+			csCleanupTask(pTask);
+		}
+		else
+		{
+			pNodeTask->WaitedObj = NULL;
+			ckTaskResume_byptr(pNodeTask);
+		}
 	}
 
 	if (g_pTaskStruct->pLastTaskUsedFPU == pTask)
@@ -358,7 +365,7 @@ static void ckTaskTerminate_internal(Task *pTask)
 
 	if (pTask == g_pTaskStruct->pNow)
 	{
-		assert(pTask->WaitObj == NULL);
+		assert(pTask->WaitedObj == NULL);
 
 		pTask->flag = TASK_FLAG_WAITFOREXIT;
 		ckLinkedListPushBack_mpsc(&g_pTaskStruct->WaitForExitList, &pTask->_node);
@@ -368,28 +375,23 @@ static void ckTaskTerminate_internal(Task *pTask)
 	}
 	else
 	{
-		if (pTask->WaitObj != NULL)
+		if (pTask->WaitedObj != NULL)
 		{
-			ckLinkedListErase(&pTask->WaitObj->WaitMeList, &pTask->WaitNode);
-			pTask->WaitObj = NULL;
-
+			// TODO: zombie
+			//ckLinkedListErase(&pTask->WaitedObj->WaitMeList, &pTask->WaitNode);
+			//pTask->WaitedObj = NULL;
 			assert(pTask->flag == TASK_FLAG_WAIT);
 			ckLinkedListErase(&g_pTaskStruct->WaitList, &pTask->_node);
+
+			pTask->flag = TASK_FLAG_ZOMBIE;
 		}
 		else
 		{
 			assert(pTask->flag == TASK_FLAG_READY);
 			ckLinkedListErase(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
+
+			csCleanupTask(pTask);
 		}
-
-		if (pProc != NULL)
-			csCleanupProcess(pProc);
-
-		if (pTask->stack != NULL)
-			ckDynMemFree(pTask->stack, pTask->stacksize);
-
-		ckGdtInitNull(g_pGdtTable + pTask->selector);
-		pTask->selector = 0;
 	}
 }
 
@@ -411,6 +413,20 @@ bool ckProcessTerminate(uint32_t ProcessId)
 	ckUnlockSystem(&lso);
 
 	return bRet;
+}
+
+static void csCleanupTask(Task *pTask)
+{
+	Process *pProc = pTask->pProcess;
+
+	if (pProc != NULL)
+		csCleanupProcess(pProc);
+
+	if (pTask->stack != NULL)
+		ckDynMemFree(pTask->stack, pTask->stacksize);
+
+	ckGdtInitNull(g_pGdtTable + pTask->selector);
+	pTask->selector = 0;
 }
 
 static void csCleanupProcess(Process *pProc)
@@ -578,14 +594,14 @@ void ckTaskJoin(uint32_t TaskId)
 	Task *pTask = csGetTaskFromId(TaskId);
 	Task *pNow = ckTaskGetCurrent();
 
-	assert(pNow->WaitObj == NULL);
+	assert(pNow->WaitedObj == NULL);
 
 	if (pTask != NULL)
 	{
 		if (pTask->flag != TASK_FLAG_WAITFOREXIT)
 		{
-			pNow->WaitObj = pTask;
-			ckLinkedListPushBack_nosync(&pTask->WaitMeList, &pNow->WaitNode);
+			pNow->WaitedObj = pTask;
+			ckLinkedListPushBack_nosync(&pTask->waitable.listOfWaiters, &pNow->nodeOfWaitedObj);
 
 			ckTaskSuspend_byptr(pNow);
 		}
@@ -602,12 +618,12 @@ void ckProcessJoin(uint32_t ProcId)
 	Process *pProc = csGetProcessFromId(ProcId);
 	Task *pNow = ckTaskGetCurrent();
 
-	assert(pNow->WaitObj == NULL);
+	assert(pNow->WaitedObj == NULL);
 
 	if (pProc != NULL)
 	{
-		pNow->WaitObj = pProc->pMainThread;
-		ckLinkedListPushBack_nosync(&pProc->pMainThread->WaitMeList, &pNow->WaitNode);
+		pNow->WaitedObj = pProc->pMainThread;
+		ckLinkedListPushBack_nosync(&pProc->pMainThread->waitable.listOfWaiters, &pNow->nodeOfWaitedObj);
 
 		ckTaskSuspend_byptr(pNow);
 	}
@@ -800,15 +816,7 @@ static void csIdleTask(void)
 			if (pTask == NULL)
 				break;
 
-			Process *pProc = pTask->pProcess;
-			if (pProc != NULL)
-				csCleanupProcess(pProc);
-
-			if (pTask->stack != NULL)
-				ckDynMemFree(pTask->stack, pTask->stacksize);
-
-			ckGdtInitNull(g_pGdtTable + pTask->selector);
-			pTask->selector = 0;
+			csCleanupTask(pTask);
 		}
 
 		/* 0.5초마다 processor load 출력 */

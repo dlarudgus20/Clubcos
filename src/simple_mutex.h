@@ -23,33 +23,29 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file lock_system.h
+ * @file simple_mutex.h
  * @date 2015. 11. 1.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#ifndef LOCK_SYSTEM_H_
-#define LOCK_SYSTEM_H_
+#ifndef SIMPLE_MUTEX_H_
+#define SIMPLE_MUTEX_H_
 
+#include <stdint.h>
 #include <stdbool.h>
-#include "port.h"
+#include "waitable.h"
 
-typedef struct tagLockSystemObject
+typedef struct tagSimpleMutex
 {
-	bool prev_IF;
-} LockSystemObject;
+	Waitable waitable;
 
-static inline void ckLockSystem(LockSystemObject *pObj)
-{
-	pObj->prev_IF = ((ckAsmGetEFlag() & EFLAG_IF) != 0);
-	ckAsmCli();
-}
+	uint32_t owner;
+	uint32_t locker;
+} SimpleMutex;
 
-static inline void ckUnlockSystem(LockSystemObject *pObj)
-{
-	if (pObj->prev_IF)
-		ckAsmSti();
-}
+void ckSimpleMutexInit(SimpleMutex *pMutex);
+void ckSimpleMutexLock(SimpleMutex *pMutex);
+bool ckSimpleMutexUnlock(SimpleMutex *pMutex);
 
-#endif /* LOCK_SYSTEM_H_ */
+#endif /* SIMPLE_MUTEX_H_ */

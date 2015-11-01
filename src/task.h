@@ -36,6 +36,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "linkedlist.h"
+#include "waitable.h"
 #include "memory_map.h"
 
 enum
@@ -100,9 +101,10 @@ typedef struct tagTss
 typedef enum tagTaskFlag
 {
 	TASK_FLAG_RUNNING,		//!< 태스크가 현재 실행 중입니다.
-	TASK_FLAG_READY,		//!< 태스크가 실행을 기다리고 있습니다.
-	TASK_FLAG_WAIT,			//!< 태스크가 다른 작업이 완료되기를 기다리고 있습니다.
+	TASK_FLAG_READY,		//!< 태스크가 실행 대기중입니다.
+	TASK_FLAG_WAIT,			//!< 태스크가 waitable object를 기다리고 있습니다.
 	TASK_FLAG_WAITFOREXIT,	//!< 태스크가 종료된 후 idle 태스크에 의해 정리되기를 기다리고 있습니다.
+	TASK_FLAG_ZOMBIE,		//!< 태스크가  waitable object를 기다리는 도중에 죽었습니다.
 } TaskFlag;
 
 /** @brief FPU 콘텍스트를 나타내는 구조체입니다. */
@@ -125,10 +127,10 @@ typedef struct tagTask
 {
 	LinkedListNode _node;
 
-	LinkedList WaitMeList;			//!< 자신이 종료되기를 기다리는 태스크들의 목록입니다.
+	Waitable waitable;
 
-	LinkedListNode WaitNode;		//!< 다른 태스크가 종료되기를 기다릴 때 사용되는 노드입니다.
-	struct tagTask *WaitObj;		//!< 이 값이 <c>NULL</c>이 아닐 경우 현재 태스크는 <c>WaitObj</c> 태스크가 종료되기를 기다리고 있습니다.
+	LinkedListNode nodeOfWaitedObj;	//!< waitable object를 기다릴 때 사용되는 노드입니다.
+	Waitable *WaitedObj;			//!< 이 값이 <c>NULL</c>이 아닐 경우 태스크가 이 waitable object를 기다리고 있습니다.
 
 	uint32_t selector;				//!< 태스크 디스크럽터 셀렉터입니다. 0이면 사용되지 않은 <c>Task</c> 구조체입니다.
 
