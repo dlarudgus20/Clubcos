@@ -42,6 +42,7 @@
 #include "likely.h"
 #include "terminal.h"
 #include "timer.h"
+#include "lock_system.h"
 
 // id로부터 Task *를 얻어옴 - 무효할 경우 NULL
 static inline Task *csGetTaskFromId(uint32_t id)
@@ -192,7 +193,8 @@ uint32_t ckTaskCreate(uint32_t eip, uint32_t esp,
 {
 	uint32_t ret_id;
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Process *pProcess = csGetProcessFromId(ProcessId);
 	if (pProcess != NULL)
@@ -205,8 +207,10 @@ uint32_t ckTaskCreate(uint32_t eip, uint32_t esp,
 		}
 	}
 	ret_id = TASK_INVALID_ID;
+
 ret_label:
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return ret_id;
 }
 static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
@@ -262,7 +266,8 @@ uint32_t ckProcessCreate(uint32_t eip, uint32_t esp,
 	uint32_t ret_id = PROCESS_INVALID_ID;
 	Process *ret;
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Process *pParentProcess = csGetProcessFromId(ParentProcessId);
 	if (pParentProcess != NULL)
@@ -297,7 +302,8 @@ uint32_t ckProcessCreate(uint32_t eip, uint32_t esp,
 		}
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return ret_id;
 }
 
@@ -306,7 +312,8 @@ bool ckTaskTerminate(uint32_t TaskId)
 	bool bRet = false;
 	assert(TaskId != KERNEL_TASK_ID && TaskId != IDLE_TASK_ID);
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Task *pTask = csGetTaskFromId(TaskId);
 	if (pTask != NULL)
@@ -315,7 +322,8 @@ bool ckTaskTerminate(uint32_t TaskId)
 		bRet = true;
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
 }
 static void ckTaskTerminate_internal(Task *pTask)
@@ -390,7 +398,8 @@ bool ckProcessTerminate(uint32_t ProcessId)
 	bool bRet = false;
 	assert(ProcessId != KERNEL_PROCESS_ID);
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Process *pProc = csGetProcessFromId(ProcessId);
 	if (pProc != NULL)
@@ -399,7 +408,8 @@ bool ckProcessTerminate(uint32_t ProcessId)
 		bRet = true;
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
 }
 
@@ -444,7 +454,8 @@ bool ckTaskChangePriority(uint32_t TaskId, TaskPriority priority)
 {
 	bool bRet = false;
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Task *pTask = csGetTaskFromId(TaskId);
 	if (pTask != NULL)
@@ -462,7 +473,8 @@ bool ckTaskChangePriority(uint32_t TaskId, TaskPriority priority)
 		bRet = true;
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
 }
 
@@ -471,7 +483,8 @@ bool ckTaskSuspend(uint32_t TaskId)
 	bool bRet = false;
 	assert(TaskId != KERNEL_TASK_ID && TaskId != IDLE_TASK_ID);
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Task *pTask = csGetTaskFromId(TaskId);
 	if (pTask != NULL)
@@ -479,7 +492,8 @@ bool ckTaskSuspend(uint32_t TaskId)
 		bRet = ckTaskSuspend_byptr(pTask);
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
 }
 
@@ -487,7 +501,8 @@ bool ckTaskSuspend_byptr(Task *pTask)
 {
 	bool bRet = false;
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	TaskFlag flag = pTask->flag;
 
@@ -511,7 +526,8 @@ bool ckTaskSuspend_byptr(Task *pTask)
 		bRet = true;
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
 }
 
@@ -520,7 +536,8 @@ bool ckTaskResume(uint32_t TaskId)
 	bool bRet = false;
 	assert(TaskId != KERNEL_TASK_ID && TaskId != IDLE_TASK_ID);
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Task *pTask = csGetTaskFromId(TaskId);
 	if (pTask != NULL)
@@ -528,14 +545,16 @@ bool ckTaskResume(uint32_t TaskId)
 		bRet = ckTaskResume_byptr(pTask);
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
 }
 bool ckTaskResume_byptr(Task *pTask)
 {
 	bool bRet = false;
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	if (pTask->flag == TASK_FLAG_WAIT)
 	{
@@ -546,14 +565,15 @@ bool ckTaskResume_byptr(Task *pTask)
 		bRet = true;
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
 
 	return bRet;
 }
 
 void ckTaskJoin(uint32_t TaskId)
 {
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Task *pTask = csGetTaskFromId(TaskId);
 	Task *pNow = ckTaskGetCurrent();
@@ -571,12 +591,13 @@ void ckTaskJoin(uint32_t TaskId)
 		}
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
 }
 
 void ckProcessJoin(uint32_t ProcId)
 {
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Process *pProc = csGetProcessFromId(ProcId);
 	Task *pNow = ckTaskGetCurrent();
@@ -591,7 +612,7 @@ void ckProcessJoin(uint32_t ProcId)
 		ckTaskSuspend_byptr(pNow);
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
 }
 
 void ckTaskSleep(uint32_t milisecond)
@@ -607,9 +628,12 @@ void ckTaskSleep(uint32_t milisecond)
 
 void ckTaskSchedule(void)
 {
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
+
 	ckTaskSchedule_internal();
-	INTERRUPT_UNLOCK();
+
+	ckUnlockSystem(&lso);
 }
 
 void ckTaskScheduleOnTimerInt(void)

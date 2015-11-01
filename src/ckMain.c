@@ -43,6 +43,7 @@
 #include "pata.h"
 #include "likely.h"
 #include "string.h"
+#include "lock_system.h"
 
 /**
  * @mainpage Clubcos 소스 레퍼런스
@@ -151,9 +152,12 @@ void ckMain(void)
 	{
 		while (!pQueue->bEmpty)
 		{
-			INTERRUPT_LOCK();
+			LockSystemObject lso;
+			ckLockSystem(&lso);
+
 			QueueData = ckCircularQueue32Get((CircularQueue32 *)pQueue, false, NULL);
-			INTERRUPT_UNLOCK();
+
+			ckUnlockSystem(&lso);
 
 			data = QueueData & 0xffffff;
 			switch (QueueData & 0xff000000)

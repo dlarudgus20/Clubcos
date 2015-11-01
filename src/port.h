@@ -88,21 +88,6 @@ static inline void ckAsmSti(void);
 /** @brief <c>hlt</c> 어셈블리 함수 */
 static inline void ckAsmHlt(void);
 
-/**
- * @brief 인터럽트를 금지시킴으로써 lock을 겁니다.
- * @sa INTERRUPT_UNLOCK
- */
-#define INTERRUPT_LOCK() \
-	uint32_t _eflag = ckAsmGetEFlag(); \
-	ckAsmCli()
-
-/**
- * @brief 인터럽트 금지 lock을 해제합니다.
- * @sa INTERRUPT_LOCK
- */
-#define INTERRUPT_UNLOCK() \
-	ckAsmSetEFlag(_eflag)
-
 #include "port_impl.h"
 
 #include "control_register.h"

@@ -32,6 +32,7 @@
 #include "memory.h"
 #include "port.h"
 #include "string.h"
+#include "lock_system.h"
 #include "likely.h"
 #include "assert.h"
 
@@ -135,7 +136,9 @@ void *ckDynMemAllocate(uint32_t size)
 	BuddyBitmap *start = g_DynMem.arBitmap + BitmapIdx;
 	BuddyBitmap *end = g_DynMem.arBitmap + g_DynMem.BitmapLevel;
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
+
 	uint32_t ret = 0;
 
 	for (BuddyBitmap *now = start; now < end; now++)
@@ -171,7 +174,7 @@ void *ckDynMemAllocate(uint32_t size)
 		break;
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
 
 	return (void *)ret;
 }
@@ -200,7 +203,8 @@ bool ckDynMemFree(void *addr, uint32_t size)
 	BuddyBitmap *start = g_DynMem.arBitmap + BitmapIdx;
 	uint32_t block = rel_addr / (DYN_MEM_BUDDY_UNIT_SIZE << BitmapIdx);
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	// 주의! 해제된 블록을 다시 해제하려 하는 경우엔 false 리턴이 아니라 assert가 걸림
 	// 만일 현재 블록이 상위 블록에 합쳐진 경우라면, 블록이 이미 해제됬는지 아닌지를 판단하는 데
@@ -242,7 +246,8 @@ bool ckDynMemFree(void *addr, uint32_t size)
 
 	g_DynMem.UsedSize -= size;
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return true;
 }
 
