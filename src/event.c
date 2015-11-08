@@ -1,4 +1,4 @@
-// Copyright (c) 2014, 임경현
+// Copyright (c) 2014, 임경현 (dlarudgus20)
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -23,85 +23,99 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file simple_mutex.c
- * @date 2015. 11. 1.
+ * @file event.c
+ * @date 2015. 11. 8.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#include "simple_mutex.h"
-#include "task.h"
-#include "lock_system.h"
+#include "event.h"
 
-void ckSimpleMutexInit(SimpleMutex *pMutex)
+#include "lock_system.h"
+#include "task.h"
+#include "assert.h"
+
+void ckEventInit(Event *pEvent, bool InitVal, bool bAutoClear)
 {
-	pMutex->owner = ckProcessGetCurrentId();
-	pMutex->locker = TASK_INVALID_ID;
-	ckLinkedListInit(&pMutex->waitable.listOfWaiters);
+	pEvent->flag = (InitVal ? 1 : 0);
+	pEvent->bAutoClear = bAutoClear;
+	ckLinkedListInit(&pEvent->waitable.listOfWaiters);
 }
 
-bool ckSimpleMutexLock(SimpleMutex *pMutex)
+void ckEventWait(Event *pEvent)
 {
-	Task *pTask = ckTaskGetCurrent();
-
 	// fastpath
-	if (__sync_bool_compare_and_swap(&pMutex->locker, TASK_INVALID_ID, pTask->id))
-		return true;
-
-	bool bRet = true;
+	if (pEvent->bAutoClear)
+	{
+		if (__sync_bool_compare_and_swap(&pEvent->flag, 1, 0))
+			return;
+	}
+	else
+	{
+		if (__sync_fetch_and_or(&pEvent->flag, 0) == 1)
+			return;
+	}
 
 	LockSystemObject lso;
 	ckLockSystem(&lso);
 
-	if (pMutex->locker == TASK_INVALID_ID)
+	if (pEvent->flag == 0)
 	{
-		pMutex->locker = pTask->id;
-	}
-	else if (pMutex->locker == pTask->id)
-	{
-		bRet = false;
-	}
-	else
-	{
-		pTask->WaitedObj = &pMutex->waitable;
-		ckLinkedListPushBack_nosync(&pMutex->waitable.listOfWaiters, &pTask->nodeOfWaitedObj);
+		Task *pTask = ckTaskGetCurrent();
+		ckLinkedListPushBack_nosync(&pEvent->waitable.listOfWaiters, &pTask->nodeOfWaitedObj);
 		ckTaskSuspend_byptr(pTask);
 	}
 
 	ckUnlockSystem(&lso);
-
-	return bRet;
 }
 
-bool ckSimpleMutexUnlock(SimpleMutex *pMutex)
+bool ckEventSet(Event *pEvent)
 {
-	Task *pTask = ckTaskGetCurrent();
-
 	bool bRet = true;
 
 	LockSystemObject lso;
 	ckLockSystem(&lso);
 
-	if (pMutex->locker != pTask->id)
+	if (pEvent->flag == 1)
 	{
 		bRet = false;
 	}
-	else if (pMutex->waitable.listOfWaiters.size != 0)
+	else if (pEvent->waitable.listOfWaiters.size != 0)
 	{
-		LinkedListNode *node = ckLinkedListPopFront_nosync(&pMutex->waitable.listOfWaiters);
-		Task *pNodeTask = (Task *)((uint32_t)node - offsetof(Task, nodeOfWaitedObj));
+		if (pEvent->bAutoClear)
+		{
+			LinkedListNode *node = ckLinkedListPopFront_nosync(&pEvent->waitable.listOfWaiters);
+			Task *pNodeTask = (Task *)((uint32_t)node - offsetof(Task, nodeOfWaitedObj));
 
-		pMutex->locker = pNodeTask->id;
+			pNodeTask->WaitedObj = NULL;
+			ckTaskResume_byptr(pNodeTask);
+		}
+		else
+		{
+			pEvent->flag = 1;
 
-		pNodeTask->WaitedObj = NULL;
-		ckTaskResume_byptr(pNodeTask);
+			LinkedList *pList = &pEvent->waitable.listOfWaiters;
+			for (LinkedListNode *node = ckLinkedListHead(pList);
+				node != (LinkedListNode *)pList;
+				node = node->pNext)
+			{
+				Task *pNodeTask = (Task *)((uint32_t)node - offsetof(Task, nodeOfWaitedObj));
+				pNodeTask->WaitedObj = NULL;
+				ckTaskResume_byptr(pNodeTask);
+			}
+		}
 	}
 	else
 	{
-		pMutex->locker = TASK_INVALID_ID;
+		pEvent->flag = 1;
 	}
 
 	ckUnlockSystem(&lso);
 
 	return bRet;
+}
+
+bool ckEventClear(Event *pEvent)
+{
+	return __sync_bool_compare_and_swap(&pEvent->flag, 1, 0);
 }

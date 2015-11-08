@@ -1,9 +1,9 @@
 // Copyright (c) 2014, 임경현 (dlarudgus20)
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
+//
 // * Redistributions of source code must retain the above copyright notice, this
 //   list of conditions and the following disclaimer.
 //
@@ -70,7 +70,7 @@ static bool csWaitForInterrupt(bool bPrimary);
 
 void ckPATAInitialize(void)
 {
-	ckBenaphoreInit(&g_PATAStruct.sem, 0);
+	ckSimpleMutexInit(&g_PATAStruct.mutex);
 
 	g_PATAStruct.DeviceInfo[0].bExist = g_PATAStruct.DeviceInfo[1].bExist = false;
 	g_PATAStruct.DeviceInfo[2].bExist = g_PATAStruct.DeviceInfo[3].bExist = false;

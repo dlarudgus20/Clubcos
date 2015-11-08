@@ -1,0 +1,63 @@
+todo: syncobj를 프로세스가 소유해야..
+
+todo: simple mutex 너무 느린데; 지금 4800찍는데 초단위로 걸리는데 윈도에선 48000을 즉시에;
+윈도 테스트 코드:
+<code>
+#include <windows.h>
+#include <process.h>
+#include <stdio.h>
+#include <stdint.h>
+
+#define TEST_SIM_MUTEX_TASK_COUNT 12
+
+static volatile uint32_t sim_count = 0;
+static HANDLE TestSimMutex;
+
+static unsigned __stdcall testsimmutex(void *param)
+{
+	for (int i = 0; i < 4000; i++)
+	{
+		WaitForSingleObject(TestSimMutex, INFINITE);
+
+		if (i % 3000 == 0) SwitchToThread();
+		volatile uint32_t tmp = sim_count + 2;
+		if (i % 3000 == 0) SwitchToThread();
+		tmp -= 3;
+		if (i % 3000 == 0) SwitchToThread();
+		sim_count = tmp + 2;
+		if (i % 3000 == 0) SwitchToThread();
+
+		ReleaseMutex(TestSimMutex);
+	}
+
+	return 0;
+}
+
+static unsigned __stdcall joinersimmutextest(void *param)
+{
+	uintptr_t *arTaskId = (uint32_t *)param;
+	for (int i = 0; i < TEST_SIM_MUTEX_TASK_COUNT; i++)
+		WaitForSingleObject((HANDLE)arTaskId[i], INFINITE);
+
+	printf("count: %u\n", sim_count);
+	sim_count = 0;
+
+	return 0;
+}
+
+int main()
+{
+	TestSimMutex = CreateMutex(NULL, FALSE, "mymutexxxxfasdf");
+
+	uintptr_t arTask[TEST_SIM_MUTEX_TASK_COUNT];
+	unsigned id;
+	for (int i = 0; i < TEST_SIM_MUTEX_TASK_COUNT; i++)
+	{
+		arTask[i] = _beginthreadex(NULL, 4096, testsimmutex, NULL, 0, &id);
+	}
+
+	uintptr_t waiter = _beginthreadex(NULL, 4096, joinersimmutextest, (void *)arTask, 0, &id);
+
+	WaitForSingleObject((HANDLE)waiter, INFINITE);
+}
+</code>

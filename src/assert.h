@@ -53,7 +53,7 @@ void ckAssertMessage(const char *str, const char *file, const char *func, unsign
 
 #else
 
-# define assert(exp) ((void)0)
+# define assert(exp) ((void)(exp))
 
 #endif
 

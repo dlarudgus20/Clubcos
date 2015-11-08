@@ -66,7 +66,7 @@ void ckMain(void)
 
 	// 터미널 초기화
 	ckTerminalInitialize();
-	ckTerminalSetColor(TERMINAL_COLOR_LOG);
+	ckTerminalSetColor_unsafe(TERMINAL_COLOR_LOG);
 
 	{
 		char buf[1024];
@@ -93,6 +93,14 @@ void ckMain(void)
 	ckIdtTableInitialize();
 	ckTerminalPrintString_unsafe(" [OK]\n");
 
+	// 멀티태스킹 초기화
+	ckTerminalPrintString_unsafe("Initializing Tasking...");
+	ckTaskStructInitialize();
+	ckTerminalPrintString_unsafe(" [OK]\n");
+
+	// 터미널 동기화 객체 초기화
+	ckTerminalInitSyncObjs();
+
 	// 동적 메모리 초기화
 	ckTerminalPrintString_unsafe("Initializing Dynamic Memory Manager...");
 	ckDynMemInitialize();
@@ -110,11 +118,6 @@ void ckMain(void)
 	ckTerminalPrintString_unsafe("Initializing Timer & RTC...");
 	ckTimerInitialize();
 	ckRTCInitialize();
-	ckTerminalPrintString_unsafe(" [OK]\n");
-
-	// 멀티태스킹 초기화 (타이머 이후)
-	ckTerminalPrintString_unsafe("Initializing Tasking...");
-	ckTaskStructInitialize();
 	ckTerminalPrintString_unsafe(" [OK]\n");
 
 	// 키보드 초기화

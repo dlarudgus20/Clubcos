@@ -82,6 +82,7 @@ static void csCleanupTask(Task *pTask);
 static void csCleanupProcess(Process *pProc);
 
 static void ckTaskTerminate_internal(Task *pTask);
+static void ckTaskJoin_internal(Task *pTask);
 static void ckTaskSchedule_internal(void);
 
 static void csIdleTask(void);
@@ -583,21 +584,24 @@ void ckTaskJoin(uint32_t TaskId)
 	ckLockSystem(&lso);
 
 	Task *pTask = csGetTaskFromId(TaskId);
+	if (pTask != NULL)
+		ckTaskJoin_internal(pTask);
+
+	ckUnlockSystem(&lso);
+}
+
+static void ckTaskJoin_internal(Task *pTask)
+{
 	Task *pNow = ckTaskGetCurrent();
 
 	assert(pNow->WaitedObj == NULL);
 
-	if (pTask != NULL)
+	if (pTask->flag != TASK_FLAG_WAITFOREXIT)
 	{
-		if (pTask->flag != TASK_FLAG_WAITFOREXIT)
-		{
-			pNow->WaitedObj = &pTask->waitable;
-			ckLinkedListPushBack_nosync(&pTask->waitable.listOfWaiters, &pNow->nodeOfWaitedObj);
-			ckTaskSuspend_byptr(pNow);
-		}
+		pNow->WaitedObj = &pTask->waitable;
+		ckLinkedListPushBack_nosync(&pTask->waitable.listOfWaiters, &pNow->nodeOfWaitedObj);
+		ckTaskSuspend_byptr(pNow);
 	}
-
-	ckUnlockSystem(&lso);
 }
 
 void ckProcessJoin(uint32_t ProcId)
@@ -606,17 +610,8 @@ void ckProcessJoin(uint32_t ProcId)
 	ckLockSystem(&lso);
 
 	Process *pProc = csGetProcessFromId(ProcId);
-	Task *pNow = ckTaskGetCurrent();
-
-	assert(pNow->WaitedObj == NULL);
-
 	if (pProc != NULL)
-	{
-		pNow->WaitedObj = &pProc->pMainThread->waitable;
-		ckLinkedListPushBack_nosync(&pProc->pMainThread->waitable.listOfWaiters, &pNow->nodeOfWaitedObj);
-
-		ckTaskSuspend_byptr(pNow);
-	}
+		ckTaskJoin_internal(pProc->pMainThread);
 
 	ckUnlockSystem(&lso);
 }

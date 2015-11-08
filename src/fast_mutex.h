@@ -1,4 +1,4 @@
-// Copyright (c) 2014, 임경현 (dlarudgus20)
+// Copyright (c) 2014, 임경현
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -23,61 +23,27 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file benaphore.h
- * @date 2014. 6. 1.
+ * @file fast_mutex.h
+ * @date 2015. 11. 8.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#ifndef BENAPHORE_H_
-#define BENAPHORE_H_
+#ifndef FAST_MUTEX_H_
+#define FAST_MUTEX_H_
 
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
 
-/**
- * @brief 바이너리 세마포어 구조체입니다.
- */
-typedef struct tagBenaphore
+typedef struct tagFastMutex
 {
-	volatile uint32_t flag;		//!< benaphore의 flag입니다.
-} Benaphore;
+	uint32_t owner;
+	uint32_t locker;
+} FastMutex;
 
-/**
- * @brief 바이너리 세마포어를 초기화합니다.
- * @param[in] bisem 초기화할 @ref Benaphore 구조체입니다.
- * @param[in] 바이너리 세마포어의 초기값입니다.
- */
-static inline bool ckBenaphoreInit(Benaphore *bisem, uint32_t InitVal)
-{
-	if (InitVal > 1)
-		return false;
+void ckFastMutexInit(FastMutex *pMutex);
+bool ckFastMutexLock(FastMutex *pMutex);
+bool ckFastMutexUnlock(FastMutex *pMutex);
 
-	bisem->flag = InitVal;
-
-	return true;
-}
-
-/**
- * @brief 바이너리 세마포어의 임계 영역에 진입하고, 카운터를 증가시킵니다.
- * @param[in] bisem @ref Benaphore 구조체입니다.
- */
-void ckBenaphoreEnter(Benaphore *bisem);
-/**
- * @brief 바이너리 세마포어의 카운터를 감소시킵니다.
- * @param[in] bisem @ref Benaphore 구조체입니다.
- */
-bool ckBenaphorePost(Benaphore *bisem);
-/**
- * @brief 바이너리 세마포어의 카운터를 증가시킵니다.
- * @param[in] bisem @ref Benaphore 구조체입니다.
- */
-bool ckBenaphoreUnpost(Benaphore *bisem);
-/**
- * @brief 바이너리 세마포어의 임계 영역에 진입하되, 카운터를 증가시키지 않습니다.
- * @param[in] bisem @ref Benaphore 구조체입니다.
- */
-void ckBenaphoreWait(Benaphore *bisem);
-
-#endif /* BENAPHORE_H_ */
+#endif /* FAST_MUTEX_H_ */

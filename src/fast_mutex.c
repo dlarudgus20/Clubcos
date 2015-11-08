@@ -1,4 +1,4 @@
-// Copyright (c) 2014, 임경현 (dlarudgus20)
+// Copyright (c) 2014, 임경현
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -23,38 +23,38 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file benaphore.c
- * @date 2014. 6. 1.
+ * @file fast_mutex.c
+ * @date 2015. 11. 8.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#include "benaphore.h"
+#include "fast_mutex.h"
 #include "task.h"
 
-void ckBenaphoreEnter(Benaphore *bisem)
+void ckFastMutexInit(FastMutex *pMutex)
 {
-	while (!__sync_bool_compare_and_swap(&bisem->flag, 0, 1))
+	pMutex->owner = ckProcessGetCurrentId();
+	pMutex->locker = TASK_INVALID_ID;
+}
+
+bool ckFastMutexLock(FastMutex *pMutex)
+{
+	uint32_t TaskId = ckTaskGetCurrentId();
+
+	if (__sync_fetch_and_or(&pMutex->locker, 0) == TaskId)
+		return false;
+
+	while (!__sync_bool_compare_and_swap(&pMutex->locker, TASK_INVALID_ID, TaskId))
 	{
 		ckTaskSchedule();
 	}
+
+	return true;
 }
 
-bool ckBenaphorePost(Benaphore *bisem)
+bool ckFastMutexUnlock(FastMutex *pMutex)
 {
-	return __sync_bool_compare_and_swap(&bisem->flag, 1, 0);
+	uint32_t TaskId = ckTaskGetCurrentId();
+	return __sync_bool_compare_and_swap(&pMutex->locker, TaskId, TASK_INVALID_ID);
 }
-
-bool ckBenaphoreUnpost(Benaphore *bisem)
-{
-	return __sync_bool_compare_and_swap(&bisem->flag, 0, 1);
-}
-
-void ckBenaphoreWait(Benaphore *bisem)
-{
-	while (bisem->flag != 0)
-	{
-		ckTaskSchedule();
-	}
-}
-

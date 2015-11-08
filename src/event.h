@@ -1,4 +1,4 @@
-// Copyright (c) 2014, 임경현
+// Copyright (c) 2014, 임경현 (dlarudgus20)
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -23,30 +23,52 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file simple_mutex.h
- * @date 2015. 11. 1.
+ * @file event.h
+ * @date 2015. 11. 8.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#ifndef SIMPLE_MUTEX_H_
-#define SIMPLE_MUTEX_H_
+#ifndef EVENT_H_
+#define EVENT_H_
 
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include "waitable.h"
 
-typedef struct tagSimpleMutex
+/**
+ * @brief 바이너리 세마포어 구조체입니다.
+ */
+typedef struct tagEvent
 {
 	Waitable waitable;
 
-	uint32_t owner;
-	uint32_t locker;
-} SimpleMutex;
+	uint32_t flag;		//!< benaphore의 flag입니다.
+	bool bAutoClear;
+} Event;
 
-void ckSimpleMutexInit(SimpleMutex *pMutex);
-bool ckSimpleMutexLock(SimpleMutex *pMutex);
-bool ckSimpleMutexUnlock(SimpleMutex *pMutex);
+/**
+ * @brief 바이너리 세마포어를 초기화합니다.
+ * @param[in] bisem 초기화할 @ref Benaphore 구조체입니다.
+ * @param[in] 바이너리 세마포어의 초기값입니다.
+ */
+void ckEventInit(Event *pEvent, bool InitVal, bool bAutoClear);
 
-#endif /* SIMPLE_MUTEX_H_ */
+/**
+ * @brief 바이너리 세마포어의 임계 영역에 진입하고, 카운터를 증가시킵니다.
+ * @param[in] bisem @ref Benaphore 구조체입니다.
+ */
+void ckEventWait(Event *pEvent);
+/**
+ * @brief 바이너리 세마포어의 카운터를 감소시킵니다.
+ * @param[in] bisem @ref Benaphore 구조체입니다.
+ */
+bool ckEventSet(Event *pEvent);
+/**
+ * @brief 바이너리 세마포어의 카운터를 증가시킵니다.
+ * @param[in] bisem @ref Benaphore 구조체입니다.
+ */
+bool ckEventClear(Event *pEvent);
+
+#endif /* EVENT_H_ */

@@ -23,30 +23,21 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file simple_mutex.h
- * @date 2015. 11. 1.
+ * @file stackdump.h
+ * @date 2015. 11. 8.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#ifndef SIMPLE_MUTEX_H_
-#define SIMPLE_MUTEX_H_
+#ifndef STACKDUMP_H_
+#define SRC_STACKDUMP_H_
 
-#include <stddef.h>
 #include <stdint.h>
-#include <stdbool.h>
-#include "waitable.h"
 
-typedef struct tagSimpleMutex
-{
-	Waitable waitable;
+// boot.asm
+extern void *_boot_stackframe_top;
 
-	uint32_t owner;
-	uint32_t locker;
-} SimpleMutex;
+// stackdump.asm
+void ckStackDump(void (*pfCallback)(void *fn, uint32_t num), uint32_t skip, uint32_t limit);
 
-void ckSimpleMutexInit(SimpleMutex *pMutex);
-bool ckSimpleMutexLock(SimpleMutex *pMutex);
-bool ckSimpleMutexUnlock(SimpleMutex *pMutex);
-
-#endif /* SIMPLE_MUTEX_H_ */
+#endif /* STACKDUMP_H_ */

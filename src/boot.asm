@@ -149,6 +149,10 @@ section .setup
 		; 끝 - C 커널 실행
 		call ckMain
 
+		; stackdump를 위해 이 지점을 export해줌
+	[global _boot_stackframe_top]
+	_boot_stackframe_top:
+
 	stop:
 		cli
 		hlt
