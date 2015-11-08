@@ -36,9 +36,11 @@
 
 typedef struct tagWaitable
 {
+	// Task._node와 union으로 묶여있음
+	// 맨 처음에 있어야 함.
 	LinkedListNode nodeOfOwner;
+
 	LinkedList listOfWaiters;
-	void (*pf)();
 } Waitable;
 
 #endif /* WAITABLE_H_ */

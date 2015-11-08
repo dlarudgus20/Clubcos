@@ -139,11 +139,13 @@ void ckTerminalSetStatus(TermStatus stat)
 
 void ckTerminalPutEntryAt(char c, uint8_t color, uint16_t x, uint16_t y)
 {
+	assert(x < 80 && y < 25);
 	s_TermBuffer[y * TERMINAL_WIDTH + x] = c | (color << 8);
 }
 
 void ckTerminalPutCharEntryAt(char c, uint16_t x, uint16_t y)
 {
+	assert(x < 80 && y < 25);
 	ckTerminalPutEntryAt(c, s_TermColor, x, y);
 }
 
@@ -438,6 +440,8 @@ static void ckTerminalClearLineBuffer_unsafe(void)
 
 void ckTerminalWriteStringAt(uint16_t x, uint16_t y, uint8_t color, const char *str)
 {
+	assert(x < 80 && y < 25);
+
 	while (*str != '\0')
 	{
 		ckTerminalPutEntryAt(*str++, color, x, y);
@@ -453,6 +457,8 @@ void ckTerminalWriteStringAt(uint16_t x, uint16_t y, uint8_t color, const char *
 
 void ckTerminalWriteStringAtF(uint16_t x, uint16_t y, uint8_t color, const char *format, ...)
 {
+	assert(x < 80 && y < 25);
+
 	va_list va;
 	char buf[1024];
 	va_start(va, format);
@@ -583,6 +589,8 @@ uint16_t ckTerminalWhereY(void)
 
 void ckTerminalGotoXY(uint16_t x, uint16_t y)
 {
+	assert(x < 80 && y < 25);
+
 	ckBenaphoreEnter(&s_TermMutex);
 
 	ckTerminalClearLineBuffer_unsafe();

@@ -45,7 +45,7 @@ typedef struct tagSimpleMutex
 } SimpleMutex;
 
 void ckSimpleMutexInit(SimpleMutex *pMutex);
-void ckSimpleMutexLock(SimpleMutex *pMutex);
+bool ckSimpleMutexLock(SimpleMutex *pMutex);
 bool ckSimpleMutexUnlock(SimpleMutex *pMutex);
 
 #endif /* SIMPLE_MUTEX_H_ */

@@ -334,15 +334,8 @@ static void ckTaskTerminate_internal(Task *pTask)
 		node = node->pNext)
 	{
 		Task *pNodeTask = (Task *)((uint32_t)node - offsetof(Task, nodeOfWaitedObj));
-		if (pNodeTask->flag == TASK_FLAG_ZOMBIE)
-		{
-			csCleanupTask(pTask);
-		}
-		else
-		{
-			pNodeTask->WaitedObj = NULL;
-			ckTaskResume_byptr(pNodeTask);
-		}
+		pNodeTask->WaitedObj = NULL;
+		ckTaskResume_byptr(pNodeTask);
 	}
 
 	if (g_pTaskStruct->pLastTaskUsedFPU == pTask)
@@ -368,7 +361,7 @@ static void ckTaskTerminate_internal(Task *pTask)
 		assert(pTask->WaitedObj == NULL);
 
 		pTask->flag = TASK_FLAG_WAITFOREXIT;
-		ckLinkedListPushBack_mpsc(&g_pTaskStruct->WaitForExitList, &pTask->_node);
+		ckLinkedListPushBack_nosync(&g_pTaskStruct->WaitForExitList, &pTask->_node);
 
 		ckTaskSchedule_internal();
 		while (1) { } /* 이 코드는 실행되지 않음 */
@@ -377,13 +370,11 @@ static void ckTaskTerminate_internal(Task *pTask)
 	{
 		if (pTask->WaitedObj != NULL)
 		{
-			// TODO: zombie
-			//ckLinkedListErase(&pTask->WaitedObj->WaitMeList, &pTask->WaitNode);
-			//pTask->WaitedObj = NULL;
+			ckLinkedListErase(&pTask->WaitedObj->listOfWaiters, &pTask->nodeOfWaitedObj);
+			pTask->WaitedObj = NULL;
+
 			assert(pTask->flag == TASK_FLAG_WAIT);
 			ckLinkedListErase(&g_pTaskStruct->WaitList, &pTask->_node);
-
-			pTask->flag = TASK_FLAG_ZOMBIE;
 		}
 		else
 		{
@@ -600,9 +591,8 @@ void ckTaskJoin(uint32_t TaskId)
 	{
 		if (pTask->flag != TASK_FLAG_WAITFOREXIT)
 		{
-			pNow->WaitedObj = pTask;
+			pNow->WaitedObj = &pTask->waitable;
 			ckLinkedListPushBack_nosync(&pTask->waitable.listOfWaiters, &pNow->nodeOfWaitedObj);
-
 			ckTaskSuspend_byptr(pNow);
 		}
 	}
@@ -622,7 +612,7 @@ void ckProcessJoin(uint32_t ProcId)
 
 	if (pProc != NULL)
 	{
-		pNow->WaitedObj = pProc->pMainThread;
+		pNow->WaitedObj = &pProc->pMainThread->waitable;
 		ckLinkedListPushBack_nosync(&pProc->pMainThread->waitable.listOfWaiters, &pNow->nodeOfWaitedObj);
 
 		ckTaskSuspend_byptr(pNow);

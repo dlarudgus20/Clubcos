@@ -104,7 +104,6 @@ typedef enum tagTaskFlag
 	TASK_FLAG_READY,		//!< 태스크가 실행 대기중입니다.
 	TASK_FLAG_WAIT,			//!< 태스크가 waitable object를 기다리고 있습니다.
 	TASK_FLAG_WAITFOREXIT,	//!< 태스크가 종료된 후 idle 태스크에 의해 정리되기를 기다리고 있습니다.
-	TASK_FLAG_ZOMBIE,		//!< 태스크가  waitable object를 기다리는 도중에 죽었습니다.
 } TaskFlag;
 
 /** @brief FPU 콘텍스트를 나타내는 구조체입니다. */
@@ -125,9 +124,11 @@ struct tagProcess;
 /** @brief 태스크를 나타내는 구조체입니다. */
 typedef struct tagTask
 {
-	LinkedListNode _node;
-
-	Waitable waitable;
+	union
+	{
+		LinkedListNode _node; // waitable.nodeOfOwner
+		Waitable waitable;
+	};
 
 	LinkedListNode nodeOfWaitedObj;	//!< waitable object를 기다릴 때 사용되는 노드입니다.
 	Waitable *WaitedObj;			//!< 이 값이 <c>NULL</c>이 아닐 경우 태스크가 이 waitable object를 기다리고 있습니다.

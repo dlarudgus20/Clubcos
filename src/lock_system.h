@@ -44,12 +44,16 @@ static inline void ckLockSystem(LockSystemObject *pObj)
 {
 	pObj->prev_IF = ((ckAsmGetEFlag() & EFLAG_IF) != 0);
 	ckAsmCli();
+	__sync_synchronize();
 }
 
 static inline void ckUnlockSystem(LockSystemObject *pObj)
 {
 	if (pObj->prev_IF)
+	{
 		ckAsmSti();
+		__sync_synchronize();
+	}
 }
 
 #endif /* LOCK_SYSTEM_H_ */
