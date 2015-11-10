@@ -371,11 +371,13 @@ static void ckTaskTerminate_internal(Task *pTask)
 	{
 		if (pTask->WaitedObj != NULL)
 		{
-			ckLinkedListErase(&pTask->WaitedObj->listOfWaiters, &pTask->nodeOfWaitedObj);
-			pTask->WaitedObj = NULL;
+			//ckLinkedListErase(&pTask->WaitedObj->listOfWaiters, &pTask->nodeOfWaitedObj);
+			//pTask->WaitedObj = NULL;
 
 			assert(pTask->flag == TASK_FLAG_WAIT);
 			ckLinkedListErase(&g_pTaskStruct->WaitList, &pTask->_node);
+
+			pTask->flag = TASK_FLAG_ZOMBIE;
 		}
 		else
 		{
@@ -571,6 +573,10 @@ bool ckTaskResume_byptr(Task *pTask)
 		pTask->flag = TASK_FLAG_READY;
 		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
 		bRet = true;
+	}
+	else if (pTask->flag == TASK_FLAG_ZOMBIE)
+	{
+		csCleanupTask(pTask);
 	}
 
 	ckUnlockSystem(&lso);

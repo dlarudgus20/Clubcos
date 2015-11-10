@@ -23,32 +23,31 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file simple_mutex.h
- * @date 2015. 11. 1.
+ * @file spinlock.h
+ * @date 2015. 11. 10.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#ifndef SIMPLE_MUTEX_H_
-#define SIMPLE_MUTEX_H_
+
+#ifndef SPINLOCK_H_
+#define SPINLOCK_H_
 
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "waitable.h"
-#include "spinlock.h"
 
-typedef struct tagSimpleMutex
+typedef struct tagSpinlock
 {
-	Waitable waitable;
+	uint32_t flag;
+} Spinlock;
 
-	Spinlock spinlock;
-	uint32_t owner;
-	uint32_t locker;
-} SimpleMutex;
+static inline void ckSpinlockInit(Spinlock *psl)
+{
+	psl->flag = 0;
+}
 
-void ckSimpleMutexInit(SimpleMutex *pMutex);
-bool ckSimpleMutexLock(SimpleMutex *pMutex);
-bool ckSimpleMutexUnlock(SimpleMutex *pMutex);
+void ckSpinlockLock(Spinlock *psl);
+void ckSpinlockUnlock(Spinlock *psl);
 
-#endif /* SIMPLE_MUTEX_H_ */
+#endif /* SPINLOCK_H_ */

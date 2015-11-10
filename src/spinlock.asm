@@ -22,73 +22,33 @@
 ; OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ; OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-; @file stackdump.asm
+; @file spinlock.asm
 ; @brief misc assembly functions
-; @date 2015. 11. 8.
+; @date 2015. 11. 10.
 ; @author dlarudgus20
 ; @copyright The BSD (2-Clause) License
 
 [cpu 686]
 [bits 32]
 
-[extern _boot_stackframe_top]
-
 section .text
-	[global ckStackDump]		; void ckStackDump(void (*pfCallback)(void *fn, uint32_t num), uint32_t skip, uint32_t limit);
-	ckStackDump:
-		push ebp
-		mov ebp, esp
-		push ebp
+	[global ckSpinlockLock]		; void ckSpinlockLock(Spinlock *psl);
+	ckSpinlockLock:
+		mov eax, [esp + 4]
 
-		push edi
-		push ebx
-		push esi
+	.start
+		lock bts dword [eax], 0
+		jc .spin_with_pause
+		ret
 
-		mov edi, [ebp + 8]	; pfCallback
-		mov edx, [ebp + 12]	; skip
-		mov esi, [ebp + 16]	; limit
+	.spin_with_pause:
+		pause
+		test dword [eax], 1
+		jnz .spin_with_pause
+		jmp .start
 
-		xor ecx, ecx
-		mov ebx, ebp
-		sub ebx, 4
-
-	.loop:
-		mov ebx, [ebx]
-		mov eax, [ebx + 4]
-
-		or edx, edx
-		jz .cont
-		dec edx
-		jmp .loop
-
-	.cont:
-		cmp eax, _boot_stackframe_top
-		je .break
-		cmp eax, 0
-		je .break
-
-		push eax
-		push ecx
-		push edx
-
-		push ecx
-		push eax
-		call edi
-		add esp, 8
-
-		pop edx
-		pop ecx
-		pop eax
-
-		inc ecx
-		cmp ecx, esi
-		jbe .loop
-
-	.break:
-		pop esi
-		pop ebx
-		pop edi
-
-		add esp, 4
-		leave
+	[global ckSpinlockUnlock]	; void ckSpinlockUnlock(Spinlock *psl);
+	ckSpinlockUnlock:
+		mov eax, [esp + 4]
+		mov dword [eax], 0
 		ret

@@ -104,6 +104,7 @@ typedef enum tagTaskFlag
 	TASK_FLAG_READY,		//!< 태스크가 실행 대기중입니다.
 	TASK_FLAG_WAIT,			//!< 태스크가 waitable object를 기다리고 있습니다.
 	TASK_FLAG_WAITFOREXIT,	//!< 태스크가 종료된 후 idle 태스크에 의해 정리되기를 기다리고 있습니다.
+	TASK_FLAG_ZOMBIE,		//!< 태스크가 waitable object를 기다리던 도중 terminate됬습니다.
 } TaskFlag;
 
 /** @brief FPU 콘텍스트를 나타내는 구조체입니다. */

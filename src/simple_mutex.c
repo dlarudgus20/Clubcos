@@ -37,6 +37,7 @@ void ckSimpleMutexInit(SimpleMutex *pMutex)
 {
 	pMutex->owner = ckProcessGetCurrentId();
 	pMutex->locker = TASK_INVALID_ID;
+	ckSpinlockInit(&pMutex->spinlock);
 	ckLinkedListInit(&pMutex->waitable.listOfWaiters);
 }
 
@@ -50,8 +51,7 @@ bool ckSimpleMutexLock(SimpleMutex *pMutex)
 
 	bool bRet = true;
 
-	LockSystemObject lso;
-	ckLockSystem(&lso);
+	ckSpinlockLock(&pMutex->spinlock);
 
 	if (pMutex->locker == TASK_INVALID_ID)
 	{
@@ -63,12 +63,17 @@ bool ckSimpleMutexLock(SimpleMutex *pMutex)
 	}
 	else
 	{
+		LockSystemObject lso;
+		ckLockSystem(&lso);
+
 		pTask->WaitedObj = &pMutex->waitable;
 		ckLinkedListPushBack_nosync(&pMutex->waitable.listOfWaiters, &pTask->nodeOfWaitedObj);
 		ckTaskSuspend_byptr(pTask);
+
+		ckUnlockSystem(&lso);
 	}
 
-	ckUnlockSystem(&lso);
+	ckSpinlockUnlock(&pMutex->spinlock);
 
 	return bRet;
 }
@@ -79,8 +84,7 @@ bool ckSimpleMutexUnlock(SimpleMutex *pMutex)
 
 	bool bRet = true;
 
-	LockSystemObject lso;
-	ckLockSystem(&lso);
+	ckSpinlockLock(&pMutex->spinlock);
 
 	if (pMutex->locker != pTask->id)
 	{
@@ -88,7 +92,7 @@ bool ckSimpleMutexUnlock(SimpleMutex *pMutex)
 	}
 	else if (pMutex->waitable.listOfWaiters.size != 0)
 	{
-		LinkedListNode *node = ckLinkedListPopFront_nosync(&pMutex->waitable.listOfWaiters);
+		LinkedListNode *node = ckLinkedListPopFront_mpsc(&pMutex->waitable.listOfWaiters);
 		Task *pNodeTask = (Task *)((uint32_t)node - offsetof(Task, nodeOfWaitedObj));
 
 		pMutex->locker = pNodeTask->id;
@@ -101,7 +105,7 @@ bool ckSimpleMutexUnlock(SimpleMutex *pMutex)
 		pMutex->locker = TASK_INVALID_ID;
 	}
 
-	ckUnlockSystem(&lso);
+	ckSpinlockUnlock(&pMutex->spinlock);
 
 	return bRet;
 }
