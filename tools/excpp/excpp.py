@@ -7,7 +7,7 @@ if len(sys.argv) != 3:
 	print('Usage: python %s [input file] [output file]' % sys.argv[0])
 	quit()
 
-with io.open(sys.argv[1], 'r', encoding='utf-8') as input:
+with io.open(sys.argv[1], mode='r', encoding='utf-8') as input:
 	sort_list = []
 	output_list = []
 	if_sorting = 0
@@ -30,6 +30,6 @@ with io.open(sys.argv[1], 'r', encoding='utf-8') as input:
 			else:
 				output_list.append(line)
 
-	with open(sys.argv[2], 'w', encoding='utf-8') as output:
+	with io.open(sys.argv[2], mode='w', encoding='utf-8') as output:
 		for item in output_list:
-			output.write('%s\n' % item)
+			output.write(u'%s\n' % item)

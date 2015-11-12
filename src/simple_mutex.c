@@ -66,11 +66,15 @@ bool ckSimpleMutexLock(SimpleMutex *pMutex)
 		LockSystemObject lso;
 		ckLockSystem(&lso);
 
+		ckSpinlockUnlock(&pMutex->spinlock);
+
 		pTask->WaitedObj = &pMutex->waitable;
 		ckLinkedListPushBack_nosync(&pMutex->waitable.listOfWaiters, &pTask->nodeOfWaitedObj);
 		ckTaskSuspend_byptr(pTask);
 
 		ckUnlockSystem(&lso);
+
+		return true;
 	}
 
 	ckSpinlockUnlock(&pMutex->spinlock);

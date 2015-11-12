@@ -136,8 +136,8 @@ typedef struct tagTask
 
 	uint32_t selector;				//!< 태스크 디스크럽터 셀렉터입니다. 0이면 사용되지 않은 <c>Task</c> 구조체입니다.
 
-	TaskFlag flag:2;				//!< 태스크의 상태 flag입니다.
-	TaskPriority priority:30;		//!< 태스크의 우선순위입니다.
+	TaskFlag flag:3;				//!< 태스크의 상태 flag입니다.
+	TaskPriority priority:29;		//!< 태스크의 우선순위입니다.
 
 	Tss tss;						//!< 태스크의 TSS입니다.
 
