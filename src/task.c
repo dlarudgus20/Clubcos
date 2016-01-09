@@ -82,6 +82,7 @@ static void csCleanupTask(Task *pTask);
 static void csCleanupProcess(Process *pProc);
 
 static void ckTaskTerminate_internal(Task *pTask);
+static void ckTaskChangePriority_internal(Task *pTask, TaskPriority priority);
 static void ckTaskJoin_internal(Task *pTask);
 static void ckTaskSchedule_internal(void);
 
@@ -131,6 +132,8 @@ void ckTaskStructInitialize(void)
 	pTask->WaitedObj = NULL;
 	pTask->selector = TASK_GDT_0;
 	pTask->flag = TASK_FLAG_RUNNING;
+	pTask->boost = 0;
+	pTask->origin_prior = KERNEL_TASK_PRIORITY;
 	pTask->priority = KERNEL_TASK_PRIORITY;
 	pTask->bFpuUsed = false;
 	pTask->UsedCpuTime = 0;
@@ -151,6 +154,8 @@ void ckTaskStructInitialize(void)
 	pTask->WaitedObj = NULL;
 	pTask->selector = TASK_GDT_0 + 1;
 	pTask->flag = TASK_FLAG_READY;
+	pTask->boost = 0;
+	pTask->origin_prior = TASK_PRIORITY_IDLE;
 	pTask->priority = TASK_PRIORITY_IDLE;
 	pTask->bFpuUsed = false;
 	pTask->UsedCpuTime = 0;
@@ -233,6 +238,8 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
 
 			ret->selector = TASK_GDT_0 + i;
 			ret->flag = TASK_FLAG_READY;
+			ret->boost = 0;
+			ret->origin_prior = priority;
 			ret->priority = priority;
 
 			ret->pProcess = pProcess;
@@ -470,22 +477,26 @@ bool ckTaskChangePriority(uint32_t TaskId, TaskPriority priority)
 	Task *pTask = csGetTaskFromId(TaskId);
 	if (pTask != NULL)
 	{
-		if (pTask == g_pTaskStruct->pNow)
-		{
-			pTask->priority = priority;
-		}
-		else if (pTask->priority != priority)
-		{
-			ckLinkedListErase(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
-			ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[priority], &pTask->_node);
-			pTask->priority = priority;
-		}
+		ckTaskChangePriority_internal(pTask, priority);
 		bRet = true;
 	}
 
 	ckUnlockSystem(&lso);
 
 	return bRet;
+}
+static void ckTaskChangePriority_internal(Task *pTask, TaskPriority priority)
+{
+	if (pTask->flag != TASK_FLAG_READY)
+	{
+		pTask->priority = priority;
+	}
+	else if (pTask->priority != priority)
+	{
+		ckLinkedListErase(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
+		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[priority], &pTask->_node);
+		pTask->priority = priority;
+	}
 }
 
 bool ckTaskSuspend(uint32_t TaskId)
@@ -571,6 +582,8 @@ bool ckTaskResume_byptr(Task *pTask)
 		ckLinkedListErase(&g_pTaskStruct->WaitList, &pTask->_node);
 
 		pTask->flag = TASK_FLAG_READY;
+		pTask->boost = TASK_BOOST_COUNT;
+		pTask->priority = (pTask->priority > TASK_PRIORITY_HIGHEST + 2) ? pTask->priority : TASK_PRIORITY_HIGHEST;
 		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
 		bRet = true;
 	}
@@ -683,6 +696,14 @@ static void ckTaskSchedule_internal(void)
 		{
 			ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pPrev->priority], &pPrev->_node);
 			pPrev->flag = TASK_FLAG_READY;
+		}
+
+		if (pPrev->boost != 0)
+		{
+			if (--pPrev->boost == 0)
+			{
+				ckTaskChangePriority_internal(pPrev, pPrev->origin_prior);
+			}
 		}
 
 		// 태스크가 사용한 CPU 퀀텀 계산

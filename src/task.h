@@ -55,6 +55,8 @@ enum
 
 	KERNEL_TASK_ID = 0,					//<! 커널 태스크 ID입니다.
 	IDLE_TASK_ID = 1,					//<! idle 태스크 ID입니다.
+
+	TASK_BOOST_COUNT = 20,
 };
 enum
 {
@@ -81,7 +83,6 @@ typedef enum tagTaskPriority
 	TASK_PRIORITY_IDLE,
 
 	COUNT_TASK_PRIORITY,
-	MAX_TASK_PRIORITY = COUNT_TASK_PRIORITY - 1,
 
 	KERNEL_TASK_PRIORITY = TASK_PRIORITY_HIGHEST
 } TaskPriority;
@@ -137,7 +138,9 @@ typedef struct tagTask
 	uint32_t selector;				//!< 태스크 디스크럽터 셀렉터입니다. 0이면 사용되지 않은 <c>Task</c> 구조체입니다.
 
 	TaskFlag flag:3;				//!< 태스크의 상태 flag입니다.
-	TaskPriority priority:29;		//!< 태스크의 우선순위입니다.
+	unsigned boost:5;
+	TaskPriority origin_prior:12;
+	TaskPriority priority:12;		//!< 태스크의 우선순위입니다.
 
 	Tss tss;						//!< 태스크의 TSS입니다.
 
