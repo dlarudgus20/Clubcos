@@ -531,10 +531,10 @@ static void ckTerminalClearStatusBar_unsafe(void)
 			csMakeVGAEntry('\0', csAntiColor(s_TermColor)), TERMINAL_WIDTH);
 }
 
-static void panic_stackdump(void *fn, uint32_t num)
-{
-	ckTerminalPrintStringF_unsafe("\n[%02d] : %p", num, fn);
-}
+//static void panic_stackdump(void *fn, uint32_t num)
+//{
+//	ckTerminalPrintStringF_unsafe("\n[%02d] : %p", num, fn);
+//}
 void ckTerminalPanic(const char *str)
 {
 	ckAsmCli(); // panic
@@ -543,7 +543,8 @@ void ckTerminalPanic(const char *str)
 	ckTerminalPrintString_unsafe("\n[!!PANIC!!] ");
 	ckTerminalPrintString_unsafe(str);
 
-	ckStackDump(panic_stackdump, 0, 0xfffffff);
+	// buggy for #PF :(
+	// ckStackDump(panic_stackdump, 0, 0xfffffff);
 
 	while (1) ckAsmHlt();
 }

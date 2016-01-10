@@ -127,7 +127,7 @@ bool ckKeyboardWaitForACKAndPutQueue(void)
 		if (data == KEYBOARD_ACK)
 			return true;
 		else
-			ckCircularQueue32Put(&g_InterruptQueue, data);
+			ckInterruptQueuePut(data | INTERRUPT_QUEUE_FLAG_KEYBOARD);
 	}
 	return false;
 }
@@ -156,5 +156,5 @@ void ck_KeyboardIntHandler(InterruptContext *pContext)
 	uint8_t code = ckPortInByte(KEYBOARD_PORT_OUTPUT);
 
 	if (likely(code != KEYBOARD_ACK))
-		ckCircularQueue32Put(&g_InterruptQueue, code | INTERRUPT_QUEUE_FLAG_KEYBOARD);
+		ckInterruptQueuePut(code | INTERRUPT_QUEUE_FLAG_KEYBOARD);
 }

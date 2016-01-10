@@ -695,53 +695,54 @@ static void ckTaskSchedule_internal(void)
 			break;
 	}
 
-	assert(pNow != NULL);
-
-	// 2. task switching
-	Task *pPrev = g_pTaskStruct->pNow;
-
-	if (pPrev->flag == TASK_FLAG_RUNNING)
+	if (pNow != NULL)
 	{
-		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pPrev->priority], &pPrev->_node);
-		pPrev->flag = TASK_FLAG_READY;
-	}
+		// 2. task switching
+		Task *pPrev = g_pTaskStruct->pNow;
 
-	if (pPrev->boost != 0)
-	{
-		if (--pPrev->boost == 0)
+		if (pPrev->flag == TASK_FLAG_RUNNING)
 		{
-			ckTaskChangePriority_internal(pPrev, pPrev->origin_prior);
+			ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pPrev->priority], &pPrev->_node);
+			pPrev->flag = TASK_FLAG_READY;
 		}
+
+		if (pPrev->boost != 0)
+		{
+			if (--pPrev->boost == 0)
+			{
+				ckTaskChangePriority_internal(pPrev, pPrev->origin_prior);
+			}
+		}
+
+		// 태스크가 사용한 CPU 퀀텀 계산
+		Process *pProc = pPrev->pProcess;
+		if (likely(pProc != NULL))
+		{
+			pProc->UsedCpuTime += UsedCpuTime;
+			pPrev->UsedCpuTime += UsedCpuTime;
+		}
+
+		// ProcData 갱신
+		g_pTaskStruct->pProcData = &pNow->pProcess->ProcData;
+
+		// 전환할 태스크가 마지막으로 fpu를 사용한 태스크가 아니라면 TS = 1
+		// 그렇지 않으면 TS = 0 (FPU 콘텍스트를 교체할 필요가 없음)
+		if (pNow != g_pTaskStruct->pLastTaskUsedFPU)
+		{
+			ckAsmSetCr0(ckAsmGetCr0() | CR0_TASK_SWITCHED);
+		}
+		else
+		{
+			ckAsmClearTS();
+		}
+
+		g_pTaskStruct->pNow = pNow;
+		g_pTaskStruct->pNow->flag = TASK_FLAG_RUNNING;
+
+		g_pTaskStruct->RemainQuantum = TASK_QUANTUM;
+
+		ckAsmFarJmp(0, g_pTaskStruct->pNow->selector * 8);
 	}
-
-	// 태스크가 사용한 CPU 퀀텀 계산
-	Process *pProc = pPrev->pProcess;
-	if (likely(pProc != NULL))
-	{
-		pProc->UsedCpuTime += UsedCpuTime;
-		pPrev->UsedCpuTime += UsedCpuTime;
-	}
-
-	// ProcData 갱신
-	g_pTaskStruct->pProcData = &pNow->pProcess->ProcData;
-
-	// 전환할 태스크가 마지막으로 fpu를 사용한 태스크가 아니라면 TS = 1
-	// 그렇지 않으면 TS = 0 (FPU 콘텍스트를 교체할 필요가 없음)
-	if (pNow != g_pTaskStruct->pLastTaskUsedFPU)
-	{
-		ckAsmSetCr0(ckAsmGetCr0() | CR0_TASK_SWITCHED);
-	}
-	else
-	{
-		ckAsmClearTS();
-	}
-
-	g_pTaskStruct->pNow = pNow;
-	g_pTaskStruct->pNow->flag = TASK_FLAG_RUNNING;
-
-	g_pTaskStruct->RemainQuantum = TASK_QUANTUM;
-
-	ckAsmFarJmp(0, g_pTaskStruct->pNow->selector * 8);
 }
 
 // #NM Device No Available

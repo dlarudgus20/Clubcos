@@ -44,6 +44,7 @@
 #include "likely.h"
 #include "string.h"
 #include "lock_system.h"
+#include "assert.h"
 
 /**
  * @mainpage Clubcos 소스 레퍼런스
@@ -145,33 +146,22 @@ void ckMain(void)
 	// Coshell 초기화
 	ckCoshellInitialize();
 
-
 	// 인터럽트 큐 처리 루프
-
-	volatile CircularQueue32 *pQueue = &g_InterruptQueue;
 	uint32_t QueueData, data;
 
 	while (1)
 	{
-		while (!pQueue->bEmpty)
+		QueueData = ckInterruptQueueWaitAndGet();
+
+		data = QueueData & 0xffffff;
+		switch (QueueData & 0xff000000)
 		{
-			LockSystemObject lso;
-			ckLockSystem(&lso);
-
-			QueueData = ckCircularQueue32Get((CircularQueue32 *)pQueue, false, NULL);
-
-			ckUnlockSystem(&lso);
-
-			data = QueueData & 0xffffff;
-			switch (QueueData & 0xff000000)
-			{
-				case INTERRUPT_QUEUE_FLAG_KEYBOARD:
-					ckOnKeyboardInterrupt(data);
-					break;
-			}
+			case INTERRUPT_QUEUE_FLAG_KEYBOARD:
+				ckOnKeyboardInterrupt(data);
+				break;
+			default:
+				assert(!"wrong interrupt queue data");
+				break;
 		}
-
-		// 모두 처리했으면 CPU 시간을 반납합니다.
-		ckTaskSchedule();
 	}
 }

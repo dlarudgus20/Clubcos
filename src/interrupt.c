@@ -31,13 +31,47 @@
 
 #include "terminal.h"
 #include "interrupt.h"
-#include "circular_queue.h"
-#include "string.h"
+#include "lock_system.h"
 
-CircularQueue32 g_InterruptQueue;
-uint32_t IntQueueBuf[1024];
+static Event s_InterruptEvent;
+static CircularQueue32 s_InterruptQueue;
+static uint32_t s_IntQueueBuf[1024];
 
 void ckInterruptQueueInitialize(void)
 {
-	ckCircularQueue32Init(&g_InterruptQueue, IntQueueBuf, sizeof(IntQueueBuf) / sizeof(IntQueueBuf[0]));
+	ckEventInit(&s_InterruptEvent, false, true);
+	ckCircularQueue32Init(&s_InterruptQueue, s_IntQueueBuf, sizeof(s_IntQueueBuf) / sizeof(s_IntQueueBuf[0]));
+}
+
+bool ckInterruptQueuePut(uint32_t data)
+{
+	if (ckCircularQueue32Put(&s_InterruptQueue, data | INTERRUPT_QUEUE_FLAG_KEYBOARD))
+	{
+		ckEventSet(&s_InterruptEvent);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+uint32_t ckInterruptQueueWaitAndGet(void)
+{
+	uint32_t ret;
+	bool bSuccess;
+
+	do
+	{
+		bool bEmpty = ((volatile CircularQueue32 *)&s_InterruptQueue)->bEmpty;
+		if (bEmpty)
+			ckEventWait(&s_InterruptEvent);
+
+		LockSystemObject lso;
+		ckLockSystem(&lso);
+		ret = ckCircularQueue32Get((CircularQueue32 *)&s_InterruptQueue, false, &bSuccess);
+		ckUnlockSystem(&lso);
+	} while (!bSuccess);
+
+	return ret;
 }
