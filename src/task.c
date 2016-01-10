@@ -139,7 +139,6 @@ void ckTaskStructInitialize(void)
 	pTask->UsedCpuTime = 0;
 	pTask->stack = NULL;
 	pTask->id = KERNEL_TASK_ID;
-	g_pTaskStruct->ExecuteCount[KERNEL_TASK_PRIORITY] = 1;
 
 	// cr3 레지스터는 수동으로 설정해 주어야 하는 것 같다.
 	pTask->tss.cr3 = cr3;
@@ -582,8 +581,13 @@ bool ckTaskResume_byptr(Task *pTask)
 		ckLinkedListErase(&g_pTaskStruct->WaitList, &pTask->_node);
 
 		pTask->flag = TASK_FLAG_READY;
-		pTask->boost = TASK_BOOST_COUNT;
-		pTask->priority = (pTask->priority > TASK_PRIORITY_HIGHEST + 2) ? pTask->priority : TASK_PRIORITY_HIGHEST;
+		pTask->boost = TASK_BOOST_QUANTUM;
+
+		if (pTask->priority > TASK_BOOST_MAX_PRIOR + TASK_BOOST_LEVEL)
+			pTask->priority = pTask->priority - TASK_BOOST_LEVEL;
+		else
+			pTask->priority = TASK_BOOST_MAX_PRIOR;
+
 		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
 		bRet = true;
 	}
@@ -668,19 +672,22 @@ static void ckTaskSchedule_internal(void)
 {
 	Task *pNow = NULL;
 
+	uint32_t UsedCpuTime = TASK_QUANTUM - g_pTaskStruct->RemainQuantum;
+
+	// 1. select next task
 	for (int j = 0; j < 2; j++)
 	{
 		for (int i = 0; i < COUNT_TASK_PRIORITY; i++)
 		{
-			if (g_pTaskStruct->ExecuteCount[i] < g_pTaskStruct->ReadyList[i].size)
+			if (g_pTaskStruct->ExecuteQuantum[i] < TASK_QUANTUM * g_pTaskStruct->ReadyList[i].size)
 			{
 				pNow = (Task *)ckLinkedListPopFront_nosync(&g_pTaskStruct->ReadyList[i]);
-				g_pTaskStruct->ExecuteCount[i]++;
+				g_pTaskStruct->ExecuteQuantum[i] += UsedCpuTime;
 				break;
 			}
 			else
 			{
-				g_pTaskStruct->ExecuteCount[i] = 0;
+				g_pTaskStruct->ExecuteQuantum[i] = 0;
 			}
 		}
 
@@ -688,54 +695,53 @@ static void ckTaskSchedule_internal(void)
 			break;
 	}
 
-	if (pNow != NULL)
+	assert(pNow != NULL);
+
+	// 2. task switching
+	Task *pPrev = g_pTaskStruct->pNow;
+
+	if (pPrev->flag == TASK_FLAG_RUNNING)
 	{
-		Task *pPrev = g_pTaskStruct->pNow;
-
-		if (pPrev->flag == TASK_FLAG_RUNNING)
-		{
-			ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pPrev->priority], &pPrev->_node);
-			pPrev->flag = TASK_FLAG_READY;
-		}
-
-		if (pPrev->boost != 0)
-		{
-			if (--pPrev->boost == 0)
-			{
-				ckTaskChangePriority_internal(pPrev, pPrev->origin_prior);
-			}
-		}
-
-		// 태스크가 사용한 CPU 퀀텀 계산
-		Process *pProc = pPrev->pProcess;
-		if (likely(pProc != NULL))
-		{
-			uint32_t UsedCpuTime = TASK_QUANTUM - g_pTaskStruct->RemainQuantum;
-			pProc->UsedCpuTime += UsedCpuTime;
-			pPrev->UsedCpuTime += UsedCpuTime;
-		}
-
-		// ProcData 갱신
-		g_pTaskStruct->pProcData = &pNow->pProcess->ProcData;
-
-		// 전환할 태스크가 마지막으로 fpu를 사용한 태스크가 아니라면 TS = 1
-		// 그렇지 않으면 TS = 0 (FPU 콘텍스트를 교체할 필요가 없음)
-		if (pNow != g_pTaskStruct->pLastTaskUsedFPU)
-		{
-			ckAsmSetCr0(ckAsmGetCr0() | CR0_TASK_SWITCHED);
-		}
-		else
-		{
-			ckAsmClearTS();
-		}
-
-		g_pTaskStruct->pNow = pNow;
-		g_pTaskStruct->pNow->flag = TASK_FLAG_RUNNING;
-
-		g_pTaskStruct->RemainQuantum = TASK_QUANTUM;
-
-		ckAsmFarJmp(0, g_pTaskStruct->pNow->selector * 8);
+		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pPrev->priority], &pPrev->_node);
+		pPrev->flag = TASK_FLAG_READY;
 	}
+
+	if (pPrev->boost != 0)
+	{
+		if (--pPrev->boost == 0)
+		{
+			ckTaskChangePriority_internal(pPrev, pPrev->origin_prior);
+		}
+	}
+
+	// 태스크가 사용한 CPU 퀀텀 계산
+	Process *pProc = pPrev->pProcess;
+	if (likely(pProc != NULL))
+	{
+		pProc->UsedCpuTime += UsedCpuTime;
+		pPrev->UsedCpuTime += UsedCpuTime;
+	}
+
+	// ProcData 갱신
+	g_pTaskStruct->pProcData = &pNow->pProcess->ProcData;
+
+	// 전환할 태스크가 마지막으로 fpu를 사용한 태스크가 아니라면 TS = 1
+	// 그렇지 않으면 TS = 0 (FPU 콘텍스트를 교체할 필요가 없음)
+	if (pNow != g_pTaskStruct->pLastTaskUsedFPU)
+	{
+		ckAsmSetCr0(ckAsmGetCr0() | CR0_TASK_SWITCHED);
+	}
+	else
+	{
+		ckAsmClearTS();
+	}
+
+	g_pTaskStruct->pNow = pNow;
+	g_pTaskStruct->pNow->flag = TASK_FLAG_RUNNING;
+
+	g_pTaskStruct->RemainQuantum = TASK_QUANTUM;
+
+	ckAsmFarJmp(0, g_pTaskStruct->pNow->selector * 8);
 }
 
 // #NM Device No Available
