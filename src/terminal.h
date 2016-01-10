@@ -98,11 +98,19 @@ typedef enum tagTerminalCursorType
 	TERMINAL_CURSOR_NOCURSOR,	//!< 커서가 없음을 나타냅니다.
 } TerminalCursorType;
 
-/** @brief 터미널을 초기화합니다. */
+/**
+ * @brief 터미널을 초기화합니다. 동기화 객체는 초기화하지 않습니다.
+ * @remark 동기화 객체를 초기화하지 않기 때문에 @ref ckTerminalInitSyncObjs 를 호출하기 전까진 unsafe 함수와 @ref ckTerminalPanic 함수만 사용 가능합니다.
+ */
 void ckTerminalInitialize(void);
+/** @brief 터미널에서 사용되는 동기화 객체를 초기화합니다. 이 함수를 호출하지 않으면 unsafe 함수와 @ref ckTerminalPanic 만 사용 가능합니다. */
+void ckTerminalInitSyncObjs(void);
 
+/** @brief 동기화 없이 터미널의 색을 설정합니다. @param[in] color 터미널의 색 코드입니다. */
+void ckTerminalSetColor_unsafe(uint8_t color);
 /** @brief 터미널의 색을 설정합니다. @param[in] color 터미널의 색 코드입니다. */
 void ckTerminalSetColor(uint8_t color);
+
 /** @brief 터미널의 상태를 설정합니다. @param[in] stat 터미널의 상태입니다. */
 void ckTerminalSetStatus(TermStatus stat);
 
@@ -187,7 +195,7 @@ void ckTerminalPrintStatusBarF(const char *format, ...);
 void ckTerminalClearStatusBar(void);
 
 /**
- * @brief panic 메시지를 출력하고 시스템을 panic 상태로 만듭니다. @ref assert 매크로에서 사용됩니다.
+ * @brief panic 메시지를 출력하고 시스템을 panic 상태로 만듭니다. @ref assert 매크로에서 사용됩니다. 이 함수는 @ref ckTerminalInitSyncObjs 함수를 호출하지 않고도 사용 가능합니다.
  * @param[in] str 출력할 panic 문자열입니다.
  */
 void ckTerminalPanic(const char *str);
@@ -231,6 +239,11 @@ void ckTerminalPrintString_unsafe(const char *str);
  * @sa ckTerminalPutChar
  */
 void ckTerminalPrintString(const char *str);
+/**
+ * @brief 동기화 없이 서식 문자열을 조립해 출력합니다.
+ * @param[in] format 출력할 서식 문자열입니다.
+ */
+void ckTerminalPrintStringF_unsafe(const char *format, ...);
 /**
  * @brief 서식 문자열을 조립해 출력합니다.
  * @param[in] format 출력할 서식 문자열입니다.

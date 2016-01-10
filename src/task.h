@@ -36,6 +36,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "linkedlist.h"
+#include "waitable.h"
 #include "memory_map.h"
 
 enum
@@ -80,10 +81,16 @@ typedef enum tagTaskPriority
 	TASK_PRIORITY_IDLE,
 
 	COUNT_TASK_PRIORITY,
-	MAX_TASK_PRIORITY = COUNT_TASK_PRIORITY - 1,
 
 	KERNEL_TASK_PRIORITY = TASK_PRIORITY_HIGHEST
 } TaskPriority;
+
+enum
+{
+	TASK_BOOST_QUANTUM = 20,
+	TASK_BOOST_LEVEL = 2,
+	TASK_BOOST_MAX_PRIOR = TASK_PRIORITY_HIGHEST,
+};
 
 /** @brief TSS를 나타내는 구조체입니다. */
 typedef struct tagTss
@@ -100,9 +107,10 @@ typedef struct tagTss
 typedef enum tagTaskFlag
 {
 	TASK_FLAG_RUNNING,		//!< 태스크가 현재 실행 중입니다.
-	TASK_FLAG_READY,		//!< 태스크가 실행을 기다리고 있습니다.
-	TASK_FLAG_WAIT,			//!< 태스크가 다른 작업이 완료되기를 기다리고 있습니다.
+	TASK_FLAG_READY,		//!< 태스크가 실행 대기중입니다.
+	TASK_FLAG_WAIT,			//!< 태스크가 waitable object를 기다리고 있습니다.
 	TASK_FLAG_WAITFOREXIT,	//!< 태스크가 종료된 후 idle 태스크에 의해 정리되기를 기다리고 있습니다.
+	TASK_FLAG_ZOMBIE,		//!< 태스크가 waitable object를 기다리던 도중 terminate됬습니다.
 } TaskFlag;
 
 /** @brief FPU 콘텍스트를 나타내는 구조체입니다. */
@@ -123,25 +131,28 @@ struct tagProcess;
 /** @brief 태스크를 나타내는 구조체입니다. */
 typedef struct tagTask
 {
-	LinkedListNode _node;
+	union
+	{
+		LinkedListNode _node; // waitable.nodeOfOwner
+		Waitable waitable;
+	};
 
-	LinkedList WaitMeList;			//!< 자신이 종료되기를 기다리는 태스크들의 목록입니다.
-
-	LinkedListNode WaitNode;		//!< 다른 태스크가 종료되기를 기다릴 때 사용되는 노드입니다.
-	struct tagTask *WaitObj;		//!< 이 값이 <c>NULL</c>이 아닐 경우 현재 태스크는 <c>WaitObj</c> 태스크가 종료되기를 기다리고 있습니다.
+	LinkedListNode nodeOfWaitedObj;	//!< waitable object를 기다릴 때 사용되는 노드입니다.
+	Waitable *WaitedObj;			//!< 이 값이 <c>NULL</c>이 아닐 경우 태스크가 이 waitable object를 기다리고 있습니다.
 
 	uint32_t selector;				//!< 태스크 디스크럽터 셀렉터입니다. 0이면 사용되지 않은 <c>Task</c> 구조체입니다.
 
-	TaskFlag flag:2;				//!< 태스크의 상태 flag입니다.
-	TaskPriority priority:30;		//!< 태스크의 우선순위입니다.
+	TaskFlag flag:3;				//!< 태스크의 상태 flag입니다.
+	unsigned boost:5;				//!< 남은 boosting 횟수입니다. 0이면 boosting받고 있지 않습니다.
+	bool bFpuUsed:1;				//!< 이 태스크가 최근 FPU를 사용했는지 나타내는 진위형입니다.
+	TaskPriority origin_prior:11;	//!< priority boosting의 영향을 받지 않은 본래의 우선순위입니다.
+	TaskPriority priority:12;		//!< 태스크의 우선순위입니다.
 
 	Tss tss;						//!< 태스크의 TSS입니다.
 
 	FpuContext fpu_context;			//!< 태스크의 FPU 콘텍스트입니다.
-	int bFpuUsed;					//!< 이 태스크가 최근 FPU를 사용했는지 나타내는 진위형입니다.
-									//!<정렬을 위해 4byte <c>int</c>형으로 선언되 있습니다.
 
-	volatile uint32_t UsedCpuTime;	//!< 이 태스크가 사용한 CPU 시간입니다.
+	volatile uint32_t UsedCpuTime;	//!< 이 태스크가 사용한 총 CPU 시간입니다.
 
 	struct tagProcess *pProcess;	//!< 이 태스크를 가지는 프로세스입니다.
 	LinkedListNode ThreadNode;		//!< 프로세스가 이 태스크를 관리하기 위해 사용하는 노드입니다.
@@ -185,31 +196,31 @@ typedef struct tagProcess
 /** @brief 태스크 관리 구조체입니다. */
 typedef struct tagTaskStruct
 {
-	Task tasks[MAX_TASK];						//!< 태스크의 배열입니다.
-	uint32_t TaskIdMask;						//!< 태스크 id 중복 방지를 위해 사용되는 비트 마스크입니다.
-												//!< 한번 사용될 때마다 @ref TASK_IDMASK_UNIT 씩 증가합니다.
+	Task tasks[MAX_TASK];							//!< 태스크의 배열입니다.
+	uint32_t TaskIdMask;							//!< 태스크 id 중복 방지를 위해 사용되는 비트 마스크입니다.
+													//!< 한번 사용될 때마다 @ref TASK_IDMASK_UNIT 씩 증가합니다.
 
-	Process processes[MAX_PROCESS];				//!< 프로세스의 배열입니다.
-	uint32_t ProcessIdMask;						//!< 프로세스 id 중복 방지를 위해 사용되는 비트 마스크입니다.
-												//!< 한번 사용될 때마다 @ref PROCESS_IDMASK_UNIT 씩 증가합니다.
+	Process processes[MAX_PROCESS];					//!< 프로세스의 배열입니다.
+	uint32_t ProcessIdMask;							//!< 프로세스 id 중복 방지를 위해 사용되는 비트 마스크입니다.
+													//!< 한번 사용될 때마다 @ref PROCESS_IDMASK_UNIT 씩 증가합니다.
 
-	LinkedList ReadyList[COUNT_TASK_PRIORITY];	//!< @ref TASK_FLAG_RUNNING 상태의 태스크의 우선순위 큐입니다.
+	LinkedList ReadyList[COUNT_TASK_PRIORITY];		//!< @ref TASK_FLAG_RUNNING 상태의 태스크의 우선순위 큐입니다.
 
-	LinkedList WaitList;						//!< @ref TASK_FLAG_WAIT 상태의 태스크의 목록입니다.
-	LinkedList WaitForExitList;					//!< @ref TASK_FLAG_WAITFOREXIT 상태의 태스크의 목록입니다. idle에서의 처리를 위해 mpcs로 동기화가 필요합니다.
+	LinkedList WaitList;							//!< @ref TASK_FLAG_WAIT 상태의 태스크의 목록입니다.
+	LinkedList WaitForExitList;						//!< @ref TASK_FLAG_WAITFOREXIT 상태의 태스크의 목록입니다. idle에서의 처리를 위해 mpcs로 동기화가 필요합니다.
 
-	uint32_t ExecuteCount[COUNT_TASK_PRIORITY];	//!< 각 우선순위별로 실행된 횟수를 기록하는 배열입니다.
+	uint32_t ExecuteQuantum[COUNT_TASK_PRIORITY];	//!< 각 우선순위별로 실행된 시간을 기록하는 배열입니다.
 
-	Task *pNow;									//!< 현재 실행중인 태스크입니다.
-	ProcessData *pProcData;						//!< 현재 실행중인 프로세스의 data입니다. <c>pNow->pProcess->ProcData</c>와 동일합니다.
+	Task *pNow;										//!< 현재 실행중인 태스크입니다.
+	ProcessData *pProcData;							//!< 현재 실행중인 프로세스의 data입니다. <c>pNow->pProcess->ProcData</c>와 동일합니다.
 
-	volatile uint32_t ProcessorLoad;			//!< 현재 프로세스 점유율입니다. 단위는 %입니다.
+	volatile uint32_t ProcessorLoad;				//!< 현재 프로세스 점유율입니다. 단위는 %입니다.
 
-	uint32_t RemainQuantum;						//!< 태스크 스위칭까지 남은 CPU 시간입니다.
+	uint32_t RemainQuantum;							//!< 태스크 스위칭까지 남은 CPU 시간입니다.
 
-	Task *pLastTaskUsedFPU;						//!< 마지막으로 FPU를 사용한 태스크입니다.
+	Task *pLastTaskUsedFPU;							//!< 마지막으로 FPU를 사용한 태스크입니다.
 
-	bool bSSEIsExist;							//!< SSE의 사용 가능 여부입니다.
+	bool bSSEIsExist;								//!< SSE의 사용 가능 여부입니다.
 
 	uint8_t _padding[3];
 } TaskStruct;

@@ -1,4 +1,4 @@
-// Copyright (c) 2014, 임경현 (dlarudgus20)
+// Copyright (c) 2014, 임경현
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -23,62 +23,38 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file recursive_mutex.c
- * @date 2014. 5. 11.
+ * @file fast_mutex.c
+ * @date 2015. 11. 8.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#include "recursive_mutex.h"
-#include "port.h"
+#include "fast_mutex.h"
 #include "task.h"
 
-uint32_t ckRecursiveMutexLock(RecursiveMutex *pMutex)
+void ckFastMutexInit(FastMutex *pMutex)
 {
-	if (!__sync_bool_compare_and_swap(&pMutex->bLocked, false, true))
-	{
-		Task *pCur = ckTaskGetCurrent();
-
-		if (pMutex->TaskId == pCur->id)
-		{
-			return ++pMutex->LockCount;
-		}
-		else
-		{
-			while (!__sync_bool_compare_and_swap(&pMutex->bLocked, false, true))
-			{
-				ckTaskSchedule();
-			}
-		}
-	}
-
-	pMutex->LockCount = 1;
-	pMutex->TaskId = ckTaskGetCurrentId();
-	return 1;
+	pMutex->owner = ckProcessGetCurrentId();
+	pMutex->locker = TASK_INVALID_ID;
 }
 
-bool ckRecursiveMutexUnlock(RecursiveMutex *pMutex)
+bool ckFastMutexLock(FastMutex *pMutex)
 {
-	if (pMutex->bLocked && pMutex->TaskId == ckTaskGetCurrentId())
-	{
-		uint32_t LockCount = pMutex->LockCount;
-		if (LockCount > 1)
-		{
-			pMutex->LockCount = --LockCount;
-		}
-		else
-		{
-			pMutex->LockCount = 0;
-			pMutex->TaskId = TASK_INVALID_ID;
-			__sync_synchronize();
-			pMutex->bLocked = false;
-		}
+	uint32_t TaskId = ckTaskGetCurrentId();
 
-		return true;
-	}
-	else
-	{
+	if (__sync_fetch_and_or(&pMutex->locker, 0) == TaskId)
 		return false;
+
+	while (!__sync_bool_compare_and_swap(&pMutex->locker, TASK_INVALID_ID, TaskId))
+	{
+		ckTaskSchedule();
 	}
+
+	return true;
 }
 
+bool ckFastMutexUnlock(FastMutex *pMutex)
+{
+	uint32_t TaskId = ckTaskGetCurrentId();
+	return __sync_bool_compare_and_swap(&pMutex->locker, TaskId, TASK_INVALID_ID);
+}

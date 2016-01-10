@@ -37,6 +37,7 @@
 #include "pic.h"
 #include "terminal.h"
 #include "task.h"
+#include "lock_system.h"
 #include "memory_map.h"
 #include "string.h"
 #include "assert.h"
@@ -82,7 +83,8 @@ bool ckTimerSet(TimeOut *pTimeOut)
 	if (pTimeOut->NoticeQueue == NULL)
 		return false;
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	uint32_t tick = g_TimerStruct.TickCountLow;
 
@@ -105,7 +107,7 @@ bool ckTimerSet(TimeOut *pTimeOut)
 		}
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
 
 	return true;
 }
@@ -156,7 +158,8 @@ void ck_TimerIntHandler(InterruptContext *pContext)
 #define MS_TO_COUNT(ms) (PIT_FREQUENCY * (ms) / 1000)
 void ckTimerBusyDirectWait_ms(uint32_t milli)
 {
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	while (milli > 30)		// 30ms 단위로 쉼.
 	{
@@ -167,7 +170,7 @@ void ckTimerBusyDirectWait_ms(uint32_t milli)
 
 	ckTimerReinitialize();
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
 }
 
 static void ckWaitThroughPITCounter(uint16_t count)

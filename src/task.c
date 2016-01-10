@@ -42,6 +42,7 @@
 #include "likely.h"
 #include "terminal.h"
 #include "timer.h"
+#include "lock_system.h"
 
 // id로부터 Task *를 얻어옴 - 무효할 경우 NULL
 static inline Task *csGetTaskFromId(uint32_t id)
@@ -77,10 +78,12 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
 	void *stack, uint32_t stacksize,
 	Process *pProcess, TaskPriority priority);
 
-// 프로세스가 종료된 후 정리 처리
+static void csCleanupTask(Task *pTask);
 static void csCleanupProcess(Process *pProc);
 
 static void ckTaskTerminate_internal(Task *pTask);
+static void ckTaskChangePriority_internal(Task *pTask, TaskPriority priority);
+static void ckTaskJoin_internal(Task *pTask);
 static void ckTaskSchedule_internal(void);
 
 static void csIdleTask(void);
@@ -125,16 +128,17 @@ void ckTaskStructInitialize(void)
 
 	// Kernel Task Init
 	Task *pTask = &g_pTaskStruct->tasks[0];
-	ckLinkedListInit(&pTask->WaitMeList);
-	pTask->WaitObj = NULL;
+	ckLinkedListInit(&pTask->waitable.listOfWaiters);
+	pTask->WaitedObj = NULL;
 	pTask->selector = TASK_GDT_0;
 	pTask->flag = TASK_FLAG_RUNNING;
+	pTask->boost = 0;
+	pTask->origin_prior = KERNEL_TASK_PRIORITY;
 	pTask->priority = KERNEL_TASK_PRIORITY;
 	pTask->bFpuUsed = false;
 	pTask->UsedCpuTime = 0;
 	pTask->stack = NULL;
 	pTask->id = KERNEL_TASK_ID;
-	g_pTaskStruct->ExecuteCount[KERNEL_TASK_PRIORITY] = 1;
 
 	// cr3 레지스터는 수동으로 설정해 주어야 하는 것 같다.
 	pTask->tss.cr3 = cr3;
@@ -145,10 +149,12 @@ void ckTaskStructInitialize(void)
 
 	// Idle Task Init
 	pTask = &g_pTaskStruct->tasks[1];
-	ckLinkedListInit(&pTask->WaitMeList);
-	pTask->WaitObj = NULL;
+	ckLinkedListInit(&pTask->waitable.listOfWaiters);
+	pTask->WaitedObj = NULL;
 	pTask->selector = TASK_GDT_0 + 1;
 	pTask->flag = TASK_FLAG_READY;
+	pTask->boost = 0;
+	pTask->origin_prior = TASK_PRIORITY_IDLE;
 	pTask->priority = TASK_PRIORITY_IDLE;
 	pTask->bFpuUsed = false;
 	pTask->UsedCpuTime = 0;
@@ -192,7 +198,8 @@ uint32_t ckTaskCreate(uint32_t eip, uint32_t esp,
 {
 	uint32_t ret_id;
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Process *pProcess = csGetProcessFromId(ProcessId);
 	if (pProcess != NULL)
@@ -205,8 +212,10 @@ uint32_t ckTaskCreate(uint32_t eip, uint32_t esp,
 		}
 	}
 	ret_id = TASK_INVALID_ID;
+
 ret_label:
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return ret_id;
 }
 static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
@@ -220,14 +229,16 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
 		ret = &g_pTaskStruct->tasks[i];
 		if (ret->selector == 0)
 		{
-			ret->WaitObj = NULL;
-			ckLinkedListInit(&ret->WaitMeList);
+			ret->WaitedObj = NULL;
+			ckLinkedListInit(&ret->waitable.listOfWaiters);
 
 			ret->bFpuUsed = false;
 			ret->UsedCpuTime = 0;
 
 			ret->selector = TASK_GDT_0 + i;
 			ret->flag = TASK_FLAG_READY;
+			ret->boost = 0;
+			ret->origin_prior = priority;
 			ret->priority = priority;
 
 			ret->pProcess = pProcess;
@@ -262,7 +273,8 @@ uint32_t ckProcessCreate(uint32_t eip, uint32_t esp,
 	uint32_t ret_id = PROCESS_INVALID_ID;
 	Process *ret;
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Process *pParentProcess = csGetProcessFromId(ParentProcessId);
 	if (pParentProcess != NULL)
@@ -297,7 +309,8 @@ uint32_t ckProcessCreate(uint32_t eip, uint32_t esp,
 		}
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return ret_id;
 }
 
@@ -306,7 +319,8 @@ bool ckTaskTerminate(uint32_t TaskId)
 	bool bRet = false;
 	assert(TaskId != KERNEL_TASK_ID && TaskId != IDLE_TASK_ID);
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Task *pTask = csGetTaskFromId(TaskId);
 	if (pTask != NULL)
@@ -315,18 +329,19 @@ bool ckTaskTerminate(uint32_t TaskId)
 		bRet = true;
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
 }
 static void ckTaskTerminate_internal(Task *pTask)
 {
-	LinkedList *pList = &pTask->WaitMeList;
+	LinkedList *pList = &pTask->waitable.listOfWaiters;
 	for (LinkedListNode *node = ckLinkedListHead(pList);
 		node != (LinkedListNode *)pList;
 		node = node->pNext)
 	{
-		Task *pNodeTask = (Task *)((uint32_t)node - offsetof(Task, WaitNode));
-		pNodeTask->WaitObj = NULL;
+		Task *pNodeTask = (Task *)((uint32_t)node - offsetof(Task, nodeOfWaitedObj));
+		pNodeTask->WaitedObj = NULL;
 		ckTaskResume_byptr(pNodeTask);
 	}
 
@@ -350,38 +365,33 @@ static void ckTaskTerminate_internal(Task *pTask)
 
 	if (pTask == g_pTaskStruct->pNow)
 	{
-		assert(pTask->WaitObj == NULL);
+		assert(pTask->WaitedObj == NULL);
 
 		pTask->flag = TASK_FLAG_WAITFOREXIT;
-		ckLinkedListPushBack_mpsc(&g_pTaskStruct->WaitForExitList, &pTask->_node);
+		ckLinkedListPushBack_nosync(&g_pTaskStruct->WaitForExitList, &pTask->_node);
 
 		ckTaskSchedule_internal();
 		while (1) { } /* 이 코드는 실행되지 않음 */
 	}
 	else
 	{
-		if (pTask->WaitObj != NULL)
+		if (pTask->WaitedObj != NULL)
 		{
-			ckLinkedListErase(&pTask->WaitObj->WaitMeList, &pTask->WaitNode);
-			pTask->WaitObj = NULL;
+			//ckLinkedListErase(&pTask->WaitedObj->listOfWaiters, &pTask->nodeOfWaitedObj);
+			//pTask->WaitedObj = NULL;
 
 			assert(pTask->flag == TASK_FLAG_WAIT);
 			ckLinkedListErase(&g_pTaskStruct->WaitList, &pTask->_node);
+
+			pTask->flag = TASK_FLAG_ZOMBIE;
 		}
 		else
 		{
 			assert(pTask->flag == TASK_FLAG_READY);
 			ckLinkedListErase(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
+
+			csCleanupTask(pTask);
 		}
-
-		if (pProc != NULL)
-			csCleanupProcess(pProc);
-
-		if (pTask->stack != NULL)
-			ckDynMemFree(pTask->stack, pTask->stacksize);
-
-		ckGdtInitNull(g_pGdtTable + pTask->selector);
-		pTask->selector = 0;
 	}
 }
 
@@ -390,7 +400,8 @@ bool ckProcessTerminate(uint32_t ProcessId)
 	bool bRet = false;
 	assert(ProcessId != KERNEL_PROCESS_ID);
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Process *pProc = csGetProcessFromId(ProcessId);
 	if (pProc != NULL)
@@ -399,8 +410,23 @@ bool ckProcessTerminate(uint32_t ProcessId)
 		bRet = true;
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
+}
+
+static void csCleanupTask(Task *pTask)
+{
+	Process *pProc = pTask->pProcess;
+
+	if (pProc != NULL)
+		csCleanupProcess(pProc);
+
+	if (pTask->stack != NULL)
+		ckDynMemFree(pTask->stack, pTask->stacksize);
+
+	ckGdtInitNull(g_pGdtTable + pTask->selector);
+	pTask->selector = 0;
 }
 
 static void csCleanupProcess(Process *pProc)
@@ -444,26 +470,32 @@ bool ckTaskChangePriority(uint32_t TaskId, TaskPriority priority)
 {
 	bool bRet = false;
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Task *pTask = csGetTaskFromId(TaskId);
 	if (pTask != NULL)
 	{
-		if (pTask == g_pTaskStruct->pNow)
-		{
-			pTask->priority = priority;
-		}
-		else if (pTask->priority != priority)
-		{
-			ckLinkedListErase(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
-			ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[priority], &pTask->_node);
-			pTask->priority = priority;
-		}
+		ckTaskChangePriority_internal(pTask, priority);
 		bRet = true;
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
+}
+static void ckTaskChangePriority_internal(Task *pTask, TaskPriority priority)
+{
+	if (pTask->flag != TASK_FLAG_READY)
+	{
+		pTask->priority = priority;
+	}
+	else if (pTask->priority != priority)
+	{
+		ckLinkedListErase(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
+		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[priority], &pTask->_node);
+		pTask->priority = priority;
+	}
 }
 
 bool ckTaskSuspend(uint32_t TaskId)
@@ -471,7 +503,8 @@ bool ckTaskSuspend(uint32_t TaskId)
 	bool bRet = false;
 	assert(TaskId != KERNEL_TASK_ID && TaskId != IDLE_TASK_ID);
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Task *pTask = csGetTaskFromId(TaskId);
 	if (pTask != NULL)
@@ -479,7 +512,8 @@ bool ckTaskSuspend(uint32_t TaskId)
 		bRet = ckTaskSuspend_byptr(pTask);
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
 }
 
@@ -487,7 +521,8 @@ bool ckTaskSuspend_byptr(Task *pTask)
 {
 	bool bRet = false;
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	TaskFlag flag = pTask->flag;
 
@@ -511,7 +546,8 @@ bool ckTaskSuspend_byptr(Task *pTask)
 		bRet = true;
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
 }
 
@@ -520,7 +556,8 @@ bool ckTaskResume(uint32_t TaskId)
 	bool bRet = false;
 	assert(TaskId != KERNEL_TASK_ID && TaskId != IDLE_TASK_ID);
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Task *pTask = csGetTaskFromId(TaskId);
 	if (pTask != NULL)
@@ -528,70 +565,78 @@ bool ckTaskResume(uint32_t TaskId)
 		bRet = ckTaskResume_byptr(pTask);
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
 }
 bool ckTaskResume_byptr(Task *pTask)
 {
 	bool bRet = false;
 
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	if (pTask->flag == TASK_FLAG_WAIT)
 	{
 		ckLinkedListErase(&g_pTaskStruct->WaitList, &pTask->_node);
 
 		pTask->flag = TASK_FLAG_READY;
+		pTask->boost = TASK_BOOST_QUANTUM;
+
+		if (pTask->priority > TASK_BOOST_MAX_PRIOR + TASK_BOOST_LEVEL)
+			pTask->priority = pTask->priority - TASK_BOOST_LEVEL;
+		else
+			pTask->priority = TASK_BOOST_MAX_PRIOR;
+
 		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
 		bRet = true;
 	}
+	else if (pTask->flag == TASK_FLAG_ZOMBIE)
+	{
+		csCleanupTask(pTask);
+	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
 
 	return bRet;
 }
 
 void ckTaskJoin(uint32_t TaskId)
 {
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Task *pTask = csGetTaskFromId(TaskId);
+	if (pTask != NULL)
+		ckTaskJoin_internal(pTask);
+
+	ckUnlockSystem(&lso);
+}
+
+static void ckTaskJoin_internal(Task *pTask)
+{
 	Task *pNow = ckTaskGetCurrent();
 
-	assert(pNow->WaitObj == NULL);
+	assert(pNow->WaitedObj == NULL);
 
-	if (pTask != NULL)
+	if (pTask->flag != TASK_FLAG_WAITFOREXIT)
 	{
-		if (pTask->flag != TASK_FLAG_WAITFOREXIT)
-		{
-			pNow->WaitObj = pTask;
-			ckLinkedListPushBack_nosync(&pTask->WaitMeList, &pNow->WaitNode);
-
-			ckTaskSuspend_byptr(pNow);
-		}
+		pNow->WaitedObj = &pTask->waitable;
+		ckLinkedListPushBack_nosync(&pTask->waitable.listOfWaiters, &pNow->nodeOfWaitedObj);
+		ckTaskSuspend_byptr(pNow);
 	}
-
-	INTERRUPT_UNLOCK();
 }
 
 void ckProcessJoin(uint32_t ProcId)
 {
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	Process *pProc = csGetProcessFromId(ProcId);
-	Task *pNow = ckTaskGetCurrent();
-
-	assert(pNow->WaitObj == NULL);
-
 	if (pProc != NULL)
-	{
-		pNow->WaitObj = pProc->pMainThread;
-		ckLinkedListPushBack_nosync(&pProc->pMainThread->WaitMeList, &pNow->WaitNode);
+		ckTaskJoin_internal(pProc->pMainThread);
 
-		ckTaskSuspend_byptr(pNow);
-	}
-
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
 }
 
 void ckTaskSleep(uint32_t milisecond)
@@ -607,9 +652,12 @@ void ckTaskSleep(uint32_t milisecond)
 
 void ckTaskSchedule(void)
 {
-	INTERRUPT_LOCK();
+	LockSystemObject lso;
+	ckLockSystem(&lso);
+
 	ckTaskSchedule_internal();
-	INTERRUPT_UNLOCK();
+
+	ckUnlockSystem(&lso);
 }
 
 void ckTaskScheduleOnTimerInt(void)
@@ -624,19 +672,22 @@ static void ckTaskSchedule_internal(void)
 {
 	Task *pNow = NULL;
 
+	uint32_t UsedCpuTime = TASK_QUANTUM - g_pTaskStruct->RemainQuantum;
+
+	// 1. select next task
 	for (int j = 0; j < 2; j++)
 	{
 		for (int i = 0; i < COUNT_TASK_PRIORITY; i++)
 		{
-			if (g_pTaskStruct->ExecuteCount[i] < g_pTaskStruct->ReadyList[i].size)
+			if (g_pTaskStruct->ExecuteQuantum[i] < TASK_QUANTUM * g_pTaskStruct->ReadyList[i].size)
 			{
 				pNow = (Task *)ckLinkedListPopFront_nosync(&g_pTaskStruct->ReadyList[i]);
-				g_pTaskStruct->ExecuteCount[i]++;
+				g_pTaskStruct->ExecuteQuantum[i] += UsedCpuTime;
 				break;
 			}
 			else
 			{
-				g_pTaskStruct->ExecuteCount[i] = 0;
+				g_pTaskStruct->ExecuteQuantum[i] = 0;
 			}
 		}
 
@@ -644,46 +695,53 @@ static void ckTaskSchedule_internal(void)
 			break;
 	}
 
-	if (pNow != NULL)
+	assert(pNow != NULL);
+
+	// 2. task switching
+	Task *pPrev = g_pTaskStruct->pNow;
+
+	if (pPrev->flag == TASK_FLAG_RUNNING)
 	{
-		Task *pPrev = g_pTaskStruct->pNow;
-
-		if (pPrev->flag == TASK_FLAG_RUNNING)
-		{
-			ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pPrev->priority], &pPrev->_node);
-			pPrev->flag = TASK_FLAG_READY;
-		}
-
-		// 태스크가 사용한 CPU 퀀텀 계산
-		Process *pProc = pPrev->pProcess;
-		if (likely(pProc != NULL))
-		{
-			uint32_t UsedCpuTime = TASK_QUANTUM - g_pTaskStruct->RemainQuantum;
-			pProc->UsedCpuTime += UsedCpuTime;
-			pPrev->UsedCpuTime += UsedCpuTime;
-		}
-
-		// ProcData 갱신
-		g_pTaskStruct->pProcData = &pNow->pProcess->ProcData;
-
-		// 전환할 태스크가 마지막으로 fpu를 사용한 태스크가 아니라면 TS = 1
-		// 그렇지 않으면 TS = 0 (FPU 콘텍스트를 교체할 필요가 없음)
-		if (pNow != g_pTaskStruct->pLastTaskUsedFPU)
-		{
-			ckAsmSetCr0(ckAsmGetCr0() | CR0_TASK_SWITCHED);
-		}
-		else
-		{
-			ckAsmClearTS();
-		}
-
-		g_pTaskStruct->pNow = pNow;
-		g_pTaskStruct->pNow->flag = TASK_FLAG_RUNNING;
-
-		g_pTaskStruct->RemainQuantum = TASK_QUANTUM;
-
-		ckAsmFarJmp(0, g_pTaskStruct->pNow->selector * 8);
+		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pPrev->priority], &pPrev->_node);
+		pPrev->flag = TASK_FLAG_READY;
 	}
+
+	if (pPrev->boost != 0)
+	{
+		if (--pPrev->boost == 0)
+		{
+			ckTaskChangePriority_internal(pPrev, pPrev->origin_prior);
+		}
+	}
+
+	// 태스크가 사용한 CPU 퀀텀 계산
+	Process *pProc = pPrev->pProcess;
+	if (likely(pProc != NULL))
+	{
+		pProc->UsedCpuTime += UsedCpuTime;
+		pPrev->UsedCpuTime += UsedCpuTime;
+	}
+
+	// ProcData 갱신
+	g_pTaskStruct->pProcData = &pNow->pProcess->ProcData;
+
+	// 전환할 태스크가 마지막으로 fpu를 사용한 태스크가 아니라면 TS = 1
+	// 그렇지 않으면 TS = 0 (FPU 콘텍스트를 교체할 필요가 없음)
+	if (pNow != g_pTaskStruct->pLastTaskUsedFPU)
+	{
+		ckAsmSetCr0(ckAsmGetCr0() | CR0_TASK_SWITCHED);
+	}
+	else
+	{
+		ckAsmClearTS();
+	}
+
+	g_pTaskStruct->pNow = pNow;
+	g_pTaskStruct->pNow->flag = TASK_FLAG_RUNNING;
+
+	g_pTaskStruct->RemainQuantum = TASK_QUANTUM;
+
+	ckAsmFarJmp(0, g_pTaskStruct->pNow->selector * 8);
 }
 
 // #NM Device No Available
@@ -776,15 +834,7 @@ static void csIdleTask(void)
 			if (pTask == NULL)
 				break;
 
-			Process *pProc = pTask->pProcess;
-			if (pProc != NULL)
-				csCleanupProcess(pProc);
-
-			if (pTask->stack != NULL)
-				ckDynMemFree(pTask->stack, pTask->stacksize);
-
-			ckGdtInitNull(g_pGdtTable + pTask->selector);
-			pTask->selector = 0;
+			csCleanupTask(pTask);
 		}
 
 		/* 0.5초마다 processor load 출력 */

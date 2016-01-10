@@ -1,9 +1,9 @@
 // Copyright (c) 2014, 임경현 (dlarudgus20)
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
+//
 // * Redistributions of source code must retain the above copyright notice, this
 //   list of conditions and the following disclaimer.
 //
@@ -40,7 +40,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "benaphore.h"
+#include "simple_mutex.h"
 
 enum
 {
@@ -134,7 +134,7 @@ typedef struct tagPATADeviceInfo
 /** @brief PATA 하드디스크 자료구조입니다. */
 typedef struct tagPATAStruct
 {
-	Benaphore sem;
+	SimpleMutex mutex;
 
 	PATADeviceInfo DeviceInfo[4];			//!< 순서대로 P.M - P.S - S.M - S.S의 @ref PATADeviceInfo
 	int IsSlaveSelected[2];					//!< 0이면 Master, 1이면 Slave, -1이면 선택되지 않음. [0]:Primary, [1]:Secondary

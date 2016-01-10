@@ -23,7 +23,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file coshell.c
+ * @file coshell.excp
  * @date 2014. 5. 4.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
@@ -37,7 +37,6 @@
 #include "rtc.h"
 #include "timer.h"
 #include "task.h"
-#include "recursive_mutex.h"
 #include "string.h"
 #include "memory_map.h"
 
@@ -65,7 +64,7 @@ void ckCoshellCmdShowTick(const char *param);
 void ckCoshellCmdDateTime(const char *param);
 void ckCoshellCmdCpuSpeed(const char *param);
 void ckCoshellCmdTestTask(const char *param);
-void ckCoshellCmdTestMutex(const char *param);
+void ckCoshellCmdTestSimMutex(const char *param);
 void ckCoshellCmdTestFloat(const char *param);
 void ckCoshellCmdTestProcess(const char *param);
 void ckCoshellCmdKillTask(const char *param);
@@ -86,7 +85,7 @@ static CommandEntry Commands[] = {
 	{ "datetime",		ckCoshellCmdDateTime,		"show now date & time",						NULL },
 	{ "cpuspeed",		ckCoshellCmdCpuSpeed,		"measure cpu speed",						"Usage) cpuspeed (waiting time)" },
 	{ "testtask",		ckCoshellCmdTestTask,		"test tasking feature",						NULL },
-	{ "testmutex",		ckCoshellCmdTestMutex,		"test mutex",								NULL },
+	{ "testsimmutex",	ckCoshellCmdTestSimMutex,	"test simple mutex",						NULL },
 	{ "skout-sokoban",	ckCoshellCmdSkoutSokoban,	"sokoban, by skout",						NULL },
 	{ "testfloat",		ckCoshellCmdTestFloat,		"test floating-point feature",				NULL },
 	{ "testprocess",	ckCoshellCmdTestProcess,	"test multi-process feature",				NULL },

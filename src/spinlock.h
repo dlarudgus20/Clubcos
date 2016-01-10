@@ -1,4 +1,4 @@
-// Copyright (c) 2014, 임경현 (dlarudgus20)
+// Copyright (c) 2014, 임경현
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -23,38 +23,31 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file benaphore.c
- * @date 2014. 6. 1.
+ * @file spinlock.h
+ * @date 2015. 11. 10.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#include "benaphore.h"
-#include "task.h"
 
-void ckBenaphoreEnter(Benaphore *bisem)
+#ifndef SPINLOCK_H_
+#define SPINLOCK_H_
+
+#include <stddef.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+typedef struct tagSpinlock
 {
-	while (!__sync_bool_compare_and_swap(&bisem->flag, 0, 1))
-	{
-		ckTaskSchedule();
-	}
+	uint32_t flag;
+} Spinlock;
+
+static inline void ckSpinlockInit(Spinlock *psl)
+{
+	psl->flag = 0;
 }
 
-bool ckBenaphorePost(Benaphore *bisem)
-{
-	return __sync_bool_compare_and_swap(&bisem->flag, 1, 0);
-}
+void ckSpinlockLock(Spinlock *psl);
+void ckSpinlockUnlock(Spinlock *psl);
 
-bool ckBenaphoreUnpost(Benaphore *bisem)
-{
-	return __sync_bool_compare_and_swap(&bisem->flag, 0, 1);
-}
-
-void ckBenaphoreWait(Benaphore *bisem)
-{
-	while (bisem->flag != 0)
-	{
-		ckTaskSchedule();
-	}
-}
-
+#endif /* SPINLOCK_H_ */

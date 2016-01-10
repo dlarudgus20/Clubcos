@@ -33,6 +33,7 @@
 #include "keyboard.h"
 #include "keys.h"
 #include "port.h"
+#include "lock_system.h"
 #include "interrupt.h"
 #include "idt.h"
 #include "gdt.h"
@@ -66,7 +67,9 @@ bool ckKeyboardUpdateLED(void)
 static bool csKeyboardUpdateLED_internal(bool (*WaitForACK)(void))
 {
 	bool bRet = false;
-	INTERRUPT_LOCK();
+
+	LockSystemObject lso;
+	ckLockSystem(&lso);
 
 	ckKeyboardWaitForInput();
 
@@ -83,7 +86,8 @@ static bool csKeyboardUpdateLED_internal(bool (*WaitForACK)(void))
 		}
 	}
 
-	INTERRUPT_UNLOCK();
+	ckUnlockSystem(&lso);
+
 	return bRet;
 }
 

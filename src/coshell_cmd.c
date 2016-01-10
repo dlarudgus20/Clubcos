@@ -37,7 +37,7 @@
 #include "rtc.h"
 #include "timer.h"
 #include "task.h"
-#include "recursive_mutex.h"
+#include "simple_mutex.h"
 #include "page.h"
 #include "memory_map.h"
 
@@ -195,7 +195,7 @@ void ckCoshellCmdTestDynRan(const char *param)
 	if (param == NULL || testdynran_number == 0)
 		testdynran_number = 50;
 
-	srand(g_TimerStruct.TickCountLow);
+	srand(ckTimerGetTickCount());
 
 	for (int i = 0; i < 11; i++)
 	{
@@ -212,11 +212,12 @@ void ckCoshellCmdTestDynRan(const char *param)
 
 void ckCoshellCmdShowTick(const char *param)
 {
-	ckTerminalPrintStringF("tick count (low 32bit) : %u [0x%08x]\n",
-		g_TimerStruct.TickCountLow, g_TimerStruct.TickCountLow);
+	uint32_t high, low;
+	ckTimerGetTickCount64(&high, &low);
 
-	ckTerminalPrintStringF("tick count (64bit) : 0x%08x%08x\n",
-		g_TimerStruct.TickCountHigh, g_TimerStruct.TickCountLow);
+	ckTerminalPrintStringF("tick count (low 32bit) : %u [0x%08x]\n", low, low);
+
+	ckTerminalPrintStringF("tick count (64bit) : 0x%08x%08x\n", high, low);
 }
 
 void ckCoshellCmdDateTime(const char *param)
@@ -282,11 +283,11 @@ void ckCoshellCmdCpuSpeed(const char *param)
 	ckTerminalPrintStringF("\nCPU Speed = %d MHz\n", Speed);
 }
 
-static void testtask(void)
+static void testtask(void *param)
 {
 	unsigned count = 0;
 	uint32_t id = ckTaskGetCurrent()->id;
-	uint32_t y = id & 0x3ff;
+	uint32_t y = (uint32_t)param + 3;
 
 	while (count < 0x50000)
 	{
@@ -305,67 +306,74 @@ static void testtask(void)
 }
 void ckCoshellCmdTestTask(const char *param)
 {
+	const TaskPriority t[] =
+		{ TASK_PRIORITY_LOW, TASK_PRIORITY_NORMAL, TASK_PRIORITY_HIGH };
+
+	void *stack, *stack_top;
+
 	for (int i = 0; i < 12; i++)
 	{
-		const TaskPriority t[] =
-			{ TASK_PRIORITY_LOW, TASK_PRIORITY_NORMAL, TASK_PRIORITY_HIGH };
-		void *stack = ckDynMemAllocate(4 * 1024);
+		stack = ckDynMemAllocate(4 * 1024);
+		stack_top = (uint8_t *)stack + 4 * 1024;
+		ckTaskSetInitParam(&stack_top, (void *)i);
+
 		ckTaskCreate(
-			(uint32_t)testtask, (uint32_t)stack + 4 * 1024,
+			(uint32_t)testtask, (uint32_t)stack_top,
 			stack, 4 * 1024,
 			ckProcessGetCurrentId(), t[i % 3]);
 	}
 }
 
-#define TEST_MUTEX_TASK_COUNT 12
-static volatile uint32_t count = 0;
-static RecursiveMutex TestMutex;
-static void increase_count(int i)
-{
-	if (i % 3000 == 0) ckTaskSchedule();
-	volatile uint32_t tmp = count + 2;
-	if (i % 3000 == 0) ckTaskSchedule();
-	tmp -= 3;
-	if (i % 3000 == 0) ckTaskSchedule();
-	count = tmp + 2;
-	if (i % 3000 == 0) ckTaskSchedule();
-}
-static void testmutex(void *param)
+#define TEST_SIM_MUTEX_TASK_COUNT 12
+static volatile uint32_t sim_count = 0;
+static SimpleMutex TestSimMutex;
+static void testsimmutex(void *param)
 {
 	for (int i = 0; i < 4000; i++)
 	{
-		ckRecursiveMutexLock(&TestMutex);
-		increase_count(i);
-		ckRecursiveMutexUnlock(&TestMutex);
+		ckSimpleMutexLock(&TestSimMutex);
+
+		if (i % 3000 == 0) ckTaskSchedule();
+		volatile uint32_t tmp = sim_count + 2;
+		if (i % 3000 == 0) ckTaskSchedule();
+		tmp -= 3;
+		if (i % 3000 == 0) ckTaskSchedule();
+		sim_count = tmp + 2;
+		if (i % 3000 == 0) ckTaskSchedule();
+
+		ckSimpleMutexUnlock(&TestSimMutex);
 	}
 
 	ckTaskExit();
 }
-static void joinermutextest(void *param)
+static void joinersimmutextest(void *param)
 {
 	uint32_t *arTaskId = (uint32_t *)param;
-	for (int i = 0; i < TEST_MUTEX_TASK_COUNT; i++)
+	for (int i = 0; i < TEST_SIM_MUTEX_TASK_COUNT; i++)
 		ckTaskJoin(arTaskId[i]);
 
-	ckTerminalWriteStringAtF(0, 0, TERMINAL_LIGHT_CYAN, "count: %u", count);
-	count = 0;
+	ckTerminalWriteStringAtF(0, 0, TERMINAL_LIGHT_CYAN, "count: %u [%u ms]", sim_count,
+		ckTimerGetTickCount() - arTaskId[TEST_SIM_MUTEX_TASK_COUNT]);
+	sim_count = 0;
 
 	ckTaskExit();
 }
-void ckCoshellCmdTestMutex(const char *param)
+void ckCoshellCmdTestSimMutex(const char *param)
 {
 	uint32_t *arTaskId = (uint32_t *)ckDynMemAllocate(4 * 1024);
 	void *stack, *stack_top;
 
-	ckRecursiveMutexInit(&TestMutex);
-	for (int i = 0; i < TEST_MUTEX_TASK_COUNT; i++)
+	arTaskId[TEST_SIM_MUTEX_TASK_COUNT] = ckTimerGetTickCount();
+
+	ckSimpleMutexInit(&TestSimMutex);
+	for (int i = 0; i < TEST_SIM_MUTEX_TASK_COUNT; i++)
 	{
 		stack = ckDynMemAllocate(4 * 1024);
 		stack_top = (uint8_t *)stack + 4 * 1024;
 		ckTaskSetInitParam(&stack_top, (void *)i);
 
 		arTaskId[i] = ckTaskCreate(
-			(uint32_t)testmutex, (uint32_t)stack_top,
+			(uint32_t)testsimmutex, (uint32_t)stack_top,
 			stack, 4 * 1024,
 			ckProcessGetCurrentId(), TASK_PRIORITY_BELOW_NORMAL);
 	}
@@ -373,7 +381,7 @@ void ckCoshellCmdTestMutex(const char *param)
 	stack_top = (uint8_t *)arTaskId + 4 * 1024;
 	ckTaskSetInitParam(&stack_top, (void *)arTaskId);
 
-	ckTaskCreate((uint32_t)joinermutextest, (uint32_t)stack_top,
+	ckTaskCreate((uint32_t)joinersimmutextest, (uint32_t)stack_top,
 		arTaskId, 4 * 1024,
 		ckProcessGetCurrentId(), TASK_PRIORITY_NORMAL);
 }
@@ -408,7 +416,7 @@ static void testfloatfreertask(const char *param)
 		ckTaskJoin(arTaskId[0]);
 
 	ckTerminalWriteStringAtF(0, 0, TERMINAL_MAGENTA,
-		"testfloat : %u ms", g_TimerStruct.TickCountLow - arTaskId[TEST_FLOAT_TASK_COUNT]);
+		"testfloat : %u ms", ckTimerGetTickCount() - arTaskId[TEST_FLOAT_TASK_COUNT]);
 
 	ckTaskExit();
 }
@@ -417,7 +425,7 @@ void ckCoshellCmdTestFloat(const char *param)
 	uint32_t *arTaskId = (uint32_t *)ckDynMemAllocate(4 * 1024);
 	void *stack, *stack_top;
 
-	arTaskId[TEST_FLOAT_TASK_COUNT] = g_TimerStruct.TickCountLow;
+	arTaskId[TEST_FLOAT_TASK_COUNT] = ckTimerGetTickCount();
 
 	for (int i = 0; i < TEST_FLOAT_TASK_COUNT; i++)
 	{

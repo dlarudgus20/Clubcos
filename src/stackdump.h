@@ -1,4 +1,4 @@
-// Copyright (c) 2014, 임경현 (dlarudgus20)
+// Copyright (c) 2014, 임경현
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -23,38 +23,21 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file assert.h
- * @date 2014. 5. 5.
+ * @file stackdump.h
+ * @date 2015. 11. 8.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#ifndef ASSERT_H_
-#define ASSERT_H_
+#ifndef STACKDUMP_H_
+#define SRC_STACKDUMP_H_
 
-#ifndef NDEBUG
+#include <stdint.h>
 
-/**
- * @brief 단언 실패 메시지와 함께 PANIC합니다. <c>NDEBUG</c> 매크로가 선언되지 않았을 경우에만 존재합니다.
- * @param[in] str 단언문입니다.
- * @param[in] file 단언문이 있는 파일입니다.
- * @param[in] func 단언문이 있는 함수입니다.
- * @param[in] line 단언문이 있는 줄번호입니다.
- * @sa ckTerminalPanic
- */
-void ckAssertMessage(const char *str, const char *file, const char *func, unsigned line);
+// boot.asm
+extern void *_boot_stackframe_top;
 
-/**
- * @brief 단언문을 확인합니다. 단언문이 실패할 경우 @ref ckAssertMessage 를 통해 PANIC합니다.<br/>
- *        <c>NDEBUG</c> 매크로가 선언되어있다면 아무 일도 하지 않습니다.
- * @param exp 단언문입니다.
- */
-# define assert(exp) ((void)((exp) || (ckAssertMessage(#exp, __FILE__, __func__, __LINE__), 1)))
+// stackdump.asm
+void ckStackDump(void (*pfCallback)(void *fn, uint32_t num), uint32_t skip, uint32_t limit);
 
-#else
-
-# define assert(exp) ((void)(exp))
-
-#endif
-
-#endif /* ASSERT_H_ */
+#endif /* STACKDUMP_H_ */

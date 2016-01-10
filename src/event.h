@@ -22,55 +22,53 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-/*
- * @file recursive_mutex.h
- * @date 2014. 5. 11.
+/**
+ * @file event.h
+ * @date 2015. 11. 8.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
-#ifndef MUTEX_H_
-#define MUTEX_H_
+#ifndef EVENT_H_
+#define EVENT_H_
 
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "task.h"
+#include "waitable.h"
 
 /**
- * @brief recursive mutex 구조체입니다.
+ * @brief 바이너리 세마포어 구조체입니다.
  */
-typedef struct tagRecursiveMutex
+typedef struct tagEvent
 {
-	volatile uint32_t TaskId;
-	volatile uint32_t LockCount;
+	Waitable waitable;
 
-	// 32비트 단위로 메모리를 mov하는 건 원자성이 있음.
-	volatile uint32_t bLocked;
-} RecursiveMutex;
-
-/**
- * @brief @ref RecursiveMutex 구조체를 초기화합니다.
- * @param[in] pMutex 초기화할 @ref RecursiveMutex 구조체입니다.
- */
-static inline void ckRecursiveMutexInit(RecursiveMutex *pMutex)
-{
-	pMutex->TaskId = TASK_INVALID_ID;
-	pMutex->LockCount = 0;
-	pMutex->bLocked = false;
-}
+	uint32_t flag;		//!< benaphore의 flag입니다.
+	bool bAutoClear;
+} Event;
 
 /**
- * @brief @ref RecursiveMutex 구조체의 임계 영역에 진입합니다.
- * @param[in] pMutex @ref RecursiveMutex 구조체입니다.
- * @return 진입 후 뮤텍스의 LockCount입니다.
+ * @brief 바이너리 세마포어를 초기화합니다.
+ * @param[in] bisem 초기화할 @ref Benaphore 구조체입니다.
+ * @param[in] 바이너리 세마포어의 초기값입니다.
  */
-uint32_t ckRecursiveMutexLock(RecursiveMutex *pMutex);
-/**
- * @brief @ref RecursiveMutex 구조체의 임계 영역에서 빠져나옵니다.
- * @param[in] pMutex @ref RecursiveMutex 구조체입니다.
- * @return 이 뮤텍스를 잠그지 않았으면 <c>false</c>입니다. 그렇지 않으면 <c>true</c>입니다.
- */
-bool ckRecursiveMutexUnlock(RecursiveMutex *pMutex);
+void ckEventInit(Event *pEvent, bool InitVal, bool bAutoClear);
 
-#endif /* MUTEX_H_ */
+/**
+ * @brief 바이너리 세마포어의 임계 영역에 진입하고, 카운터를 증가시킵니다.
+ * @param[in] bisem @ref Benaphore 구조체입니다.
+ */
+void ckEventWait(Event *pEvent);
+/**
+ * @brief 바이너리 세마포어의 카운터를 감소시킵니다.
+ * @param[in] bisem @ref Benaphore 구조체입니다.
+ */
+bool ckEventSet(Event *pEvent);
+/**
+ * @brief 바이너리 세마포어의 카운터를 증가시킵니다.
+ * @param[in] bisem @ref Benaphore 구조체입니다.
+ */
+bool ckEventClear(Event *pEvent);
+
+#endif /* EVENT_H_ */
