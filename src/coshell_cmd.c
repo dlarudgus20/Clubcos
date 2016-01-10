@@ -195,7 +195,7 @@ void ckCoshellCmdTestDynRan(const char *param)
 	if (param == NULL || testdynran_number == 0)
 		testdynran_number = 50;
 
-	srand(g_TimerStruct.TickCountLow);
+	srand(ckTimerGetTickCount());
 
 	for (int i = 0; i < 11; i++)
 	{
@@ -212,11 +212,12 @@ void ckCoshellCmdTestDynRan(const char *param)
 
 void ckCoshellCmdShowTick(const char *param)
 {
-	ckTerminalPrintStringF("tick count (low 32bit) : %u [0x%08x]\n",
-		g_TimerStruct.TickCountLow, g_TimerStruct.TickCountLow);
+	uint32_t high, low;
+	ckTimerGetTickCount64(&high, &low);
 
-	ckTerminalPrintStringF("tick count (64bit) : 0x%08x%08x\n",
-		g_TimerStruct.TickCountHigh, g_TimerStruct.TickCountLow);
+	ckTerminalPrintStringF("tick count (low 32bit) : %u [0x%08x]\n", low, low);
+
+	ckTerminalPrintStringF("tick count (64bit) : 0x%08x%08x\n", high, low);
 }
 
 void ckCoshellCmdDateTime(const char *param)
@@ -328,7 +329,7 @@ static volatile uint32_t sim_count = 0;
 static SimpleMutex TestSimMutex;
 static void testsimmutex(void *param)
 {
-	for (int i = 0; i < 400; i++)
+	for (int i = 0; i < 4000; i++)
 	{
 		ckSimpleMutexLock(&TestSimMutex);
 
@@ -351,7 +352,8 @@ static void joinersimmutextest(void *param)
 	for (int i = 0; i < TEST_SIM_MUTEX_TASK_COUNT; i++)
 		ckTaskJoin(arTaskId[i]);
 
-	ckTerminalWriteStringAtF(0, 0, TERMINAL_LIGHT_CYAN, "count: %u", sim_count);
+	ckTerminalWriteStringAtF(0, 0, TERMINAL_LIGHT_CYAN, "count: %u [%u ms]", sim_count,
+		ckTimerGetTickCount() - arTaskId[TEST_SIM_MUTEX_TASK_COUNT]);
 	sim_count = 0;
 
 	ckTaskExit();
@@ -360,6 +362,8 @@ void ckCoshellCmdTestSimMutex(const char *param)
 {
 	uint32_t *arTaskId = (uint32_t *)ckDynMemAllocate(4 * 1024);
 	void *stack, *stack_top;
+
+	arTaskId[TEST_SIM_MUTEX_TASK_COUNT] = ckTimerGetTickCount();
 
 	ckSimpleMutexInit(&TestSimMutex);
 	for (int i = 0; i < TEST_SIM_MUTEX_TASK_COUNT; i++)
@@ -412,7 +416,7 @@ static void testfloatfreertask(const char *param)
 		ckTaskJoin(arTaskId[0]);
 
 	ckTerminalWriteStringAtF(0, 0, TERMINAL_MAGENTA,
-		"testfloat : %u ms", g_TimerStruct.TickCountLow - arTaskId[TEST_FLOAT_TASK_COUNT]);
+		"testfloat : %u ms", ckTimerGetTickCount() - arTaskId[TEST_FLOAT_TASK_COUNT]);
 
 	ckTaskExit();
 }
@@ -421,7 +425,7 @@ void ckCoshellCmdTestFloat(const char *param)
 	uint32_t *arTaskId = (uint32_t *)ckDynMemAllocate(4 * 1024);
 	void *stack, *stack_top;
 
-	arTaskId[TEST_FLOAT_TASK_COUNT] = g_TimerStruct.TickCountLow;
+	arTaskId[TEST_FLOAT_TASK_COUNT] = ckTimerGetTickCount();
 
 	for (int i = 0; i < TEST_FLOAT_TASK_COUNT; i++)
 	{
