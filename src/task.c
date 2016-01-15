@@ -132,7 +132,6 @@ void ckTaskStructInitialize(void)
 	pTask->WaitedObj = NULL;
 	pTask->selector = TASK_GDT_0;
 	pTask->flag = TASK_FLAG_RUNNING;
-	pTask->boost = 0;
 	pTask->origin_prior = KERNEL_TASK_PRIORITY;
 	pTask->priority = KERNEL_TASK_PRIORITY;
 	pTask->bFpuUsed = false;
@@ -153,7 +152,6 @@ void ckTaskStructInitialize(void)
 	pTask->WaitedObj = NULL;
 	pTask->selector = TASK_GDT_0 + 1;
 	pTask->flag = TASK_FLAG_READY;
-	pTask->boost = 0;
 	pTask->origin_prior = TASK_PRIORITY_IDLE;
 	pTask->priority = TASK_PRIORITY_IDLE;
 	pTask->bFpuUsed = false;
@@ -237,7 +235,6 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
 
 			ret->selector = TASK_GDT_0 + i;
 			ret->flag = TASK_FLAG_READY;
-			ret->boost = 0;
 			ret->origin_prior = priority;
 			ret->priority = priority;
 
@@ -581,12 +578,9 @@ bool ckTaskResume_byptr(Task *pTask)
 		ckLinkedListErase(&g_pTaskStruct->WaitList, &pTask->_node);
 
 		pTask->flag = TASK_FLAG_READY;
-		pTask->boost = TASK_BOOST_QUANTUM;
 
-		if (pTask->priority > TASK_BOOST_MAX_PRIOR + TASK_BOOST_LEVEL)
-			pTask->priority = pTask->priority - TASK_BOOST_LEVEL;
-		else
-			pTask->priority = TASK_BOOST_MAX_PRIOR;
+		if (pTask->priority > TASK_PRIORITY_HIGHEST)
+			pTask->priority = TASK_PRIORITY_HIGHEST;
 
 		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
 		bRet = true;
@@ -675,22 +669,9 @@ static void ckTaskSchedule_internal(void)
 	uint32_t UsedCpuTime = TASK_QUANTUM - g_pTaskStruct->RemainQuantum;
 
 	// 1. select next task
-	for (int j = 0; j < 2; j++)
+	for (int i = 0; i < COUNT_TASK_PRIORITY; i++)
 	{
-		for (int i = 0; i < COUNT_TASK_PRIORITY; i++)
-		{
-			if (g_pTaskStruct->ExecuteQuantum[i] < TASK_QUANTUM * g_pTaskStruct->ReadyList[i].size)
-			{
-				pNow = (Task *)ckLinkedListPopFront_nosync(&g_pTaskStruct->ReadyList[i]);
-				g_pTaskStruct->ExecuteQuantum[i] += UsedCpuTime;
-				break;
-			}
-			else
-			{
-				g_pTaskStruct->ExecuteQuantum[i] = 0;
-			}
-		}
-
+		pNow = (Task *)ckLinkedListPopFront_nosync(&g_pTaskStruct->ReadyList[i]);
 		if (pNow != NULL)
 			break;
 	}
@@ -706,12 +687,10 @@ static void ckTaskSchedule_internal(void)
 			pPrev->flag = TASK_FLAG_READY;
 		}
 
-		if (pPrev->boost != 0)
+		if (pPrev->priority != pPrev->origin_prior)
 		{
-			if (--pPrev->boost == 0)
-			{
-				ckTaskChangePriority_internal(pPrev, pPrev->origin_prior);
-			}
+			pPrev->priority++;
+			ckTaskChangePriority_internal(pPrev, pPrev->priority);
 		}
 
 		// 태스크가 사용한 CPU 퀀텀 계산

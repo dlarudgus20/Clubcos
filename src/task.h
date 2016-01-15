@@ -85,13 +85,6 @@ typedef enum tagTaskPriority
 	KERNEL_TASK_PRIORITY = TASK_PRIORITY_HIGHEST
 } TaskPriority;
 
-enum
-{
-	TASK_BOOST_QUANTUM = 20,
-	TASK_BOOST_LEVEL = 2,
-	TASK_BOOST_MAX_PRIOR = TASK_PRIORITY_HIGHEST,
-};
-
 /** @brief TSS를 나타내는 구조체입니다. */
 typedef struct tagTss
 {
@@ -142,11 +135,10 @@ typedef struct tagTask
 
 	uint32_t selector;				//!< 태스크 디스크럽터 셀렉터입니다. 0이면 사용되지 않은 <c>Task</c> 구조체입니다.
 
-	TaskFlag flag:3;				//!< 태스크의 상태 flag입니다.
-	unsigned boost:5;				//!< 남은 boosting 횟수입니다. 0이면 boosting받고 있지 않습니다.
-	bool bFpuUsed:1;				//!< 이 태스크가 최근 FPU를 사용했는지 나타내는 진위형입니다.
-	TaskPriority origin_prior:11;	//!< priority boosting의 영향을 받지 않은 본래의 우선순위입니다.
-	TaskPriority priority:12;		//!< 태스크의 우선순위입니다.
+	TaskFlag flag:8;				//!< 태스크의 상태 flag입니다.
+	int bFpuUsed:8;					//!< 이 태스크가 최근 FPU를 사용했는지 나타내는 진위형입니다.
+	TaskPriority origin_prior:8;	//!< priority boosting의 영향을 받지 않은 본래의 우선순위입니다.
+	TaskPriority priority:8;		//!< 태스크의 우선순위입니다.
 
 	Tss tss;						//!< 태스크의 TSS입니다.
 
@@ -208,8 +200,6 @@ typedef struct tagTaskStruct
 
 	LinkedList WaitList;							//!< @ref TASK_FLAG_WAIT 상태의 태스크의 목록입니다.
 	LinkedList WaitForExitList;						//!< @ref TASK_FLAG_WAITFOREXIT 상태의 태스크의 목록입니다. idle에서의 처리를 위해 mpcs로 동기화가 필요합니다.
-
-	uint32_t ExecuteQuantum[COUNT_TASK_PRIORITY];	//!< 각 우선순위별로 실행된 시간을 기록하는 배열입니다.
 
 	Task *pNow;										//!< 현재 실행중인 태스크입니다.
 	ProcessData *pProcData;							//!< 현재 실행중인 프로세스의 data입니다. <c>pNow->pProcess->ProcData</c>와 동일합니다.
