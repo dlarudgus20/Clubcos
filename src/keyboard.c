@@ -35,6 +35,7 @@
 #include "port.h"
 #include "lock_system.h"
 #include "interrupt.h"
+#include "kernel_queue.h"
 #include "idt.h"
 #include "gdt.h"
 #include "pic.h"
@@ -127,7 +128,7 @@ bool ckKeyboardWaitForACKAndPutQueue(void)
 		if (data == KEYBOARD_ACK)
 			return true;
 		else
-			ckInterruptQueuePut(data | INTERRUPT_QUEUE_FLAG_KEYBOARD);
+			ckKernelQueuePut(data | KERNEL_QUEUE_FLAG_KEYBOARD);
 	}
 	return false;
 }
@@ -156,5 +157,5 @@ void ck_KeyboardIntHandler(InterruptContext *pContext)
 	uint8_t code = ckPortInByte(KEYBOARD_PORT_OUTPUT);
 
 	if (likely(code != KEYBOARD_ACK))
-		ckInterruptQueuePut(code | INTERRUPT_QUEUE_FLAG_KEYBOARD);
+		ckKernelQueuePut(code | KERNEL_QUEUE_FLAG_KEYBOARD);
 }

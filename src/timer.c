@@ -34,6 +34,7 @@
 #include "idt.h"
 #include "gdt.h"
 #include "interrupt.h"
+#include "kernel_queue.h"
 #include "pic.h"
 #include "terminal.h"
 #include "task.h"
@@ -144,6 +145,11 @@ void ck_TimerIntHandler(InterruptContext *pContext)
 		{
 			break;
 		}
+	}
+
+	if (low % 500 == 0)
+	{
+		ckKernelQueuePut(KERNEL_QUEUE_FLAG_PROCLOAD);
 	}
 
 	// 태스크 스케쥴링

@@ -31,7 +31,7 @@
 #include "terminal.h"
 #include "gdt.h"
 #include "idt.h"
-#include "interrupt.h"
+#include "kernel_queue.h"
 #include "pic.h"
 #include "keyboard.h"
 #include "keys.h"
@@ -55,6 +55,8 @@
  * visit <a href="http://dlarudgus20.github.io/Clubcos/">github site</a> or
  * <a href="https://github.com/dlarudgus20/Clubcos">github project</a> for more information.
  */
+
+static void csCalcProcessorLoad(void);
 
 /**
  * @brief Clubcos 커널의 시작 부분입니다. boot.asm에서 호출됩니다.
@@ -108,7 +110,7 @@ void ckMain(void)
 	ckTerminalPrintString_unsafe(" [OK]\n");
 
 	// 인터럽트 큐 초기화
-	ckInterruptQueueInitialize();
+	ckKernelQueueInitialize();
 
 	// PIC 초기화
 	ckTerminalPrintString_unsafe("Initializing PIC...");
@@ -151,17 +153,50 @@ void ckMain(void)
 
 	while (1)
 	{
-		QueueData = ckInterruptQueueWaitAndGet();
+		QueueData = ckKernelQueueWaitAndGet();
 
 		data = QueueData & 0xffffff;
 		switch (QueueData & 0xff000000)
 		{
-			case INTERRUPT_QUEUE_FLAG_KEYBOARD:
+			case KERNEL_QUEUE_FLAG_KEYBOARD:
 				ckOnKeyboardInterrupt(data);
+				break;
+			case KERNEL_QUEUE_FLAG_PROCLOAD:
+				csCalcProcessorLoad();
+				ckTerminalPrintStatusBarF("ProcessorLoad : %03u%%", g_pTaskStruct->ProcessorLoad);
 				break;
 			default:
 				assert(!"wrong interrupt queue data");
 				break;
 		}
 	}
+}
+
+static void csCalcProcessorLoad(void)
+{
+	Task *pIdleTask = &g_pTaskStruct->tasks[1];
+
+	static uint32_t LastTickCount = 0;
+	static uint32_t LastIdleTime = 0;
+
+	uint32_t TickCount, DiffTick;
+	uint32_t IdleTime, DiffIdleTime;
+
+	TickCount = g_TimerStruct.TickCountLow;
+	DiffTick = TickCount - LastTickCount;
+
+	IdleTime = pIdleTask->UsedCpuTime;
+	DiffIdleTime = IdleTime - LastIdleTime;
+
+	if (DiffTick == 0)
+	{
+		g_pTaskStruct->ProcessorLoad = 0;
+	}
+	else
+	{
+		g_pTaskStruct->ProcessorLoad = 100 - (DiffIdleTime * 100) / DiffTick;
+	}
+
+	LastTickCount = TickCount;
+	LastIdleTime = IdleTime;
 }

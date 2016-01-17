@@ -132,8 +132,8 @@ void ckTaskStructInitialize(void)
 	pTask->WaitedObj = NULL;
 	pTask->selector = TASK_GDT_0;
 	pTask->flag = TASK_FLAG_RUNNING;
-	pTask->origin_prior = KERNEL_TASK_PRIORITY;
-	pTask->priority = KERNEL_TASK_PRIORITY;
+	pTask->origin_prior = TASK_PRIORITY_KERNEL;
+	pTask->priority = TASK_PRIORITY_KERNEL;
 	pTask->bFpuUsed = false;
 	pTask->UsedCpuTime = 0;
 	pTask->stack = NULL;
@@ -583,6 +583,10 @@ bool ckTaskResume_byptr(Task *pTask)
 			pTask->priority = TASK_PRIORITY_HIGHEST;
 
 		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
+
+		//if (ckTaskGetCurrent()->priority >= pTask->priority)
+		//	ckTaskSchedule_internal();
+
 		bRet = true;
 	}
 	else if (pTask->flag == TASK_FLAG_ZOMBIE)
@@ -681,16 +685,15 @@ static void ckTaskSchedule_internal(void)
 		// 2. task switching
 		Task *pPrev = g_pTaskStruct->pNow;
 
+		if (pPrev->priority != pPrev->origin_prior)
+		{
+			pPrev->priority++;
+		}
+
 		if (pPrev->flag == TASK_FLAG_RUNNING)
 		{
 			ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pPrev->priority], &pPrev->_node);
 			pPrev->flag = TASK_FLAG_READY;
-		}
-
-		if (pPrev->priority != pPrev->origin_prior)
-		{
-			pPrev->priority++;
-			ckTaskChangePriority_internal(pPrev, pPrev->priority);
 		}
 
 		// 태스크가 사용한 CPU 퀀텀 계산
@@ -757,55 +760,10 @@ void ck_ExceptIntHandler07(InterruptContext *pContext)
 
 static void csIdleTask(void)
 {
-	Task *pTaskMe = ckTaskGetCurrent();
-
-	uint32_t LastTickCount = g_TimerStruct.TickCountLow;
-	uint32_t LastIdleTime = pTaskMe->UsedCpuTime;
-
-	uint32_t TickCount, DiffTick;
-	uint32_t IdleTime, DiffIdleTime;
-	uint32_t ProcessorLoad;
 	Task *pTask;
-
-	LinkedList NoticeQueue;
-	TimeOut timeout;
-
-	ckLinkedListInit(&NoticeQueue);
-	timeout.timeout = g_TimerStruct.TickCountLow + 500;
-	timeout.NoticeQueue = &NoticeQueue;
-	ckTimerSet(&timeout);
 
 	while (1)
 	{
-		/* 프로세서 사용률 측정*/
-
-		TickCount = g_TimerStruct.TickCountLow;
-		DiffTick = TickCount - LastTickCount;
-
-		IdleTime = pTaskMe->UsedCpuTime;
-		DiffIdleTime = IdleTime - LastIdleTime;
-
-		if (DiffTick == 0)
-		{
-			g_pTaskStruct->ProcessorLoad = ProcessorLoad = 0;
-		}
-		else
-		{
-			g_pTaskStruct->ProcessorLoad = ProcessorLoad = 100 - (DiffIdleTime * 100) / DiffTick;
-		}
-
-		LastTickCount = TickCount;
-		LastIdleTime = IdleTime;
-
-		/* 프로세서 사용률에 따라 hlt함 */
-
-		if (ProcessorLoad < 40)
-			ckAsmHlt();
-		if (ProcessorLoad < 80)
-			ckAsmHlt();
-		if (ProcessorLoad < 95)
-			ckAsmHlt();
-
 		/* TASK_WAITFOREXIT 상태의 태스크 처리 */
 
 		while (1)
@@ -817,20 +775,11 @@ static void csIdleTask(void)
 			csCleanupTask(pTask);
 		}
 
-		/* 0.5초마다 processor load 출력 */
-
-		if (ckLinkedListPopFront_mpsc(&NoticeQueue) != NULL)
-		{
-			ckTerminalPrintStatusBarF("ProcessorLoad : %03u%%", ProcessorLoad);
-
-			timeout.timeout = g_TimerStruct.TickCountLow + 500;
-			timeout.NoticeQueue = &NoticeQueue;
-			ckTimerSet(&timeout);
-		}
-
-		/* 끝 - 다른 태스크에게 시간 양보 */
-
 		ckTaskSchedule();
+
+		/* hlt */
+
+		ckAsmHlt();
 	}
 }
 

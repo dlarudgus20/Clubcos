@@ -23,31 +23,31 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
- * @file interrupt.c
+ * @file kernel_queue.c
  * @date 2014. 4. 27.
  * @author dlarudgus20
  * @copyright The BSD (2-Clause) License
  */
 
 #include "terminal.h"
-#include "interrupt.h"
+#include "kernel_queue.h"
 #include "lock_system.h"
 
-static Event s_InterruptEvent;
-static CircularQueue32 s_InterruptQueue;
-static uint32_t s_IntQueueBuf[1024];
+static Event s_QueueEvent;
+static CircularQueue32 s_Queue;
+static uint32_t s_QueueBuf[1024];
 
-void ckInterruptQueueInitialize(void)
+void ckKernelQueueInitialize(void)
 {
-	ckEventInit(&s_InterruptEvent, false, true);
-	ckCircularQueue32Init(&s_InterruptQueue, s_IntQueueBuf, sizeof(s_IntQueueBuf) / sizeof(s_IntQueueBuf[0]));
+	ckEventInit(&s_QueueEvent, false, true);
+	ckCircularQueue32Init(&s_Queue, s_QueueBuf, sizeof(s_QueueBuf) / sizeof(s_QueueBuf[0]));
 }
 
-bool ckInterruptQueuePut(uint32_t data)
+bool ckKernelQueuePut(uint32_t data)
 {
-	if (ckCircularQueue32Put(&s_InterruptQueue, data | INTERRUPT_QUEUE_FLAG_KEYBOARD))
+	if (ckCircularQueue32Put(&s_Queue, data))
 	{
-		ckEventSet(&s_InterruptEvent);
+		ckEventSet(&s_QueueEvent);
 		return true;
 	}
 	else
@@ -56,20 +56,20 @@ bool ckInterruptQueuePut(uint32_t data)
 	}
 }
 
-uint32_t ckInterruptQueueWaitAndGet(void)
+uint32_t ckKernelQueueWaitAndGet(void)
 {
 	uint32_t ret;
 	bool bSuccess;
 
 	do
 	{
-		bool bEmpty = ((volatile CircularQueue32 *)&s_InterruptQueue)->bEmpty;
+		bool bEmpty = ((volatile CircularQueue32 *)&s_Queue)->bEmpty;
 		if (bEmpty)
-			ckEventWait(&s_InterruptEvent);
+			ckEventWait(&s_QueueEvent);
 
 		LockSystemObject lso;
 		ckLockSystem(&lso);
-		ret = ckCircularQueue32Get((CircularQueue32 *)&s_InterruptQueue, false, &bSuccess);
+		ret = ckCircularQueue32Get((CircularQueue32 *)&s_Queue, false, &bSuccess);
 		ckUnlockSystem(&lso);
 	} while (!bSuccess);
 

@@ -34,35 +34,6 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "circular_queue.h"
-#include "event.h"
-#include "pic.h"
-
-// Interrupt Queue
-enum
-{
-	// INTERRUPT_QUEUE_FLAG_TIMER	= PIC_IRQ_TIMER << 24, /* unused */
-	INTERRUPT_QUEUE_FLAG_KEYBOARD	= PIC_IRQ_KEYBOARD << 24,
-};
-
-
-/**
- * @brief 인터럽트 큐를 초기화합니다.
- */
-void ckInterruptQueueInitialize(void);
-
-/**
- * @brief 인터럽트 큐에 데이터를 넣습니다.
- * @param[in] data 넣을 데이터입니다.
- * @return 큐가 꽉 차 있다면 false입니다. 그렇지 않으면 true입니다.
- */
-bool ckInterruptQueuePut(uint32_t data);
-
-/**
- * @brief 인터럽트 큐에 데이터가 생길 때까지 기다린 후, 데이터를 가져옵니다.
- * @return 가져온 데이터입니다.
- */
-uint32_t ckInterruptQueueWaitAndGet(void);
 
 /**
  * @brief 인터럽트 콘텍스트입니다. C로 짜여진 ISR에 어셈블리로 짜여진 ISR이 인수로 이 콘텍스트의 포인터를 넘깁니다.

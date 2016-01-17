@@ -70,7 +70,7 @@ enum
 /** @brief 태스크의 스케쥴 우선순위를 나타내는 열거형입니다. */
 typedef enum tagTaskPriority
 {
-	TASK_PRIORITY_REALTIME,
+	TASK_PRIORITY_KERNEL,
 	TASK_PRIORITY_HIGHEST,
 	TASK_PRIORITY_HIGH,
 	TASK_PRIORITY_ABOVE_NORMAL,
@@ -80,9 +80,7 @@ typedef enum tagTaskPriority
 	TASK_PRIORITY_LOWEST,
 	TASK_PRIORITY_IDLE,
 
-	COUNT_TASK_PRIORITY,
-
-	KERNEL_TASK_PRIORITY = TASK_PRIORITY_HIGHEST
+	COUNT_TASK_PRIORITY
 } TaskPriority;
 
 /** @brief TSS를 나타내는 구조체입니다. */
