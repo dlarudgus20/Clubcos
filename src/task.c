@@ -775,10 +775,11 @@ static void csIdleTask(void)
 			csCleanupTask(pTask);
 		}
 
-		ckTaskSchedule();
+		/* schedule & hlt */
 
-		/* hlt */
-
+		ckAsmCli();
+		ckTaskSchedule_internal();
+		ckAsmSti();
 		ckAsmHlt();
 	}
 }
