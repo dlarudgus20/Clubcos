@@ -628,7 +628,7 @@ void ckCoshellCmdReadSector(const char *param)
 						ckTerminalPrintString(" |");
 					}
 
-					ckTerminalPrintStringF(" %02x", buf[sec * 512 + i]);
+					ckTerminalPrintStringF(" %02X", buf[sec * 512 + i]);
 
 					if (i % 16 == 15)
 					{
