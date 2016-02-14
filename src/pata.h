@@ -129,6 +129,8 @@ typedef struct tagPATADeviceInfo
 {
 	bool bExist;
 	uint32_t dwCountOfTotalSector;
+	char SerialNumber[21];
+	char ModelNumber[41];
 } PATADeviceInfo;
 
 /** @brief PATA 하드디스크 자료구조입니다. */
@@ -137,7 +139,6 @@ typedef struct tagPATAStruct
 	SimpleMutex mutex;
 
 	PATADeviceInfo DeviceInfo[4];			//!< 순서대로 P.M - P.S - S.M - S.S의 @ref PATADeviceInfo
-	int IsSlaveSelected[2];					//!< 0이면 Master, 1이면 Slave, -1이면 선택되지 않음. [0]:Primary, [1]:Secondary
 
 	volatile bool bInterruptOccurred[2];	//!< [0]:Primary, [1]:Secondary
 } PATAStruct;
@@ -145,6 +146,10 @@ typedef struct tagPATAStruct
 extern PATAStruct g_PATAStruct;
 
 void ckPATAInitialize(void);
+void ckPATAOutputInfo(bool bPrimary, bool bMaster);
+
+int ckPATAReadSector(bool bPrimary, bool bMaster, uint32_t lba, uint8_t count, void *buf);
+int ckPATAWriteSector(bool bPrimary, bool bMaster, uint32_t lba, uint8_t count, const void *buf);
 
 /** @brief PATA Primary 인터럽트 ISR입니다. */
 void ckPATAPrimaryIntHandler();

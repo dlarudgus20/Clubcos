@@ -44,6 +44,7 @@ char *strncpy(char * restrict dest, const char * restrict src, size_t count);
 char *strcat(char * restrict dest, const char * restrict src);
 
 int strcmp(const char *lhs, const char *rhs);
+int strncmp(const char *lhs, const char *rhs, size_t count);
 char *strchr(const char *str, int ch);
 char *_strchr_not(const char *str, int ch);
 
@@ -86,5 +87,7 @@ static inline int isspace(int c) { return strchr(" \t\n\v\f\r", c) != NULL; }
 #define range(a, x, b) (((x) < (a)) ? (a) : (min(x, b)))
 
 void swap_endian_of_shorts(uint16_t *ar, size_t count);
+
+void strtrimend(char *str);
 
 #endif /* STRING_H_ */

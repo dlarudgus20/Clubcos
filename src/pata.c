@@ -52,17 +52,8 @@ static inline uint16_t csPortBase(bool bPrimary)
 {
 	return bPrimary ? PATA_PORTBASE_PRIMARY : PATA_PORTBASE_SECONDARY;
 }
-static inline PATADeviceInfo *csGetDeviceInfo(bool bPrimary, bool bMaster)
-{
-	return &g_PATAStruct.DeviceInfo[(bPrimary ? 0 : 2) + (bMaster ? 0 : 1)];
-}
-static inline bool csIsMasterSelected(bool bPrimary)
-{
-	return (g_PATAStruct.IsSlaveSelected[bPrimary ? 0 : 1] == 0);
-}
 
 static void csPATAInit(bool bPrimary);
-static bool csSelectDevice(bool bPrimary, bool bMaster);
 
 static bool csWaitForNoBusy(bool bPrimary);
 static bool csWaitForDriveReady(bool bPrimary);
@@ -74,7 +65,6 @@ void ckPATAInitialize(void)
 
 	g_PATAStruct.DeviceInfo[0].bExist = g_PATAStruct.DeviceInfo[1].bExist = false;
 	g_PATAStruct.DeviceInfo[2].bExist = g_PATAStruct.DeviceInfo[3].bExist = false;
-	g_PATAStruct.IsSlaveSelected[0] = g_PATAStruct.IsSlaveSelected[1] = -1;
 	g_PATAStruct.bInterruptOccurred[0] = g_PATAStruct.bInterruptOccurred[1] = false;
 
 	ckIdtInit(g_pIdtTable + PIC_INTERRUPT_HARDDISK1, ckPATAPrimaryIntHandler, KERNEL_CODE_SEGMENT, 0);
@@ -89,8 +79,8 @@ static void csPATAInit(bool bPrimary)
 	uint16_t portbase = csPortBase(bPrimary);
 
 	PATADeviceInfo *pInfoAr[2] = {
-		csGetDeviceInfo(bPrimary, true),
-		csGetDeviceInfo(bPrimary, false)
+		&g_PATAStruct.DeviceInfo[(bPrimary ? 0 : 2)],
+		&g_PATAStruct.DeviceInfo[(bPrimary ? 0 : 2) + 1]
 	};
 
 	PATAIdentifyResult idrs;
@@ -108,7 +98,13 @@ static void csPATAInit(bool bPrimary)
 	{
 		bool bMaster = (mas == 0);
 
-		if (!csSelectDevice(bPrimary, bMaster))
+		if (!csWaitForNoBusy(bPrimary))
+			continue;
+
+		ckPortOutByte(portbase + PATA_PORTIDX_DRV_HEAD,
+			(bMaster ? 0 : PATA_DRVHEAD_SLAVE) | PATA_DRVHEAD_LBA | PATA_DRVHEAD_MASK);
+
+		if (!csWaitForDriveReady(bPrimary))
 			continue;
 
 		g_PATAStruct.bInterruptOccurred[bPrimary ? 0 : 1] = false;
@@ -137,40 +133,166 @@ static void csPATAInit(bool bPrimary)
 		pInfoAr[mas]->bExist = true;
 		pInfoAr[mas]->dwCountOfTotalSector = idrs.dwCountOfTotalSector;
 
-		ckTerminalSetColor(TERMINAL_COLOR_PANIC);
-		idrs.wControllerType = idrs._reserved2[0] = 0;
-		ckTerminalPrintStringF("\n [%s]: config[%#x], serial[%s], model[%s], sectors[%#x]",
-				(const char *[]){ "hda", "hdb", "hdc", "hdd" }[(bPrimary ? 0 : 2) + mas],
-				idrs.wConfiguration, (const char *)idrs.vwModelNumber, (const char *)idrs.vwSerialNumber,
-				idrs.dwCountOfTotalSector);
-		ckTerminalSetColor(TERMINAL_COLOR_LOG);
+		memcpy(pInfoAr[mas]->ModelNumber, idrs.vwModelNumber, sizeof(idrs.vwModelNumber));
+		pInfoAr[mas]->ModelNumber[sizeof(pInfoAr[mas]->ModelNumber) - 1] = '\0';
+		strtrimend(pInfoAr[mas]->ModelNumber);
+
+		memcpy(pInfoAr[mas]->SerialNumber, idrs.vwSerialNumber, sizeof(idrs.vwSerialNumber));
+		pInfoAr[mas]->SerialNumber[sizeof(pInfoAr[mas]->SerialNumber) - 1] = '\0';
+		strtrimend(pInfoAr[mas]->SerialNumber);
 	}
 }
 
-static bool csSelectDevice(bool bPrimary, bool bMaster)
+void ckPATAOutputInfo(bool bPrimary, bool bMaster)
 {
-	uint16_t portbase = csPortBase(bPrimary);
+	PATADeviceInfo *pInfo = &g_PATAStruct.DeviceInfo[(bPrimary ? 0 : 2) + (bMaster ? 0 : 1)];
 
-	// 이미 select 되있다면 그냥 return
-	if (csIsMasterSelected(bPrimary) == bMaster)
-		return true;
+	const char *strpm = (const char *[]){ "hda", "hdb", "hdc", "hdd" }[(bPrimary ? 0 : 2) + (bMaster ? 0 : 1)];
 
-	if (!csWaitForNoBusy(bPrimary))
-		return false;
+	if (pInfo->bExist)
+	{
+		ckTerminalPrintStringF("PATA [%s]: serial[%s], model[%s], sectors[%#x]\n",
+			strpm, pInfo->SerialNumber, pInfo->ModelNumber, pInfo->dwCountOfTotalSector);
+	}
+	else
+	{
+		ckTerminalPrintStringF("PATA [%s]: not exist\n", strpm);
+	}
+}
 
-	ckPortOutByte(portbase + PATA_PORTIDX_DRV_HEAD,
-		(bMaster ? 0 : PATA_DRVHEAD_SLAVE) | PATA_DRVHEAD_LBA | PATA_DRVHEAD_MASK);
-	g_PATAStruct.IsSlaveSelected[bPrimary ? 0 : 1] = (bMaster ? 0 : 1);
+int ckPATAReadSector(bool bPrimary, bool bMaster, uint32_t lba, uint8_t count, void *buf)
+{
+	PATADeviceInfo *pInfo = &g_PATAStruct.DeviceInfo[(bPrimary ? 0 : 2) + (bMaster ? 0 : 1)];
+	int ret = 0;
 
-	// 400ns delay
-	// http://wiki.osdev.org/ATA_PIO_Mode#400ns_delays
-	for (int i = 0; i < 4; i++)
-		ckPortInByte(portbase + PATA_PORTIDX_ALT_STATUS);
+	if (pInfo->bExist)
+	{
+		if (lba + count < pInfo->dwCountOfTotalSector)
+		{
+			uint16_t portbase = csPortBase(bPrimary);
 
-	if (!csWaitForDriveReady(bPrimary))
-		return false;
+			ckSimpleMutexLock(&g_PATAStruct.mutex);
 
-	return true;
+			if (csWaitForNoBusy(bPrimary))
+			{
+				uint8_t drvflag = (bMaster ? 0 : PATA_DRVHEAD_SLAVE) | PATA_DRVHEAD_LBA | PATA_DRVHEAD_MASK;
+
+				ckPortOutByte(portbase + PATA_PORTIDX_SEC_COUNT, count);
+				ckPortOutByte(portbase + PATA_PORTIDX_SEC_NUM, (uint8_t)lba);
+				ckPortOutByte(portbase + PATA_PORTIDX_CYL_LSB, (uint8_t)(lba >> 8));
+				ckPortOutByte(portbase + PATA_PORTIDX_CYL_MSB, (uint8_t)(lba >> 16));
+				ckPortOutByte(portbase + PATA_PORTIDX_DRV_HEAD, drvflag | ((lba >> 24) & 0x0f));
+
+				if (csWaitForDriveReady(bPrimary))
+				{
+					ckPortOutByte(portbase + PATA_PORTIDX_COMMAND, PATA_CMD_READ);
+
+					int i, bufidx = 0;
+					for (i = 0; i < count; i++)
+					{
+						uint8_t status = ckPortInByte(portbase + PATA_PORTIDX_STATUS);
+						if (status & PATA_STATUS_ERROR)
+						{
+							break;
+						}
+						else if (!(status & PATA_STATUS_DATA_REQUEST))
+						{
+							if (!csWaitForInterrupt(bPrimary))
+								break;
+						}
+
+						for (int j = 0; j < 512 / 2; j++)
+						{
+							((uint16_t *)buf)[bufidx++] = ckPortInWord(portbase + PATA_PORTIDX_DATA);
+						}
+					}
+
+					ret = i;
+				}
+			}
+
+			ckSimpleMutexUnlock(&g_PATAStruct.mutex);
+		}
+	}
+
+	return ret;
+}
+
+int ckPATAWriteSector(bool bPrimary, bool bMaster, uint32_t lba, uint8_t count, const void *buf)
+{
+	PATADeviceInfo *pInfo = &g_PATAStruct.DeviceInfo[(bPrimary ? 0 : 2) + (bMaster ? 0 : 1)];
+	int ret = 0;
+
+	if (pInfo->bExist)
+	{
+		if (lba + count < pInfo->dwCountOfTotalSector)
+		{
+			uint16_t portbase = csPortBase(bPrimary);
+
+			ckSimpleMutexLock(&g_PATAStruct.mutex);
+
+			if (csWaitForNoBusy(bPrimary))
+			{
+				uint8_t drvflag = (bMaster ? 0 : PATA_DRVHEAD_SLAVE) | PATA_DRVHEAD_LBA | PATA_DRVHEAD_MASK;
+
+				ckPortOutByte(portbase + PATA_PORTIDX_SEC_COUNT, count);
+				ckPortOutByte(portbase + PATA_PORTIDX_SEC_NUM, (uint8_t)lba);
+				ckPortOutByte(portbase + PATA_PORTIDX_CYL_LSB, (uint8_t)(lba >> 8));
+				ckPortOutByte(portbase + PATA_PORTIDX_CYL_MSB, (uint8_t)(lba >> 16));
+				ckPortOutByte(portbase + PATA_PORTIDX_DRV_HEAD, drvflag | ((lba >> 24) & 0x0f));
+
+				if (csWaitForDriveReady(bPrimary))
+				{
+					ckPortOutByte(portbase + PATA_PORTIDX_COMMAND, PATA_CMD_WRITE);
+
+					int i = 0, bufidx = 0;
+
+					// wait for DRQ
+					while (1)
+					{
+						uint8_t status = ckPortInByte(portbase + PATA_PORTIDX_STATUS);
+
+						if (status & PATA_STATUS_ERROR)
+						{
+							goto end;
+						}
+						else if (status & PATA_STATUS_DATA_REQUEST)
+						{
+							break;
+						}
+
+						ckTaskSleep(1);
+					}
+
+					for (; i < count; i++)
+					{
+						for (int j = 0; j < 512 / 2; j++)
+						{
+							ckPortOutWord(portbase + PATA_PORTIDX_DATA, ((uint16_t *)buf)[bufidx++]);
+						}
+
+						uint8_t status = ckPortInByte(portbase + PATA_PORTIDX_STATUS);
+						if (status & PATA_STATUS_ERROR)
+						{
+							break;
+						}
+						else if (!(status & PATA_STATUS_DATA_REQUEST))
+						{
+							if (!csWaitForInterrupt(bPrimary))
+								break;
+						}
+					}
+
+				end:
+					ret = i;
+				}
+			}
+
+			ckSimpleMutexUnlock(&g_PATAStruct.mutex);
+		}
+	}
+
+	return ret;
 }
 
 static bool csWaitForNoBusy(bool bPrimary)
@@ -209,11 +331,14 @@ static bool csWaitForDriveReady(bool bPrimary)
 }
 static bool csWaitForInterrupt(bool bPrimary)
 {
+	int idx = bPrimary ? 0 : 1;
+
 	uint32_t start = ckTimerGetTickCount();
 	while (g_TimerStruct.TickCountLow - start <= WAITTIME_FOR_PATA)
 	{
-		if (g_PATAStruct.bInterruptOccurred[bPrimary ? 0 : 1])
+		if (g_PATAStruct.bInterruptOccurred[idx])
 		{
+			g_PATAStruct.bInterruptOccurred[idx] = false;
 			return true;
 		}
 

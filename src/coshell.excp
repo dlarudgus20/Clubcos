@@ -69,6 +69,9 @@ void ckCoshellCmdTestFloat(const char *param);
 void ckCoshellCmdTestProcess(const char *param);
 void ckCoshellCmdKillTask(const char *param);
 void ckCoshellCmdKillProc(const char *param);
+void ckCoshellCmdHDDInfo(const char *param);
+void ckCoshellCmdReadSector(const char *param);
+void ckCoshellCmdWriteSector(const char *param);
 
 void ckCoshellCmdSkoutSokoban(const char *param);
 
@@ -91,6 +94,9 @@ static CommandEntry Commands[] = {
 	{ "testprocess",	ckCoshellCmdTestProcess,	"test multi-process feature",				NULL },
 	{ "killtask",		ckCoshellCmdKillTask,		"kill task",								"Usage) killproc (task id)" },
 	{ "killproc",		ckCoshellCmdKillProc,		"kill process",								"Usage) killproc (proc id)" },
+	{ "hddinfo",		ckCoshellCmdHDDInfo,		"show HDD information",						NULL },
+	{ "readsector",		ckCoshellCmdReadSector,		"read HDD sector",							"Usage) readsector (drive) (LBA) (count)" },
+	{ "writesector",	ckCoshellCmdWriteSector,	"write HDD sector",							"Usage) writesector (drive) (LBA) (count) (value)" },
 #@endsort
 };
 static const size_t CountOfCommands = sizeof(Commands) / sizeof(Commands[0]);
@@ -201,18 +207,8 @@ static void csCoshellCmdHelp(const char *param)
 			{
 				ckTerminalPrintString("---Type <return> to continue, or q <return> to quit---");
 
-				bool bLoop = true;
-				while (bLoop)
-				{
-					switch (ckTerminalGetChar())
-					{
-						case '\n':
-							bLoop = false;
-							break;
-						case 'q':
-							goto HelpQuit;
-					}
-				}
+				if (!ckTerminalAskContinue())
+					goto HelpQuit;
 			}
 		}
 		ckTerminalPrintString("To see more detail help of specific command, enter \"help [command]\"");

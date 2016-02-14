@@ -549,6 +549,22 @@ void ckTerminalPanic(const char *str)
 	while (1) ckAsmHlt();
 }
 
+bool ckTerminalAskContinue(void)
+{
+	ckTerminalPrintString("---Type <return> to continue, or q <return> to quit---");
+
+	while (1)
+	{
+		switch (ckTerminalGetChar())
+		{
+			case '\n':
+				return true;
+			case 'q':
+				return false;
+		}
+	}
+}
+
 void ckTerminalCls(void)
 {
 	csLockForTerminal();

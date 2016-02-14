@@ -201,6 +201,12 @@ void ckTerminalClearStatusBar(void);
 void ckTerminalPanic(const char *str);
 
 /**
+ * @brief "---Type <return> to continue, or q <return> to quit---" 메시지를 띄우고 입력을 받습니다.
+ * @return 계속이면 <c>true</c>, 종료이면 <c>false</c>입니다.
+ */
+bool ckTerminalAskContinue(void);
+
+/**
  * @brief 커서의 모양을 설정합니다.
  * @param[in] BeginHeight 커서의 시작 높이입니다. 0 ~ 0x1f 사이의 값입니다.
  * @param[in] EndHeight 커서의 끝 높이입니다. 0 ~ 0x1f 사이의 값입니다.

@@ -40,6 +40,7 @@
 #include "simple_mutex.h"
 #include "page.h"
 #include "memory_map.h"
+#include "pata.h"
 
 void ckCoshellCmdReset(const char *param)
 {
@@ -523,14 +524,14 @@ void ckCoshellCmdKillTask(const char *param)
 
 		if (id > 2)
 			if (ckTaskTerminate((uint32_t)id))
-				ckTerminalPrintStringF("Task [%d] is terminated successfully.", id);
+				ckTerminalPrintStringF("Task [%d] is terminated successfully.\n", id);
 			else
-				ckTerminalPrintStringF("Failed to terminate task [%d].", id);
+				ckTerminalPrintStringF("Failed to terminate task [%d].\n", id);
 		else
-			ckTerminalPrintStringF("%d: Invalid Id", id);
+			ckTerminalPrintStringF("%d: Invalid Id\n", id);
 	}
 	else
-		ckTerminalPrintString("Usage) killtask (task id)");
+		ckTerminalPrintString("Usage) killtask (task id)\n");
 }
 
 void ckCoshellCmdKillProc(const char *param)
@@ -541,12 +542,187 @@ void ckCoshellCmdKillProc(const char *param)
 
 		if (id > 2)
 			if (ckProcessTerminate((uint32_t)id))
-				ckTerminalPrintStringF("Process [%d] is terminated successfully.", id);
+				ckTerminalPrintStringF("Process [%d] is terminated successfully.\n", id);
 			else
-				ckTerminalPrintStringF("Failed to terminate process [%d].", id);
+				ckTerminalPrintStringF("Failed to terminate process [%d].\n", id);
 		else
-			ckTerminalPrintStringF("%d: Invalid Id", id);
+			ckTerminalPrintStringF("%d: Invalid Id\n", id);
 	}
 	else
-		ckTerminalPrintString("Usage) killproc (process id)");
+		ckTerminalPrintString("Usage) killproc (process id)\n");
+}
+
+void ckCoshellCmdHDDInfo(const char *param)
+{
+	ckPATAOutputInfo(true, true);
+	ckPATAOutputInfo(true, false);
+	ckPATAOutputInfo(false, true);
+	ckPATAOutputInfo(false, false);
+}
+
+void ckCoshellCmdReadSector(const char *param)
+{
+	if (param != NULL)
+	{
+		const char *strDrive = param;
+
+		const char *strLBA = strchr(strDrive, ' ');
+		if (strDrive == NULL)
+			goto par_err;
+		strLBA++;
+
+		const char *strCount = strchr(strLBA, ' ');
+		if (strCount == NULL)
+			goto par_err;
+		strCount++;
+
+		bool bMasPri[2];
+		int lba, count;
+
+		if (strncmp(strDrive, "hda ", 4) == 0)
+		{
+			bMasPri[0] = true; bMasPri[1] = true;
+		}
+		else if (strncmp(strDrive, "hdb ", 4) == 0)
+		{
+			bMasPri[0] = true; bMasPri[1] = false;
+		}
+		else if (strncmp(strDrive, "hdc ", 4) == 0)
+		{
+			bMasPri[0] = false; bMasPri[1] = true;
+		}
+		else if (strncmp(strDrive, "hdd ", 4) == 0)
+		{
+			bMasPri[0] = false; bMasPri[1] = false;
+		}
+		else
+		{
+			goto par_err;
+		}
+
+		lba = atoi(strLBA);
+		count = atoi(strCount);
+
+		uint8_t *buf = ckDynMemAllocate(512 * count);
+
+		if (ckPATAReadSector(bMasPri[0], bMasPri[1], lba, count, buf))
+		{
+			for (int sec = 0; sec < count; sec++)
+			{
+				ckTerminalPrintStringF(">> LBA %d (%d / %d sector)\n", lba + sec, sec + 1, count);
+
+				for (int i = 0; i < 512; i++)
+				{
+					if (i == 256)
+					{
+						if (!ckTerminalAskContinue())
+							goto quit;
+					}
+
+					if (i % 16 == 0)
+					{
+						ckTerminalPrintStringF("[LBA: %d, Offset: %03d] :", lba + sec, i);
+					}
+					else if (i % 8 == 0)
+					{
+						ckTerminalPrintString(" |");
+					}
+
+					ckTerminalPrintStringF(" %02x", buf[sec * 512 + i]);
+
+					if (i % 16 == 15)
+					{
+						ckTerminalPutChar('\n');
+					}
+				}
+
+				if (!ckTerminalAskContinue())
+					goto quit;
+			}
+
+		quit:
+			return;
+		}
+		else
+		{
+			ckTerminalPrintString("reading sector is failed.\n");
+		}
+
+		ckDynMemFree(buf, 512 * count);
+	}
+
+par_err:
+	ckTerminalPrintString("Usage) readsector (drive) (LBA) (count)\n");
+}
+
+void ckCoshellCmdWriteSector(const char *param)
+{
+	if (param != NULL)
+	{
+		const char *strDrive = param;
+
+		const char *strLBA = strchr(strDrive, ' ');
+		if (strDrive == NULL)
+			goto par_err;
+		strLBA++;
+
+		const char *strCount = strchr(strLBA, ' ');
+		if (strCount == NULL)
+			goto par_err;
+		strCount++;
+
+		const char *strValue = strchr(strCount, ' ');
+		if (strValue == NULL)
+			goto par_err;
+		strValue++;
+
+		bool bMasPri[2];
+		int lba, count, value;
+
+		if (strncmp(strDrive, "hda ", 4) == 0)
+		{
+			bMasPri[0] = true; bMasPri[1] = true;
+		}
+		else if (strncmp(strDrive, "hdb ", 4) == 0)
+		{
+			bMasPri[0] = true; bMasPri[1] = false;
+		}
+		else if (strncmp(strDrive, "hdc ", 4) == 0)
+		{
+			bMasPri[0] = false; bMasPri[1] = true;
+		}
+		else if (strncmp(strDrive, "hdd ", 4) == 0)
+		{
+			bMasPri[0] = false; bMasPri[1] = false;
+		}
+		else
+		{
+			goto par_err;
+		}
+
+		lba = atoi(strLBA);
+		count = atoi(strCount);
+		value = atoi(strValue);
+
+		uint32_t *buf = ckDynMemAllocate(512 * count);
+
+		for (int i = 0; i < count * 512 / 4; i++)
+		{
+			buf[i] = value;
+		}
+
+		if (ckPATAWriteSector(bMasPri[0], bMasPri[1], lba, count, buf))
+		{
+			ckTerminalPrintString("writing sector is succeeded.\n");
+		}
+		else
+		{
+			ckTerminalPrintString("writing sector is failed.\n");
+		}
+
+		ckDynMemFree(buf, 512 * count);
+		return;
+	}
+par_err:
+	ckTerminalPrintString("Usage) writesector (drive) (LBA) (count) (value)\n");
 }

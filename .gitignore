@@ -11,6 +11,7 @@
 *.sys
 floppy.img
 
+hdd/
 bochsout.txt
 parport.out
 

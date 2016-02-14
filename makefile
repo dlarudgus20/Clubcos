@@ -47,9 +47,10 @@ DIR_DEP := dep/$(CONFIG)
 DIR_OBJ := obj/$(CONFIG)
 DIR_GEN := gen/$(CONFIG)
 DIR_SRC := src
+DIR_HDD := hdd
 DIR_TOOLS := tools
 
-DIR_DEPENS := $(DIR_IMG) $(DIR_BIN) $(DIR_DEP) $(DIR_OBJ) $(DIR_GEN)
+DIR_DEPENS := $(DIR_IMG) $(DIR_BIN) $(DIR_DEP) $(DIR_OBJ) $(DIR_GEN) $(DIR_HDD)
 
 # tools
 TARGET_PREFIX := i686-pc-elf
@@ -89,6 +90,9 @@ OUTPUT_IMG := $(DIR_IMG)/floppy.img
 KERNEL_SYS_FILE := $(DIR_BIN)/Clubcos.sys
 KERNEL_ELF_FILE := $(DIR_BIN)/Clubcos.elf
 
+RAW_HDD_IMAGE := img/raw_hdd_image.qed
+HDD_IMAGES := $(DIR_HDD)/hda.qed $(DIR_HDD)/hdb.qed $(DIR_HDD)/hdc.qed $(DIR_HDD)/hdd.qed
+
 C_SOURCES := $(wildcard $(DIR_SRC)/*.c)
 C_OBJECTS := $(patsubst $(DIR_SRC)/%.c, $(DIR_OBJ)/%.c.o, $(C_SOURCES))
 
@@ -108,7 +112,7 @@ LINK_SCRIPT := $(DIR_SRC)/link_script.ld
 # qemu
 QEMU := qemu-system-i386
 QEMU_FLAGS := -L . -m 64 -fda $(OUTPUT_IMG) -boot a -localtime -M pc \
-	-hda hda.qed -hdb hdb.qed -hdc hdc.qed -hdd hdd.qed
+	-hda $(DIR_HDD)/hda.qed -hdb $(DIR_HDD)/hdb.qed -hdc $(DIR_HDD)/hdc.qed -hdd $(DIR_HDD)/hdd.qed
 QEMU_DEBUG_FLAGS := $(QEMU_FLAGS) -gdb tcp:127.0.0.1:1234 -S
 
 # bochs
@@ -129,7 +133,7 @@ rebuild:
 	make clean
 	make
 
-run:
+run: $(HDD_IMAGES)
 	make all
 	$(QEMU) $(QEMU_FLAGS)
 
@@ -137,7 +141,7 @@ rerun:
 	make clean
 	make run
 
-run-dbg:
+run-dbg: $(HDD_IMAGES)
 	make all
 	$(QEMU) $(QEMU_DEBUG_FLAGS)
 
@@ -161,6 +165,7 @@ distclean: clean tools-clean
 	-rm -r $(DIR_BIN)
 	-rmdir bin
 	-rm -r $(DIR_IMG)
+	-rm -r $(DIR_HDD)
 
 clean: mostlyclean dep-clean
 	-$(RM) $(DIR_BIN)/*
@@ -226,6 +231,9 @@ $(DIR_DEP)/%.asm.d: $(DIR_SRC)/%.asm | $(DIR_DEPENS)
 	$(TARGET_NASM) $(TARGET_NASM_FLAGS) $< -M -MT $(DIR_OBJ)/$*.asm.o \
 		| sed 's@\($(DIR_OBJ)/$*.asm.o\)[ :]*@\1 $@ : @g' > $@
 
+$(DIR_HDD)/%.qed: $(RAW_HDD_IMAGE) | $(DIR_DEPENS)
+	cp $(RAW_HDD_IMAGE) $@
+
 $(DIR_DEPENS):
 	mkdir -p img
 	mkdir -p $(DIR_IMG)
@@ -237,6 +245,7 @@ $(DIR_DEPENS):
 	mkdir -p $(DIR_OBJ)
 	mkdir -p gen
 	mkdir -p $(DIR_GEN)
+	mkdir -p $(DIR_HDD)
 
 # include dependencies
 ifeq ($(filter $(NODEPEN_TARGETS), $(MAKECMDGOALS)), )

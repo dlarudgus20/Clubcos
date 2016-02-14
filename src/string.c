@@ -92,6 +92,23 @@ int strcmp(const char *lhs, const char *rhs)
 	}
 }
 
+int strncmp(const char *lhs, const char *rhs, size_t count)
+{
+	int ret;
+
+	while (count-- > 0)
+	{
+		if ((ret = *lhs - *rhs) != 0)
+			return ret;
+		if (*lhs == '\0')
+			return 0;
+
+		lhs++; rhs++;
+	}
+
+	return 0;
+}
+
 char *strchr(const char *str, int ch)
 {
 	while (*str != '\0')
@@ -174,4 +191,19 @@ void swap_endian_of_shorts(uint16_t *ar, size_t count)
 {
 	for (uint16_t *p = ar; p < ar + count; p++)
 		*p = ((*p & 0xff00) >> 8) | ((*p & 0x00ff) << 8);
+}
+
+void strtrimend(char *str)
+{
+	int i;
+
+	for (i = strlen(str) - 1; i > 0; i--)
+	{
+		if (!isspace(str[i]))
+		{
+			break;
+		}
+	}
+
+	str[i + 1] = '\0';
 }
