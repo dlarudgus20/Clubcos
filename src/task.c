@@ -31,18 +31,19 @@
  */
 
 #include "task.h"
-#include "port.h"
+
+#include "assert.h"
+#include "control_register.h"
+#include "cpuid.h"
 #include "gdt.h"
+#include "interrupt.h"
+#include "likely.h"
+#include "lock_system.h"
+#include "memory.h"
+#include "port.h"
+#include "port_impl.h"
 #include "string.h"
 #include "timer.h"
-#include "assert.h"
-#include "cpuid.h"
-#include "interrupt.h"
-#include "memory.h"
-#include "likely.h"
-#include "terminal.h"
-#include "timer.h"
-#include "lock_system.h"
 
 // id로부터 Task *를 얻어옴 - 무효할 경우 NULL
 static inline Task *csGetTaskFromId(uint32_t id)
@@ -333,12 +334,18 @@ bool ckTaskTerminate(uint32_t TaskId)
 static void ckTaskTerminate_internal(Task *pTask)
 {
 	LinkedList *pList = &pTask->waitable.listOfWaiters;
-	for (LinkedListNode *node = ckLinkedListHead(pList);
+	for (LinkedListNode *node = pList->dummy.pNext;
 		node != (LinkedListNode *)pList;
-		node = node->pNext)
+		/* see below */)
 	{
 		Task *pNodeTask = (Task *)((uint32_t)node - offsetof(Task, nodeOfWaitedObj));
 		pNodeTask->WaitedObj = NULL;
+
+		// ckTaskResume()에 의해 pNodeTask가 실행되는 동안
+		// 다른 waitable을 기다려 node가 변조될 가능성이 있음.
+		// 따라서 미리 node->pNext를 취함.
+		node = node->pNext;
+
 		ckTaskResume_byptr(pNodeTask);
 	}
 
@@ -579,13 +586,11 @@ bool ckTaskResume_byptr(Task *pTask)
 
 		pTask->flag = TASK_FLAG_READY;
 
-		if (pTask->priority > TASK_PRIORITY_HIGHEST)
-			pTask->priority = TASK_PRIORITY_HIGHEST;
-
 		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
 
-		//if (ckTaskGetCurrent()->priority >= pTask->priority)
-		//	ckTaskSchedule_internal();
+		// TODO: BUGBUGBUG
+		if (ckTaskGetCurrent()->priority > pTask->priority)
+			ckTaskSchedule_internal();
 
 		bRet = true;
 	}
@@ -617,7 +622,7 @@ static void ckTaskJoin_internal(Task *pTask)
 
 	assert(pNow->WaitedObj == NULL);
 
-	if (pTask->flag != TASK_FLAG_WAITFOREXIT)
+	if (pTask->flag != TASK_FLAG_WAITFOREXIT && pTask->flag != TASK_FLAG_ZOMBIE)
 	{
 		pNow->WaitedObj = &pTask->waitable;
 		ckLinkedListPushBack_nosync(&pTask->waitable.listOfWaiters, &pNow->nodeOfWaitedObj);

@@ -152,15 +152,15 @@ run-bochs:
 	-$(BOCHSDBG) -qf $(BOCHSRC)
 
 distclean: clean tools-clean
-	-rmdir $(DIR_GEN)
+	-rm -r $(DIR_GEN)
 	-rmdir gen
-	-rmdir $(DIR_OBJ)
+	-rm -r $(DIR_OBJ)
 	-rmdir obj
-	-rmdir $(DIR_DEP)
+	-rm -r $(DIR_DEP)
 	-rmdir dep
-	-rmdir $(DIR_BIN)
+	-rm -r $(DIR_BIN)
 	-rmdir bin
-	-rmdir $(DIR_IMG)
+	-rm -r $(DIR_IMG)
 
 clean: mostlyclean dep-clean
 	-$(RM) $(DIR_BIN)/*
@@ -189,10 +189,11 @@ $(OUTPUT_IMG): $(KERNEL_SYS_FILE) $(EDIMG)
 		copy from:$(KERNEL_SYS_FILE) to:@: \
 		imgout:$@
 
-$(KERNEL_SYS_FILE): $(C_OBJECTS) $(ASM_OBJECTS) $(EXCP_OBJECTS)
-	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -T $(LINK_SCRIPT) -o $(KERNEL_ELF_FILE) $^ \
-		 -Xlinker -Map=$(DIR_OBJ)/Clubcos_elf.map
-	$(TARGET_NM) $(NM_FLAGS) $(KERNEL_ELF_FILE) > $(DIR_OBJ)/Clubcos_elf.nm
+$(KERNEL_SYS_FILE): $(C_OBJECTS) $(ASM_OBJECTS) $(EXCP_OBJECTS) $(LINK_SCRIPT)
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -T $(LINK_SCRIPT) -o $(KERNEL_ELF_FILE) \
+		$(subst $(LINK_SCRIPT), , $^) \
+		-Xlinker -Map=$(DIR_OBJ)/Clubcos_elf.map
+	$(TARGET_NM) $(TARGET_NM_FLAGS) $(KERNEL_ELF_FILE) > $(DIR_OBJ)/Clubcos_elf.nm
 	$(TARGET_NDISASM) -b 32 $(KERNEL_ELF_FILE) > $(DIR_OBJ)/Clubcos_elf.disasm
 
 	$(TARGET_OBJCOPY) -j .text -j .data -j .rodata -j .bss -S -g $(KERNEL_ELF_FILE) $(KERNEL_SYS_FILE)

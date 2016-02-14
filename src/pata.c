@@ -108,7 +108,8 @@ static void csPATAInit(bool bPrimary)
 	{
 		bool bMaster = (mas == 0);
 
-		csSelectDevice(bPrimary, bMaster);
+		if (!csSelectDevice(bPrimary, bMaster))
+			continue;
 
 		g_PATAStruct.bInterruptOccurred[bPrimary ? 0 : 1] = false;
 		ckPortOutByte(portbase + PATA_PORTIDX_SEC_COUNT, 0);
