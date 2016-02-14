@@ -45,10 +45,10 @@
 
 TimerStruct g_TimerStruct = { 0 };
 
-static TimeOut s_SentinalTimeOut = {
+static TimeOut s_SentinelTimeOut = {
 	.timeout = 0xffffffff,
 	.NoticeQueue = NULL,
-	.pNextTimeOut = &s_SentinalTimeOut
+	.pNextTimeOut = &s_SentinelTimeOut
 };
 
 static void ckTimerReinitialize(void);
@@ -59,7 +59,7 @@ static uint16_t ckTimerReadPITCounter(void);
 
 void ckTimerInitialize(void)
 {
-	g_TimerStruct.pTimeOutHead = &s_SentinalTimeOut;
+	g_TimerStruct.pTimeOutHead = &s_SentinelTimeOut;
 
 	ckTimerReinitialize();
 
@@ -89,7 +89,7 @@ bool ckTimerSet(TimeOut *pTimeOut)
 
 	uint32_t tick = g_TimerStruct.TickCountLow;
 
-	s_SentinalTimeOut.timeout = tick + 0xffffffff;
+	s_SentinelTimeOut.timeout = tick + 0xffffffff;
 
 	TimeOut *before = (TimeOut *)&g_TimerStruct.pTimeOutHead;
 	TimeOut *node = before->pNextTimeOut;
@@ -147,7 +147,7 @@ void ck_TimerIntHandler(InterruptContext *pContext)
 		}
 	}
 
-	if (low % 500 == 0)
+	if (low % 125 == 0)
 	{
 		ckKernelQueuePut(KERNEL_QUEUE_FLAG_PROCLOAD);
 	}
