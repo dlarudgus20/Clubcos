@@ -588,7 +588,6 @@ bool ckTaskResume_byptr(Task *pTask)
 
 		ckLinkedListPushBack_nosync(&g_pTaskStruct->ReadyList[pTask->priority], &pTask->_node);
 
-		// TODO: BUGBUGBUG
 		if (ckTaskGetCurrent()->priority > pTask->priority)
 			ckTaskSchedule_internal();
 
