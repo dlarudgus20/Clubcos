@@ -45,6 +45,9 @@ section .multiboot
 
 [extern ckMain]
 
+[extern __bss_start]
+[extern __bss_end]
+
 %include "memory_map.inc"
 
 PageFlag equ 2 | 1		; r/w, present
@@ -120,6 +123,14 @@ section .setup
 
 		;;; 스택 설정
 		mov esp, KERNEL_STACK_END_LOGICAL_ADDR
+
+		;;; bss 섹션 초기화
+		mov edi, __bss_start
+		mov ecx, __bss_end
+		sub ecx, __bss_start
+		shr ecx, 2
+		xor eax, eax
+		rep stosd
 
 		;;; text mode video memory [0xb8000 - 0xb8fa0]를 I/O mapping을 위한 memory에 map
 		mov ebx, PAGE_TABLE_LOGICAL_ADDRESS + 0xbf800 * 4	; page table의 logical address

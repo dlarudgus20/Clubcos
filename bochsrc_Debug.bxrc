@@ -419,8 +419,6 @@ vgaromimage: file=$BXSHARE/VGABIOS-lgpl-latest
 #floppya: 1_44=a:, status=inserted
 #floppya: 1_44=a.img, status=inserted, write_protected=1
 #floppya: 1_44=/dev/rfd0a, status=inserted
-
-#OS����� ���¸� ���� �е��� ���� ������ �ڵ�
 floppya: 1_44=img/debug/floppy.img, status=inserted
 
 #=======================================================================

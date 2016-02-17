@@ -63,4 +63,5 @@ SECTIONS
 		*(COMMON)
 		*(.bss .bss.* .gnu.linkonce.b.*)
 	}
+	__bss_end = .;
 }
