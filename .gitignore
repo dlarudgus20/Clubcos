@@ -1,3 +1,5 @@
+# Clubcos gitignore
+
 *.o
 *.d
 *.excp.c
@@ -20,3 +22,12 @@ parport.out
 
 edimg
 edimg.exe
+
+# eclipse gitignore
+
+.settings/
+
+# misc gitignore
+
+Thumbs.db
+Desktop.ini
