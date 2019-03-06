@@ -1,9 +1,9 @@
-﻿/* "edimg.c":디스크 이미지 에디터        */
-/*     카와이 히데미, I.Tak.           */
-/*     modified by dlarudgus20    */
+/* "edimg.c":디스크 이미지 에디터        */
+/*     Kawai Hidemi, I.Tak.           */
+/*     modified by dlarudgus20        */
 /* this program is under The BSD (2-Clause) License */
 
-/* License Notice*/
+/* License Notice */
 /*
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -26,7 +26,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
- 
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -537,7 +537,7 @@ int getnum(const UCHAR *p)
 	for (;;) {
 		c = *p++;
 		if ('0' <= c && c <= '9')
-			c -= '0'; 
+			c -= '0';
 		else if ('A' <= c && c <= 'F')
 			c -= 'A' - 10;
 		else if ('a' <= c && c <= 'f')
@@ -562,7 +562,7 @@ int getnum(const UCHAR *p)
 const UCHAR *cmd_create(const char *cmd)
 {
 	int i, asiz = -1;
-	const UCHAR *p; 
+	const UCHAR *p;
 	cmd += *cmd + 2;
 	if (optmatch(cmd, "file") == 0)
 		errend(19); /* create command error */
@@ -595,7 +595,7 @@ optloop:
 const UCHAR *cmd_ovrcreate(const char *cmd)
 {
 	int i, asiz = -1;
-	const UCHAR *p; 
+	const UCHAR *p;
 	cmd += *cmd + 2;
 	if (optmatch(cmd, "file") == 0)
 		errend(20); /* ovrcreate command error */
@@ -677,7 +677,7 @@ err:
 	p = filebuf0 + from;
 	q = BPB + to;
 	for (i = 0; i < len; i++)
-		q[i] = p[i]; 
+		q[i] = p[i];
 	return cmd + (*cmd + 2);
 }
 
