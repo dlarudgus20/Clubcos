@@ -53,7 +53,7 @@ DIR_TOOLS := tools
 DIR_DEPENS := $(DIR_IMG) $(DIR_BIN) $(DIR_DEP) $(DIR_OBJ) $(DIR_GEN) $(DIR_HDD)
 
 # tools
-TARGET_PREFIX := i686-pc-elf
+TARGET_PREFIX := x86_64-elf
 
 TARGET_CC := $(TARGET_PREFIX)-gcc
 TARGET_OBJCOPY := $(TARGET_PREFIX)-objcopy
@@ -67,7 +67,7 @@ DIR_EDIMG := $(DIR_TOOLS)/edimg
 EDIMG := $(DIR_EDIMG)/edimg
 DIR_EXCPP := $(DIR_TOOLS)/excpp
 EXCPP_SCRIPT := $(DIR_EXCPP)/excpp.py
-EXCPP := python $(EXCPP_SCRIPT)
+EXCPP := python3 $(EXCPP_SCRIPT)
 
 # flags
 TARGET_CFLAGS := $(TARGET_CFLAGS) -std=c99 -m32 -ffreestanding -I$(DIR_SRC) \
@@ -111,7 +111,7 @@ LINK_SCRIPT := $(DIR_SRC)/link_script.ld
 
 # qemu
 QEMU := qemu-system-i386
-QEMU_FLAGS := -L . -m 64 -fda $(OUTPUT_IMG) -boot a -localtime -M pc \
+QEMU_FLAGS := -L . -m 64 -fda $(OUTPUT_IMG) -boot a -rtc base=localtime -M pc \
 	-hda $(DIR_HDD)/hda.qed -hdb $(DIR_HDD)/hdb.qed -hdc $(DIR_HDD)/hdc.qed -hdd $(DIR_HDD)/hdd.qed
 QEMU_DEBUG_FLAGS := $(QEMU_FLAGS) -gdb tcp:127.0.0.1:1234 -S
 

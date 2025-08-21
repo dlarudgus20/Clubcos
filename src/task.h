@@ -211,7 +211,7 @@ typedef struct tagTaskStruct
 	bool bSSEIsExist;								//!< SSE의 사용 가능 여부입니다.
 
 	uint8_t _padding[3];
-} TaskStruct;
+} __attribute__((aligned(16))) TaskStruct;
 
 /** @brief @ref TaskStruct 입니다. */
 static TaskStruct * const g_pTaskStruct = (TaskStruct *)TASKSTRUCT_ADDRESS;

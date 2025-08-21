@@ -95,7 +95,7 @@ enum
 };
 
 /** @brief @ref PATA_CMD_IDENTIFY 커맨드의 반환값입니다. */
-typedef struct tagPATAIdentifyResult
+typedef struct __attribute__((aligned(4))) tagPATAIdentifyResult
 {
 	uint16_t wConfiguration;
 

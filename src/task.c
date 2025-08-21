@@ -223,7 +223,7 @@ static Task *ckTaskCreate_unsafe(uint32_t eip, uint32_t esp,
 {
 	Task *ret = NULL;
 
-	for (int i = 2; i < MAX_TASK; i++)
+	for (uint32_t i = 2; i < MAX_TASK; i++)
 	{
 		ret = &g_pTaskStruct->tasks[i];
 		if (ret->selector == 0)
@@ -277,7 +277,7 @@ uint32_t ckProcessCreate(uint32_t eip, uint32_t esp,
 	Process *pParentProcess = csGetProcessFromId(ParentProcessId);
 	if (pParentProcess != NULL)
 	{
-		for (int i = 0; i < MAX_PROCESS; i++)
+		for (uint32_t i = 0; i < MAX_PROCESS; i++)
 		{
 			ret = &g_pTaskStruct->processes[i];
 			if (ret->PageDirectory == NULL)
